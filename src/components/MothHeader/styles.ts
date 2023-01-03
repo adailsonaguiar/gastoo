@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {TouchableOpacity} from 'react-native';
 import colors from '../../styles/colors';
 import {fontBold} from '../../styles/fonts';
@@ -16,11 +15,9 @@ export const Container = styled.View`
 `;
 
 export const Month = styled.Text`
-  color: ${colors.greenApp};
+  color: ${colors.fontLight};
   font-family: ${fontBold};
 `;
-
-export const CustomIcon = styled(Icon)``;
 
 export const ButtonMonth = styled(TouchableOpacity)`
   background-color: ${colors.darker};

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Formik} from 'formik';
-import {useNavigation} from '@react-navigation/native';
 
 import Input from '../../components/Input';
 import Header from '../../components/Header';
@@ -14,17 +13,12 @@ import {
 import {AccountFormViewModel} from './index.model';
 
 export default function AccountForm() {
-  const navigation = useNavigation();
   const {loading, currentAccount, askDelection, onSubmit} =
     AccountFormViewModel();
 
   return (
     <Container>
-      <Header
-        title={currentAccount._id ? 'Atualizar conta' : 'Nova conta'}
-        navigation={navigation}
-      />
-
+      <Header title={currentAccount._id ? 'Atualizar conta' : 'Nova conta'} />
       <Formik
         initialValues={currentAccount}
         onSubmit={values => onSubmit(values)}>

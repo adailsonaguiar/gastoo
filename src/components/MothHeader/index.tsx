@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {loadAccounts} from '../../store/accounts/actions';
-import {loadTransactions} from '../../store/transactions/actions';
-import colors from '../../styles/colors';
-import {setTwoDigits} from '../../utils/FunctionUtils';
 import months from '../../utils/months';
-import {Container, Month, CustomIcon, ButtonMonth} from './styles';
+
+import ArrowLeft from '../../assets/arrow-rounded-left.png';
+import ArrowRight from '../../assets/arrow-rounded-right.png';
+
+import {Container, Month, ButtonMonth} from './styles';
+import {Image} from 'react-native';
 
 export default function MothHeader() {
-  // const dispatch = useDispatch();
   const [month, setMonth] = useState(0);
   const [year, setYear] = useState(0);
 
@@ -47,19 +47,11 @@ export default function MothHeader() {
   return (
     <Container>
       <ButtonMonth onPress={previousMonth}>
-        <CustomIcon
-          name="keyboard-arrow-left"
-          color={colors.greenApp}
-          size={30}
-        />
+        <Image source={ArrowLeft} />
       </ButtonMonth>
       <Month>{`${months[month] ? months[month] : ''} ${year}`}</Month>
       <ButtonMonth onPress={nextMonth}>
-        <CustomIcon
-          name="keyboard-arrow-right"
-          color={colors.greenApp}
-          size={30}
-        />
+        <Image source={ArrowRight} />
       </ButtonMonth>
     </Container>
   );

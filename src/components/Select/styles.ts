@@ -12,8 +12,10 @@ export const PickerWrapper = styled.View`
 
 export const SelectOption = styled.View`
   flex-direction: row;
-  margin-bottom: 10px;
   align-items: center;
+  padding: 10px 0;
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.gray300};
 `;
 
 export const OptionIcon = styled.View<{background: string}>`
@@ -28,7 +30,6 @@ export const LabelOption = styled.Text`
   color: ${colors.fontLight};
   font-family: ${fontMedium};
   font-size: 16px;
-  margin-left: 10px;
 `;
 
 export const FieldWrapper = styled.View`
@@ -77,11 +78,9 @@ export const BtnClear = styled.TouchableOpacity`
 
 export const stylesSheet = StyleSheet.create({
   ModalStyle: {
-    // flex: 1,
     backgroundColor: colors.backgroundColorPrimary,
-    // borderRadius: 4,
+    borderRadius: 10,
     color: colors.fontLight,
-    // marginTop: 50,
-    padding: 20,
+    padding: 15,
   },
 });

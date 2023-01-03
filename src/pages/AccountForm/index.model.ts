@@ -1,20 +1,30 @@
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {Alert} from 'react-native';
 import React from 'react';
 import uuid from 'react-native-uuid';
 
-import {getRealm, loadData, writeData, removeById} from '../../database/realm';
+import {getRealm, loadData, removeById} from '../../database/realm';
 import {SCHEMAS} from '../../database/schemas';
 import {Account} from '../../models/Accounts';
 import {showAlertError} from '../../services/alertService';
+import {saveAccount} from '../../services/accountsService';
 
 type AccountFormProps = {
   initialBalance: number;
 } & Account;
 
+type AccountFormRouteProps = {
+  props: {
+    formType: string;
+    account?: Account;
+  };
+};
+
+type RouterProps = RouteProp<AccountFormRouteProps, 'props'>;
+
 export const AccountFormViewModel = () => {
   const navigation = useNavigation();
-  const {params} = useRoute();
+  const {params} = useRoute<RouterProps>();
   const accountItem = (params?.account as Account) || null;
   const [loading, setLoading] = React.useState(false);
 
@@ -102,9 +112,7 @@ export const AccountFormViewModel = () => {
       accountToSave.month = String(date.getMonth() + 1);
       accountToSave.year = String(date.getFullYear());
       accountToSave.description = values.description;
-      console.log(accountToSave);
-
-      await writeData({schema: SCHEMAS.ACCOUNT, data: accountToSave, realm});
+      await saveAccount(accountToSave, realm);
       navigation.goBack();
     }
     setLoading(false);

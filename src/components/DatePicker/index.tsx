@@ -4,6 +4,7 @@ import {format} from 'date-fns';
 import * as S from './styles';
 import {Modal} from 'react-native';
 import colors from '../../styles/colors';
+import Header from '../Header';
 
 type DatePickerProps = {
   date: Date;
@@ -20,9 +21,8 @@ const DatePicker = ({date, setDate, ...rest}: DatePickerProps) => {
 
   function onChange(selectedDate: string) {
     setShow(false);
-    console.log(selectedDate.toString(), new Date(selectedDate));
-
-    // setDate(new Date(selectedDate));
+    const convertedCharDate = selectedDate.replace('/', '-').replace('/', '-');
+    setDate(new Date(convertedCharDate + 'T12:00:00.000Z'));
   }
 
   return (
@@ -35,12 +35,17 @@ const DatePicker = ({date, setDate, ...rest}: DatePickerProps) => {
           visible={show}
           onRequestClose={() => setShow(false)}>
           <S.ModalContainer>
+            <Header
+              title="Selecione uma data"
+              lineColor={colors.greenApp}
+              onClose={() => setShow(false)}
+            />
             <S.CustomDatePicker
               mode="calendar"
+              selected={format(date, 'yyyy-MM-dd')}
               options={{
                 textHeaderColor: colors.fontLight,
                 textDefaultColor: colors.fontLight,
-                // selectedTextColor: colors.greenApp,
                 mainColor: colors.greenApp,
                 textSecondaryColor: colors.gray400,
               }}

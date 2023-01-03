@@ -13,8 +13,10 @@ import {
   categoriesIncome,
 } from '../../utils/categoriesTransactions';
 import {transactionType} from '../../database/schemas/TransactionSchema';
+import {TransactionsModel} from './index.model';
 
 const Transactions = ({navigation}) => {
+  const {transactions} = TransactionsModel();
   // const transactions = useSelector(state => state.transactions.list);
   // const totalValueOut = useSelector(
   //   state => state.transactions.totalValueTransactionsOut,
@@ -22,6 +24,7 @@ const Transactions = ({navigation}) => {
   // const totalValueIn = useSelector(
   //   state => state.transactions.totalValueTransactionsIn,
   // );
+  console.log(transactions);
 
   function getTransactionStatus(status: number) {
     const statusList: {[key: number]: string} = {
@@ -41,10 +44,10 @@ const Transactions = ({navigation}) => {
 
   return (
     <>
-      <Header title="Transações" showMonthHeader navigation={navigation} />
+      <Header title="Transações" showMonthHeader />
       <S.Container>
         <S.List>
-          {/* <FlatList
+          <FlatList
             data={transactions}
             renderItem={({item}) => (
               <CardTransaction
@@ -63,8 +66,8 @@ const Transactions = ({navigation}) => {
                 type={item.type}
               />
             )}
-            keyExtractor={item => item.id.toString()}
-          /> */}
+            keyExtractor={item => item._id}
+          />
         </S.List>
         <S.Footer>
           {/* <S.SaldoTotal>

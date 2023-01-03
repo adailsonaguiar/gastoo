@@ -11,6 +11,8 @@ export const Conta = styled(TouchableOpacity)`
   align-items: center;
   padding: 0 20px;
   border-radius: 5px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.gray300};
 `;
 
 export const ColLeft = styled.View`

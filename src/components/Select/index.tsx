@@ -10,10 +10,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import * as S from './styles';
 
+export type Option = {value: string | number; label: string};
+
 type SelectProps = {
   placeholder: string;
   label: string;
-  options: any[];
+  options: Option[];
   lineLeftColor?: string;
   btnClear?: boolean;
 } & CustomPickerProps;
@@ -22,7 +24,6 @@ const Select = ({
   placeholder,
   label,
   options = [],
-  lineLeftColor,
   btnClear = false,
   ...rest
 }: SelectProps) => {
@@ -30,7 +31,6 @@ const Select = ({
     const {item, getLabel} = settings;
     return (
       <S.SelectOption>
-        <S.OptionIcon background={item.color} />
         <S.LabelOption>{getLabel(item)}</S.LabelOption>
       </S.SelectOption>
     );
@@ -45,12 +45,7 @@ const Select = ({
         {selectedItem ? (
           <>
             <S.LabelWrapper>
-              {lineLeftColor ? (
-                <S.LineLeft lineLeftColor={selectedItem.color} />
-              ) : null}
-              <S.Placeholder lineLeft={!!lineLeftColor}>
-                {getLabel(selectedItem)}
-              </S.Placeholder>
+              <S.Placeholder>{getLabel(selectedItem)}</S.Placeholder>
             </S.LabelWrapper>
             {btnClear && (
               <S.BtnClear onPress={clear}>

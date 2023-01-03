@@ -1,5 +1,5 @@
 export type Transaction = {
-  id: string;
+  _id: string;
   description: string;
   value: number;
   day: string;
@@ -8,5 +8,11 @@ export type Transaction = {
   type: string;
   accountId: string;
   status: number;
-  category: number;
+  category: number | string;
+  valueType: number;
+  createdAt: Date;
 };
+
+export function TransactionBuilder(props: Transaction) {
+  return props;
+}

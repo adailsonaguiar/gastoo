@@ -9,4 +9,5 @@ export default {
   graphite: '#2d536c',
 
   gray400: '#B1B7BC',
+  gray300: '#CCD4DC',
 };

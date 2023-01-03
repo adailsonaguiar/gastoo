@@ -15,9 +15,7 @@ export const PickerWrapper = styled.TouchableOpacity`
   ${InputWrapperStyles}
 `;
 
-export const CustomDatePicker = styled(RNDatePicker)`
-  z-index: 100;
-`;
+export const CustomDatePicker = styled(RNDatePicker)``;
 
 export const Label = styled.Text`
   color: ${colors.fontLight};
@@ -31,8 +29,6 @@ export const Value = styled.Text`
   font-size: 16px;
 `;
 
-export const ModalContainer = styled.View`
+export const ModalContainer = styled.SafeAreaView`
   flex: 1;
-  justify-content: center;
-  align-items: center;
 `;

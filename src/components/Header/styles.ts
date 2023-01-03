@@ -45,7 +45,7 @@ export const BtnFechar = styled.TouchableOpacity`
 `;
 
 type LineProps = {
-  lineColor: string;
+  lineColor?: string;
 };
 
 export const Line = styled.View<LineProps>`

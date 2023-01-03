@@ -7,9 +7,8 @@ import Header from '../../components/Header';
 import CardTransaction from '../../components/CardTransaction';
 import {pages} from '../../routes';
 import Button from '../../components/Button';
-import {getRealm, loadData} from '../../database/realm';
-import {SCHEMAS} from '../../database/schemas';
 import {Account} from '../../models/Accounts';
+import {fetchAccounts} from '../../services/accountsService';
 
 type AccountPageProps = {
   navigation: any;
@@ -17,24 +16,22 @@ type AccountPageProps = {
 
 const Accounts = ({navigation}: AccountPageProps) => {
   const [accounts, setAccounts] = React.useState<Account[]>([]);
-  async function fetchAccounts() {
-    const realm = await getRealm();
-    const response = await loadData({schema: SCHEMAS.ACCOUNT, realm});
+  async function getAccounts() {
+    const response = await fetchAccounts();
     if (response) {
-      setAccounts(response as Account[]);
+      setAccounts(response);
     }
-    realm.close();
   }
 
   useFocusEffect(
     React.useCallback(() => {
-      fetchAccounts();
+      getAccounts();
     }, []),
   );
 
   return (
     <>
-      <Header title="Suas contas" navigation={navigation} />
+      <Header title="Suas contas" />
       <S.Container>
         <S.Lista>
           <FlatList

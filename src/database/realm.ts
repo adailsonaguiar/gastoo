@@ -74,3 +74,20 @@ export const removeById = async (props: {
     throw error;
   }
 };
+
+export async function handleRealmInstance(externalRealmInstance?: Realm) {
+  if (externalRealmInstance) {
+    return externalRealmInstance;
+  } else {
+    return await getRealm();
+  }
+}
+
+export async function closeRealmInstance(
+  localInstance: Realm,
+  externalRealmInstance?: Realm,
+) {
+  if (!externalRealmInstance) {
+    localInstance.close();
+  }
+}
