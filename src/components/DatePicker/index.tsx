@@ -5,6 +5,8 @@ import * as S from './styles';
 import {Modal} from 'react-native';
 import colors from '../../styles/colors';
 import Header from '../Header';
+import {fontMedium, fontRegular} from '../../styles/fonts';
+import {Label} from '../Label';
 
 type DatePickerProps = {
   date: Date;
@@ -27,7 +29,7 @@ const DatePicker = ({date, setDate, ...rest}: DatePickerProps) => {
 
   return (
     <S.Container {...rest}>
-      <S.Label>Data</S.Label>
+      <Label>Data</Label>
       <S.PickerWrapper onPress={() => toogleShow()}>
         <S.Value>{format(date, 'dd/MM/yyyy')}</S.Value>
         <Modal
@@ -37,7 +39,7 @@ const DatePicker = ({date, setDate, ...rest}: DatePickerProps) => {
           <S.ModalContainer>
             <Header
               title="Selecione uma data"
-              lineColor={colors.greenApp}
+              lineColor={colors.appColor}
               onClose={() => setShow(false)}
             />
             <S.CustomDatePicker
@@ -46,8 +48,10 @@ const DatePicker = ({date, setDate, ...rest}: DatePickerProps) => {
               options={{
                 textHeaderColor: colors.fontLight,
                 textDefaultColor: colors.fontLight,
-                mainColor: colors.greenApp,
+                mainColor: colors.appColor,
                 textSecondaryColor: colors.gray400,
+                defaultFont: fontRegular,
+                headerFont: fontMedium,
               }}
               onDateChange={value => {
                 onChange(value);

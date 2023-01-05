@@ -1,26 +1,29 @@
 import React from 'react';
+import {StyleSheet} from 'react-native';
 import {TabsContainer, TabItem, TitleCard, IconArea, ImageIcon} from './styles';
 import despesaIcon from '../../assets/cardIcons/despesa.png';
 import receitaIcon from '../../assets/cardIcons/receita.png';
-import transacoesIcon from '../../assets/cardIcons/transacoes.png';
 import contasIcon from '../../assets/cardIcons/contas.png';
 import {pages} from '../../routes';
 
+const styles = StyleSheet.create({
+  tab: {
+    elevation: 6,
+  },
+});
+
 const Tabs = ({navigation}) => (
   <TabsContainer showsHorizontalScrollIndicator={false}>
-    <TabItem onPress={() => navigation.navigate(pages.transactionForm)}>
+    <TabItem
+      style={styles.tab}
+      onPress={() => navigation.navigate(pages.transactionForm)}>
       <IconArea>
         <ImageIcon source={despesaIcon} />
       </IconArea>
       <TitleCard>Despesa</TitleCard>
     </TabItem>
-    <TabItem onPress={() => navigation.navigate(pages.transactions)}>
-      <IconArea>
-        <ImageIcon source={transacoesIcon} />
-      </IconArea>
-      <TitleCard>Transações</TitleCard>
-    </TabItem>
     <TabItem
+      style={styles.tab}
       onPress={() =>
         navigation.navigate(pages.transactionForm, {formType: true})
       }>
@@ -29,7 +32,9 @@ const Tabs = ({navigation}) => (
       </IconArea>
       <TitleCard>Receita</TitleCard>
     </TabItem>
-    <TabItem onPress={() => navigation.navigate(pages.accounts)}>
+    <TabItem
+      style={styles.tab}
+      onPress={() => navigation.navigate(pages.accounts)}>
       <IconArea>
         <ImageIcon source={contasIcon} />
       </IconArea>

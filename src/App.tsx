@@ -16,6 +16,7 @@ const App = () => {
       <StatusBar
         animated={true}
         barStyle="dark-content"
+        backgroundColor={'#fff'}
         // showHideTransition={statusBarTransition}
         // hidden={hidden}
       />

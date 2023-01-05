@@ -1,4 +1,5 @@
 import {transactionType} from '../database/schemas/TransactionSchema';
+import {Transaction} from '../models/transaction';
 import {categoriesExpense, categoriesIncome} from './categoriesTransactions';
 
 export function setTwoDigits(month: number) {
@@ -53,15 +54,15 @@ export const formatteNumber = (number: string) => {
   return number;
 };
 
-export function getCategories(transaction) {
+export function getCategories(transaction: Transaction) {
   if (transaction.type === transactionType.TRANSACTION_IN) {
     return categoriesIncome;
   }
   return categoriesExpense;
 }
 
-export function getTransactionStatus(status: string) {
-  const statusList: {[key: string]: string} = {
+export function getTransactionStatus(status: number) {
+  const statusList: {[key: number]: string} = {
     0: 'Pendente',
     1: 'Confirmado',
     2: '',

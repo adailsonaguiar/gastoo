@@ -28,13 +28,15 @@ export const ContainerFormFooter = styled.View`
   justify-content: center;
   align-items: center;
   margin-top: 5px;
-  margin-bottom: 5px;
+  padding-bottom: 40px;
 `;
 
-export const BtnRemove = styled(Button)`
+export const BtnRemove = styled(Button).attrs({
+  color: colors.colorDanger,
+})`
   background-color: ${colors.backgroundColorPrimary};
-  border: 1.5px ${colors.colorDanger};
-  color: ${colors.colorDanger};
+  border: 1px ${colors.colorDanger};
+  margin-top: 10px;
 `;
 
 export const ButtonSave = styled(Button)`

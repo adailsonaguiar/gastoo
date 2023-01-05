@@ -1,12 +1,17 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {useFormik} from 'formik';
 import React from 'react';
 import uuid from 'react-native-uuid';
 import {Option} from '../../components/Select';
 import {transactionType} from '../../database/schemas/TransactionSchema';
+import {Account} from '../../models/Accounts';
 import {Transaction, TransactionBuilder} from '../../models/transaction';
 import {fetchAccounts} from '../../services/accountsService';
 import {showAlertError} from '../../services/alertService';
-import {saveTransaction} from '../../services/transactionsService';
+import {
+  deleteTransaction,
+  saveTransaction,
+} from '../../services/transactionsService';
 import {
   categoriesExpense,
   categoriesIncome,
@@ -20,7 +25,6 @@ type TransactionFormRouteProps = {
 };
 
 type FormProps = {
-  initialValue: number;
   date: Date;
   accountOption: Option;
   categoryOption: Option;
@@ -30,12 +34,40 @@ type FormProps = {
 type RouterProps = RouteProp<TransactionFormRouteProps, 'props'>;
 
 export function TransactionFormModel() {
-  const navigation = useNavigation();
   const route = useRoute<RouterProps>();
   const FORM_TYPE = route.params?.formType;
+  const INITIAL_FORM_VALUES: FormProps = {
+    _id: String(uuid.v4()),
+    category: 0,
+    value: 0,
+    rawValue: '',
+    initialValue: 0,
+    description: '',
+    accountId: '',
+    type: !FORM_TYPE
+      ? transactionType.TRANSACTION_OUT
+      : transactionType.TRANSACTION_IN,
+    status: 0,
+    day: '',
+    month: '',
+    year: '',
+    date: new Date(),
+    accountOption: {value: '', label: ''},
+    categoryOption: {value: '', label: ''},
+    valueType: 0,
+    createdAt: new Date(),
+  };
+  const navigation = useNavigation();
   const expenseEdit = route.params?.transaction
     ? route.params?.transaction
     : null;
+
+  const formik = useFormik({
+    initialValues: INITIAL_FORM_VALUES,
+    validateOnChange: false,
+    validateOnBlur: false,
+    onSubmit: async values => onSubmit(values),
+  });
 
   function getCategories() {
     if (expenseEdit?.type === transactionType.TRANSACTION_IN) {
@@ -43,28 +75,6 @@ export function TransactionFormModel() {
     }
     return categoriesExpense;
   }
-
-  const currentTransaction: FormProps = {
-    _id: expenseEdit ? expenseEdit._id : String(uuid.v4()),
-    category: expenseEdit ? getCategories()[expenseEdit.category].value : 0,
-    value: expenseEdit ? expenseEdit.value / 100 : 0,
-    rawValue: String(expenseEdit ? expenseEdit.value / 100 : 0),
-    initialValue: expenseEdit ? expenseEdit.value / 100 : 0,
-    description: expenseEdit ? expenseEdit.description : '',
-    accountId: expenseEdit ? expenseEdit.accountId : '',
-    type: !FORM_TYPE
-      ? transactionType.TRANSACTION_OUT
-      : transactionType.TRANSACTION_IN,
-    status: expenseEdit ? expenseEdit.status : 0,
-    day: expenseEdit ? expenseEdit.day : '',
-    month: expenseEdit ? expenseEdit.month : '',
-    year: expenseEdit ? expenseEdit.year : '',
-    date: new Date(),
-    accountOption: {value: '', label: ''},
-    categoryOption: {value: '', label: ''},
-    valueType: expenseEdit ? expenseEdit.valueType : 0,
-    createdAt: expenseEdit ? expenseEdit.createdAt : new Date(),
-  };
 
   const [accounts, setAccounts] = React.useState<
     {value: string; label: string}[]
@@ -75,9 +85,27 @@ export function TransactionFormModel() {
     navigation.goBack();
   }
 
+  function updateFormValues(values: FormProps) {
+    formik.setValues(values);
+  }
+
+  function getTransactionAccount(accountsResponse: Account[]) {
+    const account = accountsResponse.find(
+      item => item._id === expenseEdit?.accountId,
+    );
+    if (account) {
+      updateFormValues({
+        ...formik.values,
+        accountId: account._id,
+        accountOption: {value: account._id, label: account.description},
+      });
+    }
+  }
+
   async function mapAccounts() {
     const response = await fetchAccounts();
     if (response?.length) {
+      getTransactionAccount(response);
       const mappedSelectOptions = response.map(item => {
         return {
           value: item._id,
@@ -93,6 +121,35 @@ export function TransactionFormModel() {
   React.useEffect(() => {
     if (!accounts.length) {
       mapAccounts();
+    }
+    if (expenseEdit?._id) {
+      updateFormValues({
+        ...formik.values,
+        _id: expenseEdit._id,
+        category: expenseEdit.category,
+        value: expenseEdit.value / 100,
+        rawValue: (expenseEdit.value / 100).toString(),
+        initialValue: expenseEdit.status === 0 ? 0 : expenseEdit.value,
+        description: expenseEdit.description,
+        accountId: expenseEdit.accountId,
+
+        type: !FORM_TYPE
+          ? transactionType.TRANSACTION_OUT
+          : transactionType.TRANSACTION_IN,
+        status: expenseEdit.status,
+        day: expenseEdit.day,
+        month: expenseEdit.month,
+        year: expenseEdit.year,
+
+        date: new Date(
+          `${expenseEdit.year}-${expenseEdit.month}-${
+            Number(expenseEdit.day) + 1
+          }`,
+        ),
+        categoryOption: getCategories()[expenseEdit.category],
+        valueType: expenseEdit.valueType,
+        createdAt: expenseEdit.createdAt,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accounts.length]);
@@ -143,17 +200,24 @@ export function TransactionFormModel() {
         value: convertedValue,
         valueType: valueType,
         createdAt: values.createdAt,
+        initialValue: values.initialValue,
       });
-
-      saveTransaction(transactionToSave);
+      await saveTransaction(transactionToSave);
       navigation.goBack();
     }
   }
 
-  // const handleDelete = (transaction: Transaction) => {
-  //   // dispatch(deleteTransaction(transaction));
-  //   navigation.goBack();
-  // };
+  const handleDelete = (transaction: Transaction) => {
+    transaction.valueType = 0;
+    deleteTransaction(transaction);
+    navigation.goBack();
+  };
 
-  return {onSubmit, currentTransaction, expenseEdit, FORM_TYPE, accounts};
+  return {
+    formik,
+    expenseEdit,
+    FORM_TYPE,
+    accounts,
+    handleDelete,
+  };
 }

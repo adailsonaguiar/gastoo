@@ -17,6 +17,7 @@ export const Container = styled.View`
 export const Month = styled.Text`
   color: ${colors.fontLight};
   font-family: ${fontBold};
+  font-size: 15px;
 `;
 
 export const ButtonMonth = styled(TouchableOpacity)`

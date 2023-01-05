@@ -5,6 +5,7 @@ import {
   TextInputMaskTypeProp,
   TextInputMaskProps,
 } from 'react-native-masked-text';
+import {Label} from '../Label';
 
 import * as S from './styles';
 
@@ -13,6 +14,7 @@ type InputProps = {
   type?: TextInputMaskTypeProp;
   options?: TextInputMaskOptionProp;
   onChangeMasked: (maskedValue: string, rawValue: string) => void;
+  mainInput?: boolean;
 } & TextInputMaskProps;
 
 const InputMask = ({
@@ -20,16 +22,18 @@ const InputMask = ({
   type,
   options,
   onChangeMasked,
+  mainInput,
   ...rest
 }: InputProps) => {
   return (
     <S.Container>
-      <S.Label>{label}</S.Label>
+      <Label>{label}</Label>
       <S.InputWrapper>
         <S.InputMask
           {...rest}
           type={type}
           options={options}
+          mainInput={mainInput}
           onChangeText={(maskedValue: string, rawValue: string) =>
             onChangeMasked(maskedValue, rawValue)
           }

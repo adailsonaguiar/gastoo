@@ -1,24 +1,22 @@
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
+import {fontLight, fontMedium} from '../../styles/fonts';
+import {widthPercentageToDP} from '../../utils/ResponsiveDimensionsLayout';
 // import {fontRegular} from '../../styles/fonts';
 
-export const TabsContainer = styled.ScrollView.attrs({
-  horizontal: true,
-  contentContainerStyle: {paddingRight: 15},
-  overScrollMode: 'never',
-  height: 1,
-})`
-  padding-left: 15px;
+export const TabsContainer = styled.View`
+  flex-direction: row;
+  padding: 10px 20px;
 `;
 
 export const TabItem = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
 })`
-  width: 100px;
-  height: 95px;
-  background: ${colors.backgroundColorSecondary};
-  border-radius: 10px;
-  margin-right: 10px;
+  width: ${widthPercentageToDP(100) / 3 - 23}px;
+  height: 100px;
+  background: ${colors.appColor};
+  border-radius: 20px;
+  margin-right: 15px;
   padding: 10px;
   align-items: center;
 `;
@@ -27,6 +25,7 @@ export const TitleCard = styled.Text`
   color: #fff;
   font-size: 13px;
   padding-bottom: 10px;
+  font-family: ${fontLight};
 `;
 
 export const IconArea = styled.View`
@@ -35,4 +34,7 @@ export const IconArea = styled.View`
   align-items: center;
 `;
 
-export const ImageIcon = styled.Image``;
+export const ImageIcon = styled.Image`
+  width: 24px;
+  height: 24px;
+`;

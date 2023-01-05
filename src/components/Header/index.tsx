@@ -9,22 +9,23 @@ import closeIcon from '../../assets/close.png';
 type HeaderProps = {
   title: string;
   lineColor?: string;
-  showMonthHeader?: boolean;
   children?: ReactNode;
   onClose?: () => void;
+  onChangeMonth?: (props: {month: number; year: number}) => void;
+  padding?: boolean;
 };
 
 const Header = ({
   title,
   lineColor,
-  showMonthHeader = false,
   children,
   onClose,
+  onChangeMonth,
 }: HeaderProps) => {
   const navigation = useNavigation();
   return (
     <>
-      {showMonthHeader && <MonthHeader />}
+      {onChangeMonth && <MonthHeader onChangeMonth={onChangeMonth} />}
       <S.HeaderForm>
         <S.RowWrapper>
           <S.TxtHeaderForm>{title}</S.TxtHeaderForm>
@@ -42,6 +43,38 @@ const Header = ({
         <S.Line lineColor={lineColor} />
         {children && <S.Subtitle>{children}</S.Subtitle>}
       </S.HeaderForm>
+    </>
+  );
+};
+
+export const SelectModalHeader = ({
+  title,
+  lineColor,
+  children,
+  onClose,
+  onChangeMonth,
+}: HeaderProps) => {
+  const navigation = useNavigation();
+  return (
+    <>
+      {onChangeMonth && <MonthHeader onChangeMonth={onChangeMonth} />}
+      <S.HeaderSelect>
+        <S.RowWrapper>
+          <S.TxtHeaderForm>{title}</S.TxtHeaderForm>
+          <S.BtnFechar
+            onPress={async () => {
+              if (onClose) {
+                onClose();
+              } else {
+                navigation.goBack();
+              }
+            }}>
+            <Image source={closeIcon} />
+          </S.BtnFechar>
+        </S.RowWrapper>
+        <S.Line lineColor={lineColor} />
+        {children && <S.Subtitle>{children}</S.Subtitle>}
+      </S.HeaderSelect>
     </>
   );
 };

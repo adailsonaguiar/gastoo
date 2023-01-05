@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 
 import {formatMoney, formatteNumber} from '../../utils/FunctionUtils';
@@ -12,13 +13,10 @@ type CardTransactionProps = {
   status?: string;
   date: {day: string; month: string; year: string};
   type?: 'TRANSACTION_IN' | 'TRANSACTION_OUT';
-  navigation: any;
-  screenNavigate: any;
+  screenNavigate: string;
 };
 
 const CardTransaction = ({
-  navigation,
-  screenNavigate,
   routeParameters,
   lineLeftColor,
   transactionTitle,
@@ -27,7 +25,9 @@ const CardTransaction = ({
   status = '',
   date,
   type = 'TRANSACTION_IN',
+  screenNavigate,
 }: CardTransactionProps) => {
+  const navigation = useNavigation();
   return (
     <S.Conta
       onPress={() =>
@@ -35,11 +35,13 @@ const CardTransaction = ({
       }>
       {lineLeftColor && <S.LineLeft lineLeftColor={lineLeftColor} />}
       <S.ColLeft>
-        <S.TitleConta>{transactionTitle}</S.TitleConta>
+        <S.TitleConta>{transactionTitle.toUpperCase()}</S.TitleConta>
         <S.CategoryConta>{categoryTransaction}</S.CategoryConta>
       </S.ColLeft>
       <S.ColRight>
-        <S.Saldo type={type}>R${`${formatMoney(value)}`}</S.Saldo>
+        <S.Saldo type={type}>
+          {`${type === 'TRANSACTION_OUT' ? '-' : ''}R$${formatMoney(value)}`}
+        </S.Saldo>
         <S.Atualizado>{`${status} ${formatteNumber(date.day)}/${formatteNumber(
           date.month,
         )}`}</S.Atualizado>

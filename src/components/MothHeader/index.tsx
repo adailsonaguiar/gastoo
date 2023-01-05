@@ -1,13 +1,17 @@
 import React, {useState, useEffect} from 'react';
+import {Image} from 'react-native';
 import months from '../../utils/months';
 
 import ArrowLeft from '../../assets/arrow-rounded-left.png';
 import ArrowRight from '../../assets/arrow-rounded-right.png';
 
 import {Container, Month, ButtonMonth} from './styles';
-import {Image} from 'react-native';
 
-export default function MothHeader() {
+type MothHeaderProps = {
+  onChangeMonth: (props: {month: number; year: number}) => void;
+};
+
+export default function MothHeader({onChangeMonth}: MothHeaderProps) {
   const [month, setMonth] = useState(0);
   const [year, setYear] = useState(0);
 
@@ -25,23 +29,29 @@ export default function MothHeader() {
     if (month === 11) {
       setMonth(0);
       setYear(year + 1);
-      console.log(1);
-
-      // dispatch(loadTransactions({month: 1, year: year + 1}));
+      onChangeMonth({month: 1, year: year + 1});
     } else {
       setMonth(month + 1);
-      // dispatch(loadTransactions({month: month + 2, year: year}));
+      onChangeMonth({month: month + 2, year: year});
     }
   };
   const previousMonth = () => {
     if (month === 0) {
       setMonth(11);
       setYear(year - 1);
-      // dispatch(loadTransactions({month: 12, year: year - 1}));
+      onChangeMonth({month: 12, year: year - 1});
     } else {
       setMonth(month - 1);
-      // dispatch(loadTransactions({month: month, year: year}));
+      onChangeMonth({month: month, year: year});
     }
+  };
+
+  const handleDateDisplay = (props: {month: number; year: number}) => {
+    const currentYear = new Date().getFullYear();
+    if (props.year === currentYear) {
+      return `${months[props.month] ? months[props.month] : ''}`;
+    }
+    return `${months[props.month] ? months[props.month] : ''} ${props.year}`;
   };
 
   return (
@@ -49,7 +59,7 @@ export default function MothHeader() {
       <ButtonMonth onPress={previousMonth}>
         <Image source={ArrowLeft} />
       </ButtonMonth>
-      <Month>{`${months[month] ? months[month] : ''} ${year}`}</Month>
+      <Month>{handleDateDisplay({month, year})}</Month>
       <ButtonMonth onPress={nextMonth}>
         <Image source={ArrowRight} />
       </ButtonMonth>

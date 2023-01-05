@@ -9,13 +9,13 @@ type ButtonProps = {
   color?: string;
 } & TouchableOpacityProps;
 
-const Button = ({label, loading, ...rest}: ButtonProps) => {
+const Button = ({label, loading, color, ...rest}: ButtonProps) => {
   return (
     <S.Button {...rest} disabled={loading} activeOpacity={0.9}>
       {loading ? (
         <ActivityIndicator size="small" color="#fff" />
       ) : (
-        <S.Label>{label}</S.Label>
+        <S.Label color={color}>{label}</S.Label>
       )}
     </S.Button>
   );

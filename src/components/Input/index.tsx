@@ -1,5 +1,6 @@
 import React from 'react';
 import {TextInputProps} from 'react-native';
+import {Label} from '../Label';
 
 import * as S from './styles';
 
@@ -10,7 +11,7 @@ type InputProps = {
 const Input = ({label, ...rest}: InputProps) => {
   return (
     <S.Container>
-      <S.Label>{label}</S.Label>
+      <Label>{label}</Label>
       <S.InputWrapper>
         <S.Input {...rest} />
       </S.InputWrapper>

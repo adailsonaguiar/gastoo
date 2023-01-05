@@ -10,7 +10,7 @@ type ButtonProps = {
 
 const Button = styled(TouchableOpacity)<ButtonProps>`
   ${({background, color}) => css`
-    background: ${background ? background : colors.greenApp};
+    background: ${background ? background : colors.appColor};
     align-items: center;
     justify-content: center;
     border-radius: 10px;
@@ -23,10 +23,12 @@ const Button = styled(TouchableOpacity)<ButtonProps>`
   `}
 `;
 
-const Label = styled.Text`
-  color: ${colors.fontLight};
-  /* font-family: ${fontMedium}; */
-  font-size: 18px;
+const Label = styled.Text<ButtonProps>`
+  ${({color}) => css`
+    color: ${color ? color : colors.backgroundColorPrimary};
+    font-family: ${fontMedium};
+    font-size: 18px;
+  `}
 `;
 
 export {Button, Label};

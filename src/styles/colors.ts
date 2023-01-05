@@ -7,7 +7,10 @@ export default {
   colorDanger: '#C93A2C',
   darker: '#15252F',
   graphite: '#2d536c',
+  appColor: '#325D94',
 
+  gray500: '#8C8C8C',
   gray400: '#B1B7BC',
   gray300: '#CCD4DC',
+  fontLight100: '#ffff',
 };

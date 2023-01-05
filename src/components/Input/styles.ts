@@ -7,14 +7,8 @@ export const Container = styled.View`
   margin-bottom: 10px;
 `;
 
-export const Label = styled.Text`
-  color: ${colors.fontLight};
-  margin-bottom: 6px;
-  font-size: 15px;
-`;
-
 export const Input = styled.TextInput.attrs({
-  placeholderTextColor: colors.colorStroke,
+  placeholderTextColor: colors.gray400,
 })`
   padding-left: 10px;
   ${InputWrapperStyles}

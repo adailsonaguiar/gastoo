@@ -3,11 +3,11 @@ import {Alert} from 'react-native';
 import React from 'react';
 import uuid from 'react-native-uuid';
 
-import {getRealm, loadData, removeById} from '../../database/realm';
-import {SCHEMAS} from '../../database/schemas';
+import {getRealm} from '../../database/realm';
 import {Account} from '../../models/Accounts';
 import {showAlertError} from '../../services/alertService';
-import {saveAccount} from '../../services/accountsService';
+import {deleteAccount, saveAccount} from '../../services/accountsService';
+import {fetchTransactions} from '../../services/transactionsService';
 
 type AccountFormProps = {
   initialBalance: number;
@@ -48,21 +48,8 @@ export const AccountFormViewModel = () => {
 
   const handleDeleteAccount = async (account: Account) => {
     setLoading(true);
-    const realm = await getRealm();
-
-    const data = await loadData({
-      schema: SCHEMAS.TRANSACTION,
-      filter: `accountId = '${account._id}'`,
-      realm,
-    });
-    if (data?.length) {
-      showAlertError(
-        'Você não pode remover essa conta, ela ainda contém transações',
-      );
-    } else {
-      removeById({id: account._id, schema: SCHEMAS.ACCOUNT, realm});
-      navigation.goBack();
-    }
+    await deleteAccount(account);
+    navigation.goBack();
     setLoading(false);
   };
 
@@ -88,11 +75,7 @@ export const AccountFormViewModel = () => {
   }
 
   async function verifyTransactionsAsociate(id: string, realm: Realm) {
-    const data = await loadData({
-      schema: SCHEMAS.TRANSACTION,
-      filter: `accountId = '${id}'`,
-      realm,
-    });
+    const data = await fetchTransactions(`accountId = '${id}'`, realm);
     if (data?.length) {
       return true;
     }

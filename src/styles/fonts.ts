@@ -1,5 +1,6 @@
-const fontRegular = 'system font',
-  fontMedium = 'system font',
-  fontBold = 'system font',
-  fontLight = 'system font';
-export {fontRegular, fontMedium, fontBold, fontLight};
+const fontRegular = 'Poppins-Regular',
+  fontMedium = 'Poppins-Medium',
+  fontSemibold = 'Poppins-SemiBold',
+  fontBold = 'Poppins-Bold',
+  fontLight = 'Poppins-Light';
+export {fontRegular, fontMedium, fontSemibold, fontBold, fontLight};

@@ -38,7 +38,6 @@ const Accounts = ({navigation}: AccountPageProps) => {
             data={accounts}
             renderItem={({item}) => (
               <CardTransaction
-                navigation={navigation}
                 screenNavigate={pages.accountForm}
                 routeParameters={{account: item}}
                 transactionTitle={item.description}

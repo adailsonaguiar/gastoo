@@ -1,16 +1,10 @@
 import styled, {css} from 'styled-components/native';
 import colors from '../../styles/colors';
 import {fontMedium} from '../../styles/fonts';
-import {InputWrapperStyles} from '../InputWrapperStyles';
 
-export const Container = styled.TouchableOpacity`
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+export const Container = styled.View`
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  ${InputWrapperStyles}
 `;
 
 export const CustomSwitch = styled.Switch`
@@ -26,6 +20,19 @@ type TitleLabelProps = {
 export const TitleLabel = styled.Text<TitleLabelProps>`
   ${({isEnabled}) => css`
     font-family: ${fontMedium};
-    color: ${isEnabled ? colors.greenApp : colors.colorDanger};
+    color: ${isEnabled ? colors.fontLight100 : colors.fontLight};
+  `}
+`;
+
+export const Option = styled.TouchableOpacity<TitleLabelProps>`
+  ${({isEnabled}) => css`
+    background-color: ${
+      isEnabled ? colors.appColor : colors.backgroundColorPrimary
+    }
+    border-radius: 24px;
+    padding: 7px 20px;
+    margin-right: 7px;
+    border-width: 2px;
+    border-color: ${isEnabled ? colors.appColor : colors.gray300}
   `}
 `;

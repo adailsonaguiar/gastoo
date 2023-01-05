@@ -45,3 +45,18 @@ export const TxtDescricao = styled.Text`
   font-size: 13px;
   color: ${colors.fontLight};
 `;
+
+export const ContentWrapper = styled.View`
+  /* padding: 0 10px; */
+  flex: 1;
+`;
+
+export const Footer = styled.View`
+  background: ${colors.backgroundColorPrimary};
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-top: 10px;
+  flex-direction: row;
+`;

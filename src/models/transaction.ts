@@ -2,6 +2,7 @@ export type Transaction = {
   _id: string;
   description: string;
   value: number;
+  initialValue: number;
   day: string;
   month: string;
   year: string;

@@ -1,14 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
+import {Image} from 'react-native';
 import {
   CustomPicker,
   OptionTemplateSettings,
   FieldTemplateSettings,
   CustomPickerProps,
+  CustomPickerActions,
 } from 'react-native-custom-picker';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Label} from '../Label';
 
+import ArrowRightIcon from '../../assets/chevron-right.png';
 import * as S from './styles';
+import Header, {SelectModalHeader} from '../Header';
 
 export type Option = {value: string | number; label: string};
 
@@ -32,6 +36,7 @@ const Select = ({
     return (
       <S.SelectOption>
         <S.LabelOption>{getLabel(item)}</S.LabelOption>
+        <Image source={ArrowRightIcon} />
       </S.SelectOption>
     );
   }
@@ -47,26 +52,31 @@ const Select = ({
             <S.LabelWrapper>
               <S.Placeholder>{getLabel(selectedItem)}</S.Placeholder>
             </S.LabelWrapper>
-            {btnClear && (
-              <S.BtnClear onPress={clear}>
-                <Icon name="close" color="#fff" size={13} />
-              </S.BtnClear>
-            )}
+            {btnClear && <S.BtnClear onPress={clear} />}
+            <Image source={ArrowRightIcon} />
           </>
         ) : null}
       </S.FieldWrapper>
     );
   }
 
+  function renderHeader(settings: CustomPickerActions) {
+    return (
+      <SelectModalHeader title={'Selecione'} onClose={() => settings.close()} />
+    );
+  }
+
   return (
     <>
-      <S.Label>{label}</S.Label>
+      <Label>{label}</Label>
       <S.PickerWrapper>
         <CustomPicker
           placeholder={placeholder}
           options={options}
           modalAnimationType="slide"
           modalStyle={S.stylesSheet.ModalStyle}
+          headerTemplate={renderHeader}
+          backdropStyle={S.stylesSheet.Backdrop}
           optionTemplate={renderOption}
           getLabel={item => item.label}
           fieldTemplate={renderField}

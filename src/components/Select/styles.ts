@@ -1,20 +1,26 @@
 import {StyleSheet} from 'react-native';
 import styled, {css} from 'styled-components/native';
 import colors from '../../styles/colors';
-import {fontMedium} from '../../styles/fonts';
-import {InputWrapperStyles} from '../InputWrapperStyles';
+import {fontMedium, fontRegular} from '../../styles/fonts';
+import {
+  FontInputStyles,
+  InputWrapperStyles,
+  SelectWrapperStyles,
+} from '../InputWrapperStyles';
 
 export const PickerWrapper = styled.View`
   border-radius: 10px;
   margin-bottom: 10px;
-  ${InputWrapperStyles}
+  ${SelectWrapperStyles}
 `;
 
 export const SelectOption = styled.View`
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   padding: 10px 0;
-  border-bottom-width: 1px;
+  padding-right: 5px;
+  border-bottom-width: 0.6px;
   border-bottom-color: ${colors.gray300};
 `;
 
@@ -33,7 +39,7 @@ export const LabelOption = styled.Text`
 `;
 
 export const FieldWrapper = styled.View`
-  padding: 15px;
+  padding-right: 15px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -41,10 +47,8 @@ export const FieldWrapper = styled.View`
 
 export const Placeholder = styled.Text<{lineLeft?: boolean}>`
   ${({lineLeft}) => css`
-    color: ${colors.fontLight};
-    font-family: ${fontMedium};
-    font-size: 16px;
     margin-left: ${lineLeft ? '10px' : '0'};
+    ${FontInputStyles}
   `}
 `;
 
@@ -61,12 +65,6 @@ export const LineLeft = styled.View<{lineLeftColor: string}>`
   `}
 `;
 
-export const Label = styled.Text`
-  color: ${colors.fontLight};
-  margin-bottom: 6px;
-  font-size: 15px;
-`;
-
 export const BtnClear = styled.TouchableOpacity`
   width: 20px;
   height: 20px;
@@ -79,8 +77,10 @@ export const BtnClear = styled.TouchableOpacity`
 export const stylesSheet = StyleSheet.create({
   ModalStyle: {
     backgroundColor: colors.backgroundColorPrimary,
-    borderRadius: 10,
     color: colors.fontLight,
-    padding: 15,
+    flex: 1,
+  },
+  Backdrop: {
+    backgroundColor: colors.backgroundColorPrimary,
   },
 });

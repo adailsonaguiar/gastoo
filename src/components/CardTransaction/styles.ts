@@ -1,7 +1,12 @@
 import styled, {css} from 'styled-components/native';
 import {TouchableOpacity} from 'react-native';
 import colors from '../../styles/colors';
-import {fontMedium, fontRegular} from '../../styles/fonts';
+import {
+  fontBold,
+  fontMedium,
+  fontRegular,
+  fontSemibold,
+} from '../../styles/fonts';
 
 import {transactionType} from '../../database/schemas/TransactionSchema';
 
@@ -23,11 +28,11 @@ export const ColLeft = styled.View`
 export const TitleConta = styled.Text`
   color: ${colors.fontLight};
   font-size: 15px;
-  font-family: ${fontMedium};
+  font-family: ${fontSemibold};
 `;
 
 export const CategoryConta = styled.Text`
-  color: #90909c;
+  color: ${colors.gray500};
   font-family: ${fontRegular};
   font-size: 11px;
 `;
@@ -42,14 +47,14 @@ export const Saldo = styled.Text<{type: string}>`
   ${({type}) => css`
     color: ${type === transactionType.TRANSACTION_IN
       ? colors.greenApp
-      : colors.colorDanger};
+      : colors.fontLight};
     font-size: 16px;
     font-family: ${fontMedium};
   `}
 `;
 
 export const Atualizado = styled.Text`
-  color: #90909c;
+  color: ${colors.gray500};
   font-family: ${fontRegular};
   font-size: 11px;
 `;

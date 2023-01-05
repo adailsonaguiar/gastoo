@@ -1,6 +1,5 @@
 import React from 'react';
 import {Alert} from 'react-native';
-import {Formik} from 'formik';
 
 import Input from '../../components/Input';
 import Select from '../../components/Select';
@@ -19,7 +18,7 @@ import InputMask from '../../components/InputMask';
 import {TransactionFormModel} from './index.model';
 
 const TransactionForm = () => {
-  const {currentTransaction, onSubmit, expenseEdit, accounts, FORM_TYPE} =
+  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE} =
     TransactionFormModel();
   function handleSceneTitle() {
     if (expenseEdit) {
@@ -43,9 +42,7 @@ const TransactionForm = () => {
         {
           text: 'Sim',
           onPress: () => {
-            console.log(transaction);
-
-            // handleDelete(transaction);
+            handleDelete(transaction);
           },
         },
       ],
@@ -60,87 +57,85 @@ const TransactionForm = () => {
         lineColor={!FORM_TYPE ? colors.colorDanger : colors.greenApp}
       />
       <Container>
-        <Formik
-          initialValues={currentTransaction}
-          onSubmit={values => onSubmit(values)}>
-          {({setFieldValue, handleSubmit, values}) => (
-            <Form>
-              <Input
-                label="Descrição"
-                value={values.description}
-                onChangeText={text => setFieldValue('description', text)}
-                placeholder={
-                  !FORM_TYPE ? 'Compras mercadinho' : 'Prestação de seriço'
-                }
-              />
-              <Select
-                placeholder="Selecione uma categoria"
-                label="Categoria"
-                options={
-                  !FORM_TYPE
-                    ? getArrayCategoriesExpense()
-                    : getArrayCategoriesIncome()
-                }
-                value={values.category}
-                onValueChange={obj => setFieldValue('categoryOption', obj)}
-              />
-              <CustomDatePicker
-                date={values.date}
-                setDate={value => {
-                  if (value) {
-                    setFieldValue('date', new Date(value));
-                  }
+        <Form>
+          <InputMask
+            label="Valor"
+            type={'money'}
+            options={{
+              precision: 2,
+              separator: ',',
+              delimiter: '.',
+              unit: 'R$',
+              suffixUnit: '',
+            }}
+            onChangeMasked={(maskedValue: string, rawValue: string) => {
+              formik.setFieldValue('value', maskedValue);
+              formik.setFieldValue('rawValue', rawValue);
+            }}
+            value={String(formik.values.value * 100)}
+            includeRawValueInChangeText={true}
+            placeholder="R$ 120,00"
+            mainInput
+          />
+
+          <Select
+            placeholder="Selecione uma categoria"
+            label="Categoria"
+            options={
+              !FORM_TYPE
+                ? getArrayCategoriesExpense()
+                : getArrayCategoriesIncome()
+            }
+            value={formik.values.categoryOption}
+            onValueChange={obj => formik.setFieldValue('categoryOption', obj)}
+          />
+
+          <Select
+            placeholder="Selecione uma conta"
+            label="Contas"
+            options={accounts}
+            value={formik.values.accountOption}
+            onValueChange={selected =>
+              formik.setFieldValue('accountOption', selected)
+            }
+          />
+          <CustomDatePicker
+            date={formik.values.date}
+            setDate={value => {
+              if (value) {
+                formik.setFieldValue('date', new Date(value));
+              }
+            }}
+          />
+          <Input
+            label="Descrição"
+            value={formik.values.description}
+            onChangeText={text => formik.setFieldValue('description', text)}
+            placeholder={
+              !FORM_TYPE ? 'Compras mercadinho' : 'Prestação de serviço'
+            }
+          />
+
+          <Switch
+            toggleSwitch={value =>
+              formik.setFieldValue('status', value ? 1 : 0)
+            }
+            isEnabled={!!formik.values.status}
+            labelEnable={!FORM_TYPE ? 'PAGO' : 'RECEBIDO'}
+            labelDisable={!FORM_TYPE ? 'NÃO PAGO' : 'NÃO RECEBIDO'}
+          />
+          <ContainerFormFooter>
+            <ButtonSave label="Salvar" onPress={formik.handleSubmit} />
+            {expenseEdit && (
+              <BtnRemove
+                label="Deletar transação"
+                onPress={() => {
+                  askDelection(formik.values);
                 }}
               />
-              <Select
-                placeholder="Selecione uma conta"
-                label="Contas"
-                options={accounts}
-                value={values.accountId}
-                onValueChange={selected =>
-                  setFieldValue('accountOption', selected)
-                }
-              />
-              <InputMask
-                label="Valor"
-                type={'money'}
-                options={{
-                  precision: 2,
-                  separator: ',',
-                  delimiter: '.',
-                  unit: 'R$',
-                  suffixUnit: '',
-                }}
-                onChangeMasked={(maskedValue: string, rawValue: string) => {
-                  setFieldValue('value', maskedValue);
-                  setFieldValue('rawValue', rawValue);
-                }}
-                value={values.value.toString()}
-                includeRawValueInChangeText={true}
-                placeholder="R$ 120,00"
-              />
-              <Switch
-                toggleSwitch={() =>
-                  setFieldValue('status', values.status === 0 ? 1 : 0)
-                }
-                isEnabled={!!values.status}
-                labelEnable={!FORM_TYPE ? 'PAGO' : 'RECEBIDO'}
-                labelDisable={!FORM_TYPE ? 'NÃO PAGO' : 'NÃO RECEBIDO'}
-              />
-              {expenseEdit && (
-                <ContainerFormFooter>
-                  <BtnRemove
-                    label="Deletar transação"
-                    onPress={() => {
-                      askDelection(currentTransaction);
-                    }}
-                  />
-                </ContainerFormFooter>
-              )}
-              <ButtonSave label="Salvar" onPress={handleSubmit} />
-            </Form>
-          )}
-        </Formik>
+            )}
+          </ContainerFormFooter>
+        </Form>
       </Container>
     </>
   );

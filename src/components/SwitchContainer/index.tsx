@@ -1,34 +1,43 @@
 import React from 'react';
-import colors from '../../styles/colors';
 
 import * as S from './styles';
 
 type SwitchContainerProp = {
-  toggleSwitch: () => void;
-  isEnabled: boolean;
+  toggleSwitch: (value: boolean) => void;
   labelEnable: string;
   labelDisable: string;
+  label?: string;
+  isEnabled: boolean;
 };
 
 const SwitchContainer = ({
-  toggleSwitch,
   isEnabled,
+  toggleSwitch,
   labelEnable,
   labelDisable,
-  ...rest
 }: SwitchContainerProp) => {
+  const [buttonActive, setButtonActive] = React.useState(isEnabled);
+
+  React.useEffect(() => {
+    setButtonActive(isEnabled);
+  }, [isEnabled]);
+
+  function toggleButton(button: number) {
+    setButtonActive(!!button);
+    toggleSwitch(!!button);
+  }
   return (
-    <S.Container {...rest} onPress={toggleSwitch}>
-      <S.TitleLabel isEnabled={isEnabled}>
-        {isEnabled ? labelEnable : labelDisable}
-      </S.TitleLabel>
-      <S.CustomSwitch
-        trackColor={{false: '#767577', true: '#767577'}}
-        thumbColor={isEnabled ? colors.greenApp : colors.colorDanger}
-        // ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={isEnabled}
-      />
+    <S.Container>
+      <S.Option onPress={() => toggleButton(1)} isEnabled={buttonActive}>
+        <S.TitleLabel isEnabled={buttonActive}>{labelEnable}</S.TitleLabel>
+      </S.Option>
+      <S.Option
+        onPress={() => toggleButton(0)}
+        isEnabled={buttonActive === false}>
+        <S.TitleLabel isEnabled={buttonActive === false}>
+          {labelDisable}
+        </S.TitleLabel>
+      </S.Option>
     </S.Container>
   );
 };

@@ -5,7 +5,7 @@ import {fontMedium} from '../styles/fonts';
 const BOX_MENSAGE_STYLE = {
   borderBottomEndRadius: 5,
   borderBottomStartRadius: 5,
-  paddingTop: 50,
+  // paddingTop: 50, // IOS
 };
 const MESSAGE_STYLE = {fontFamily: fontMedium};
 

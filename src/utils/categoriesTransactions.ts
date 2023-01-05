@@ -8,21 +8,33 @@ export const categoriesExpense: {[key: string]: Category} = {
     label: 'Alimentação',
     value: 1,
   },
+  3: {
+    label: 'Assinaturas e serviços',
+    value: 3,
+  },
+  5: {
+    label: 'Compras online',
+    value: 5,
+  },
+  4: {
+    label: 'Educação',
+    value: 4,
+  },
+  6: {
+    label: 'Mercado',
+    value: 6,
+  },
+  7: {
+    label: 'Saúde',
+    value: 7,
+  },
   2: {
     label: 'Veículos',
     value: 2,
   },
-  3: {
-    label: 'Educação',
-    value: 3,
-  },
-  4: {
-    label: 'Comras online',
-    value: 4,
-  },
-  5: {
+  8: {
     label: 'Outros',
-    value: 4,
+    value: 8,
   },
 };
 
@@ -31,13 +43,21 @@ export const categoriesIncome: {[key: string]: Category} = {
     label: 'Salário',
     value: 1,
   },
+  4: {
+    label: 'Investimentos',
+    value: 4,
+  },
   2: {
     label: 'Presente',
     value: 2,
   },
   3: {
-    label: 'Vendas',
+    label: 'Empréstimos',
     value: 3,
+  },
+  5: {
+    label: 'Outras receitas',
+    value: 5,
   },
 };
 

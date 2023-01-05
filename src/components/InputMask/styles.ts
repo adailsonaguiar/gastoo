@@ -2,27 +2,27 @@ import styled from 'styled-components/native';
 import {TextInputMask} from 'react-native-masked-text';
 import colors from '../../styles/colors';
 import {InputWrapperStyles} from '../InputWrapperStyles';
+import {css} from 'styled-components';
+import {fontSemibold} from '../../styles/fonts';
 
 export const Container = styled.View`
   margin-bottom: 10px;
 `;
 
-export const Label = styled.Text`
-  color: ${colors.fontLight};
-  margin-bottom: 6px;
-  font-size: 15px;
+const inputMainStyle = css`
+  border-width: 0;
+  font-size: 30px;
+  font-family: ${fontSemibold};
+  border-radius: 0;
+  padding: 0;
 `;
 
-export const Input = styled.TextInput.attrs({
-  placeholderTextColor: colors.colorStroke,
-})`
-  padding-left: 10px;
-  ${InputWrapperStyles}
-`;
-
-export const InputMask = styled(TextInputMask)`
-  padding-left: 10px;
-  ${InputWrapperStyles}
+export const InputMask = styled(TextInputMask)<{mainInput?: boolean}>`
+  ${({mainInput}) => css`
+    padding-left: 10px;
+    ${InputWrapperStyles}
+    ${mainInput && inputMainStyle}
+  `}
 `;
 
 export const InputWrapper = styled.View`
