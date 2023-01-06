@@ -8,12 +8,20 @@ import {pages} from '../../routes';
 
 const styles = StyleSheet.create({
   tab: {
-    elevation: 6,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
   },
 });
 
 const Tabs = ({navigation}) => (
-  <TabsContainer showsHorizontalScrollIndicator={false}>
+  <TabsContainer>
     <TabItem
       style={styles.tab}
       onPress={() => navigation.navigate(pages.transactionForm)}>

@@ -7,6 +7,7 @@ export const getRealm = async () =>
   await Realm.open({
     path: 'gastoo',
     schema: [TransactionSchema, AccountSchema],
+    deleteRealmIfMigrationNeeded: true,
   });
 
 export const getId = async (schema: string) => {

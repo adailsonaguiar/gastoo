@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
-import {fontLight, fontMedium} from '../../styles/fonts';
+import {fontLight} from '../../styles/fonts';
 import {widthPercentageToDP} from '../../utils/ResponsiveDimensionsLayout';
 // import {fontRegular} from '../../styles/fonts';
 
@@ -15,7 +15,7 @@ export const TabItem = styled.TouchableOpacity.attrs({
   width: ${widthPercentageToDP(100) / 3 - 23}px;
   height: 100px;
   background: ${colors.appColor};
-  border-radius: 20px;
+  border-radius: 15px;
   margin-right: 15px;
   padding: 10px;
   align-items: center;

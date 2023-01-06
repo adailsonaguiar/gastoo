@@ -33,10 +33,15 @@ const Select = ({
 }: SelectProps) => {
   function renderOption(settings: OptionTemplateSettings) {
     const {item, getLabel} = settings;
+    console.log(item);
+
     return (
       <S.SelectOption>
-        <S.LabelOption>{getLabel(item)}</S.LabelOption>
-        <Image source={ArrowRightIcon} />
+        <S.LabelWrapper>
+          <S.LineLeft lineLeftColor={item?.color || ''} />
+          <S.LabelOption>{getLabel(item)}</S.LabelOption>
+        </S.LabelWrapper>
+        <S.ChevRightIcon source={ArrowRightIcon} />
       </S.SelectOption>
     );
   }
@@ -50,10 +55,11 @@ const Select = ({
         {selectedItem ? (
           <>
             <S.LabelWrapper>
+              <S.LineLeft lineLeftColor={selectedItem?.color} />
               <S.Placeholder>{getLabel(selectedItem)}</S.Placeholder>
             </S.LabelWrapper>
             {btnClear && <S.BtnClear onPress={clear} />}
-            <Image source={ArrowRightIcon} />
+            <S.ChevRightIcon source={ArrowRightIcon} />
           </>
         ) : null}
       </S.FieldWrapper>

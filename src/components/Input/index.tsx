@@ -6,13 +6,15 @@ import * as S from './styles';
 
 type InputProps = {
   label: string;
+  lineLeftColor?: string;
 } & TextInputProps;
 
-const Input = ({label, ...rest}: InputProps) => {
+const Input = ({label, lineLeftColor, ...rest}: InputProps) => {
   return (
     <S.Container>
       <Label>{label}</Label>
       <S.InputWrapper>
+        {lineLeftColor && <S.LineLeft lineLeftColor={lineLeftColor} />}
         <S.Input {...rest} />
       </S.InputWrapper>
     </S.Container>

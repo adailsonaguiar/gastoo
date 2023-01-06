@@ -63,12 +63,12 @@ export const Line = styled.View<LineProps>`
   ${({lineColor}) => css`
     width: 41px;
     height: 4px;
-    margin-top: 17px;
+    margin-top: 5px;
     background-color: ${lineColor ? lineColor : colors.appColor};
   `}
 `;
 
-export const Subtitle = styled.Text`
+export const Subtitle = styled.View`
   font-size: 16px;
   color: ${colors.fontLight};
   font-family: ${fontMedium};

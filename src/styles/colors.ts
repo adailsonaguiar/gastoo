@@ -8,6 +8,7 @@ export default {
   darker: '#15252F',
   graphite: '#2d536c',
   appColor: '#325D94',
+  appColor2: '#12ACE7',
 
   gray500: '#8C8C8C',
   gray400: '#B1B7BC',

@@ -61,6 +61,7 @@ export const LineLeft = styled.View<{lineLeftColor: string}>`
   ${({lineLeftColor}) => css`
     width: 5px;
     height: 27px;
+    margin-right: 10px;
     background-color: ${lineLeftColor};
   `}
 `;
@@ -84,3 +85,8 @@ export const stylesSheet = StyleSheet.create({
     backgroundColor: colors.backgroundColorPrimary,
   },
 });
+
+export const ChevRightIcon = styled.Image`
+  width: 17px;
+  height: 17px;
+`;

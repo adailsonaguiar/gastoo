@@ -5,4 +5,5 @@ export type Account = {
   year: string;
   description: string;
   balance: number;
+  color: string;
 };

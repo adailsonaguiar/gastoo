@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
-import {TextInputMask} from 'react-native-masked-text';
 import colors from '../../styles/colors';
 import {InputWrapperStyles} from '../InputWrapperStyles';
+import {css} from 'styled-components';
 
 export const Container = styled.View`
   margin-bottom: 10px;
@@ -10,15 +10,22 @@ export const Container = styled.View`
 export const Input = styled.TextInput.attrs({
   placeholderTextColor: colors.gray400,
 })`
+  flex: 1;
   padding-left: 10px;
-  ${InputWrapperStyles}
-`;
-
-export const InputMask = styled(TextInputMask)`
-  padding-left: 10px;
-  ${InputWrapperStyles}
+  height: 66px;
 `;
 
 export const InputWrapper = styled.View`
-  justify-content: center;
+  flex-direction: row;
+  padding-left: 10px;
+  align-items: center;
+  ${InputWrapperStyles}
+`;
+
+export const LineLeft = styled.View<{lineLeftColor: string}>`
+  ${({lineLeftColor}) => css`
+    width: 5px;
+    height: 27px;
+    background-color: ${lineLeftColor};
+  `}
 `;

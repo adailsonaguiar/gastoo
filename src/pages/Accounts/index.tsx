@@ -43,6 +43,7 @@ const Accounts = ({navigation}: AccountPageProps) => {
                 transactionTitle={item.description}
                 value={item.balance}
                 date={{day: item.day, month: item.month, year: item.year}}
+                lineLeftColor={item.color}
               />
             )}
             keyExtractor={item => item._id.toString()}

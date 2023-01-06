@@ -29,19 +29,21 @@ const Header = ({
       <S.HeaderForm>
         <S.RowWrapper>
           <S.TxtHeaderForm>{title}</S.TxtHeaderForm>
-          <S.BtnFechar
-            onPress={async () => {
-              if (onClose) {
-                onClose();
-              } else {
-                navigation.goBack();
-              }
-            }}>
-            <Image source={closeIcon} />
-          </S.BtnFechar>
+          {onClose && (
+            <S.BtnFechar
+              onPress={async () => {
+                if (onClose) {
+                  onClose();
+                } else {
+                  navigation.goBack();
+                }
+              }}>
+              <Image source={closeIcon} />
+            </S.BtnFechar>
+          )}
+          {children && <S.Subtitle>{children}</S.Subtitle>}
         </S.RowWrapper>
         <S.Line lineColor={lineColor} />
-        {children && <S.Subtitle>{children}</S.Subtitle>}
       </S.HeaderForm>
     </>
   );
@@ -61,19 +63,21 @@ export const SelectModalHeader = ({
       <S.HeaderSelect>
         <S.RowWrapper>
           <S.TxtHeaderForm>{title}</S.TxtHeaderForm>
-          <S.BtnFechar
-            onPress={async () => {
-              if (onClose) {
-                onClose();
-              } else {
-                navigation.goBack();
-              }
-            }}>
-            <Image source={closeIcon} />
-          </S.BtnFechar>
+          {onClose && (
+            <S.BtnFechar
+              onPress={async () => {
+                if (onClose) {
+                  onClose();
+                } else {
+                  navigation.goBack();
+                }
+              }}>
+              <Image source={closeIcon} />
+            </S.BtnFechar>
+          )}
+          {children && <S.Subtitle>{children}</S.Subtitle>}
         </S.RowWrapper>
         <S.Line lineColor={lineColor} />
-        {children && <S.Subtitle>{children}</S.Subtitle>}
       </S.HeaderSelect>
     </>
   );

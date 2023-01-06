@@ -1,25 +1,17 @@
-import {useFocusEffect} from '@react-navigation/native';
 import React from 'react';
-import Button from '../../components/Button';
+import Header, {SelectModalHeader} from '../../components/Header';
 import Tabs from '../../components/Tabs';
 import {TransactionsList} from '../../components/TransactionsList';
 import {pages} from '../../routes';
+import colors from '../../styles/colors';
 import {TransactionsModel} from '../Transactions/index.model';
 // import {loadAccounts} from '../../store/accounts/actions';
 // import Tabs from '../../components/Tabs';
 // import colors from '../../styles/colors';
 // import {getDate} from '../../utils/FunctionUtils';
+import AppLogo from '../../assets/logo-gastoo.png';
 
-import {
-  Container,
-  CompHead,
-  TxtSaldo,
-  TxtDescricao,
-  ContainerSaldo,
-  Cifra,
-  ContentWrapper,
-  Footer,
-} from './styles';
+import * as S from './styles';
 // import SlideBanners from '../../components/SlideBanners';
 // import {loadTransactions} from '../../store/transactions/actions';
 
@@ -27,27 +19,50 @@ export const Dash = ({navigation}) => {
   const {transactions} = TransactionsModel();
 
   return (
-    <Container>
-      <CompHead>
-        <TxtDescricao>Saldo disponível</TxtDescricao>
-        <ContainerSaldo>
-          <Cifra>R$</Cifra>
-          <TxtSaldo>1</TxtSaldo>
-        </ContainerSaldo>
-      </CompHead>
+    <S.Container>
+      <S.HaederLogo>
+        <S.Logo source={AppLogo} />
+      </S.HaederLogo>
+      <S.CompHead>
+        <S.IncomeCardsWrapper>
+          <S.IncomeCard color={colors.appColor2}>
+            <S.Label>Receitas</S.Label>
+            <S.IncomeCardValue>0,00</S.IncomeCardValue>
+          </S.IncomeCard>
+          <S.IncomeCard>
+            <S.Label>Despesas</S.Label>
+            <S.IncomeCardValue>0,00</S.IncomeCardValue>
+          </S.IncomeCard>
+        </S.IncomeCardsWrapper>
+        <S.TxtDescricao>Saldo disponível</S.TxtDescricao>
+        <S.ContainerSaldo>
+          <S.Cifra>R$</S.Cifra>
+          <S.TxtSaldo>9.857,96</S.TxtSaldo>
+        </S.ContainerSaldo>
+      </S.CompHead>
       {/* <SlideBanners cards={[{titleHead: 'Últimas Transações', transactions}]} /> */}
       <Tabs navigation={navigation} />
-      <ContentWrapper>
+      <S.ContentWrapper>
+        <S.ContainerBorderPage>
+          <SelectModalHeader title="Transações">
+            <S.SeeMoreBtn
+              onPress={() => {
+                navigation.navigate(pages.transactions);
+              }}>
+              <S.SeeMore>Veja mais</S.SeeMore>
+            </S.SeeMoreBtn>
+          </SelectModalHeader>
+        </S.ContainerBorderPage>
         <TransactionsList transactions={transactions} />
-      </ContentWrapper>
-      <Footer>
-        <Button
+      </S.ContentWrapper>
+      <S.Footer>
+        {/* <Button
           label="Ver todas as transações"
           onPress={() => {
             navigation.navigate(pages.transactions);
           }}
-        />
-      </Footer>
-    </Container>
+        /> */}
+      </S.Footer>
+    </S.Container>
   );
 };

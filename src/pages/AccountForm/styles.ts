@@ -27,7 +27,7 @@ export const InputContainer = styled.View`
 export const ContainerFormFooter = styled.View`
   justify-content: center;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 10px;
   padding-bottom: 40px;
 `;
 

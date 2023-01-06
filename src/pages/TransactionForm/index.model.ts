@@ -110,6 +110,7 @@ export function TransactionFormModel() {
         return {
           value: item._id,
           label: item.description,
+          color: item.color,
         };
       });
       setAccounts(mappedSelectOptions);

@@ -13,13 +13,13 @@ const App = () => {
   // const isDarkMode = useColorScheme() === 'dark';
   return (
     <Cotainer>
-      <StatusBar
-        animated={true}
-        barStyle="dark-content"
-        backgroundColor={'#fff'}
-        // showHideTransition={statusBarTransition}
-        // hidden={hidden}
-      />
+      {/* <StatusBar
+      // animated={true}
+      // barStyle="dark-content"
+      // backgroundColor={'#fff'}
+      // showHideTransition={statusBarTransition}
+      // hidden={hidden}
+      /> */}
       <Routes />
       <FlashMessage />
     </Cotainer>

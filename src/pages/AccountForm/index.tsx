@@ -11,6 +11,7 @@ import {
   ButtonSave,
 } from './styles';
 import {AccountFormViewModel} from './index.model';
+import {ColorsList} from '../../components/ColorsList';
 
 export default function AccountForm() {
   const {loading, currentAccount, askDelection, onSubmit} =
@@ -30,20 +31,22 @@ export default function AccountForm() {
               onChangeText={text => {
                 setFieldValue('description', text);
               }}
+              lineLeftColor={values.color}
             />
-            <ButtonSave
-              label="Salvar"
-              onPress={handleSubmit}
-              loading={loading}
-            />
-            {currentAccount._id && (
-              <ContainerFormFooter>
+            <ColorsList handleColor={color => setFieldValue('color', color)} />
+            <ContainerFormFooter>
+              <ButtonSave
+                label="Salvar"
+                onPress={handleSubmit}
+                loading={loading}
+              />
+              {currentAccount._id && (
                 <BtnRemove
                   onPress={() => askDelection(currentAccount)}
                   label="Deletar conta"
                 />
-              </ContainerFormFooter>
-            )}
+              )}
+            </ContainerFormFooter>
           </Form>
         )}
       </Formik>
