@@ -3,12 +3,15 @@ import AccountSchema from './schemas/AccountSchema';
 
 import {TransactionSchema} from './schemas/TransactionSchema';
 
-export const getRealm = async () =>
-  await Realm.open({
+export const getRealm = async () => {
+  console.log('calll:::getRealm');
+
+  return await Realm.open({
     path: 'gastoo',
     schema: [TransactionSchema, AccountSchema],
-    deleteRealmIfMigrationNeeded: true,
+    schemaVersion: 2,
   });
+};
 
 export const getId = async (schema: string) => {
   const realm = await getRealm();

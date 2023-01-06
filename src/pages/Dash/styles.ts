@@ -72,7 +72,6 @@ export const Footer = styled.View`
 `;
 
 export const IncomeCard = styled.View<{color?: string}>`
-  width: 120px;
   background-color: ${props => (props.color ? props.color : colors.appColor)};
   border-radius: 15px;
   margin-right: 10px;

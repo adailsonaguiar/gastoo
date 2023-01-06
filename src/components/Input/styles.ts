@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
-import {InputWrapperStyles} from '../InputWrapperStyles';
+import {FontInputStyles, InputWrapperStyles} from '../InputWrapperStyles';
 import {css} from 'styled-components';
 
 export const Container = styled.View`
@@ -13,6 +13,7 @@ export const Input = styled.TextInput.attrs({
   flex: 1;
   padding-left: 10px;
   height: 66px;
+  ${FontInputStyles}
 `;
 
 export const InputWrapper = styled.View`

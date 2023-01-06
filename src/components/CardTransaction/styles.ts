@@ -1,12 +1,7 @@
 import styled, {css} from 'styled-components/native';
 import {TouchableOpacity} from 'react-native';
 import colors from '../../styles/colors';
-import {
-  fontBold,
-  fontMedium,
-  fontRegular,
-  fontSemibold,
-} from '../../styles/fonts';
+import {fontMedium, fontRegular, fontSemibold} from '../../styles/fonts';
 
 import {transactionType} from '../../database/schemas/TransactionSchema';
 
@@ -47,7 +42,7 @@ export const Saldo = styled.Text<{type: string}>`
   ${({type}) => css`
     color: ${type === transactionType.TRANSACTION_IN
       ? colors.greenApp
-      : colors.fontLight};
+      : colors.colorDanger};
     font-size: 16px;
     font-family: ${fontMedium};
   `}

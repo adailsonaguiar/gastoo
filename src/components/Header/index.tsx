@@ -22,7 +22,6 @@ const Header = ({
   onClose,
   onChangeMonth,
 }: HeaderProps) => {
-  const navigation = useNavigation();
   return (
     <>
       {onChangeMonth && <MonthHeader onChangeMonth={onChangeMonth} />}
@@ -34,8 +33,6 @@ const Header = ({
               onPress={async () => {
                 if (onClose) {
                   onClose();
-                } else {
-                  navigation.goBack();
                 }
               }}>
               <Image source={closeIcon} />
