@@ -1,5 +1,5 @@
 import React from 'react';
-import Header, {SelectModalHeader} from '../../components/Header';
+import {SelectModalHeader} from '../../components/Header';
 import Tabs from '../../components/Tabs';
 import {TransactionsList} from '../../components/TransactionsList';
 import {pages} from '../../routes';
@@ -12,11 +12,12 @@ import {TransactionsModel} from '../Transactions/index.model';
 import AppLogo from '../../assets/logo-gastoo.png';
 
 import * as S from './styles';
+import {formatMoney} from '../../utils/FunctionUtils';
 // import SlideBanners from '../../components/SlideBanners';
 // import {loadTransactions} from '../../store/transactions/actions';
 
 export const Dash = ({navigation}) => {
-  const {transactions} = TransactionsModel();
+  const {transactions, totalsMonth} = TransactionsModel();
 
   return (
     <S.Container>
@@ -27,20 +28,25 @@ export const Dash = ({navigation}) => {
         <S.IncomeCardsWrapper>
           <S.IncomeCard color={colors.appColor2}>
             <S.Label>Receitas</S.Label>
-            <S.IncomeCardValue>0,00</S.IncomeCardValue>
+            <S.IncomeCardValue>
+              {formatMoney(totalsMonth.totalIncome)}
+            </S.IncomeCardValue>
           </S.IncomeCard>
           <S.IncomeCard>
             <S.Label>Despesas</S.Label>
-            <S.IncomeCardValue>0,00</S.IncomeCardValue>
+            <S.IncomeCardValue>
+              {formatMoney(totalsMonth.totalExpense)}
+            </S.IncomeCardValue>
           </S.IncomeCard>
         </S.IncomeCardsWrapper>
         <S.TxtDescricao>Saldo disponível</S.TxtDescricao>
         <S.ContainerSaldo>
           <S.Cifra>R$</S.Cifra>
-          <S.TxtSaldo>9.857,96</S.TxtSaldo>
+          <S.TxtSaldo>
+            {formatMoney(totalsMonth.totalIncome - totalsMonth.totalExpense)}
+          </S.TxtSaldo>
         </S.ContainerSaldo>
       </S.CompHead>
-      {/* <SlideBanners cards={[{titleHead: 'Últimas Transações', transactions}]} /> */}
       <Tabs navigation={navigation} />
       <S.ContentWrapper>
         <S.ContainerBorderPage>

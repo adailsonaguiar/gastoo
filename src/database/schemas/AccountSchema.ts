@@ -9,7 +9,8 @@ const AccountSchema = {
     year: 'string',
     description: 'string',
     balance: 'int',
-    color: 'string',
+    color: 'string?',
+    test1: 'string?',
   },
   primaryKey: '_id',
 };

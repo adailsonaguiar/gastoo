@@ -1,7 +1,12 @@
 import {css} from 'styled-components';
 import styled from 'styled-components/native';
 
-export const Container = styled.ScrollView.attrs({
+export const Container = styled.View`
+  flex-direction: row;
+  position: relative;
+`;
+
+export const Carrousel = styled.ScrollView.attrs({
   horizontal: true,
   overScrollMode: 'never',
 })``;

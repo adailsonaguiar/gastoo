@@ -33,7 +33,6 @@ const Select = ({
 }: SelectProps) => {
   function renderOption(settings: OptionTemplateSettings) {
     const {item, getLabel} = settings;
-    console.log(item);
 
     return (
       <S.SelectOption>

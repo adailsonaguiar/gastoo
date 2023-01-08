@@ -31,7 +31,7 @@ const Accounts = ({navigation}: AccountPageProps) => {
 
   return (
     <>
-      <Header title="Suas contas" />
+      <Header title="Suas contas" onClose={() => navigation.goBack()} />
       <S.Container>
         <S.Lista>
           <FlatList

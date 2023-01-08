@@ -14,8 +14,10 @@ export async function fetchAccounts(
   externalRealmInstance?: Realm,
 ) {
   let realm = await handleRealmInstance(externalRealmInstance);
+
   const response = await loadData({schema: SCHEMAS.ACCOUNT, realm, filter});
   if (response) {
+    closeRealmInstance(realm, externalRealmInstance);
     return response as Account[];
   }
   closeRealmInstance(realm, externalRealmInstance);

@@ -16,10 +16,12 @@ import {BtnRemove, ContainerFormFooter} from '../AccountForm/styles';
 import {Transaction} from '../../models/transaction';
 import InputMask from '../../components/InputMask';
 import {TransactionFormModel} from './index.model';
+import {useNavigation} from '@react-navigation/native';
 
 const TransactionForm = () => {
   const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE} =
     TransactionFormModel();
+  const navigation = useNavigation();
   function handleSceneTitle() {
     if (expenseEdit) {
       return 'Editar';
@@ -55,6 +57,7 @@ const TransactionForm = () => {
       <Header
         title={handleSceneTitle()}
         lineColor={!FORM_TYPE ? colors.colorDanger : colors.greenApp}
+        onClose={() => navigation.goBack()}
       />
       <Container>
         <Form>

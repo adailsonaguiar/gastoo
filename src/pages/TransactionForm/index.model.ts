@@ -182,7 +182,8 @@ export function TransactionFormModel() {
   }
 
   async function onSubmit(values: FormProps) {
-    const convertedValue = Number(values.rawValue) * 100;
+    const convertedValue = Math.round(Number(values.rawValue) * 100);
+
     let valueType = 0;
     if (values.status) {
       valueType = handleValueType(values.type, convertedValue);
