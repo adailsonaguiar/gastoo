@@ -17,14 +17,14 @@ import {formatMoney} from '../../utils/FunctionUtils';
 // import {loadTransactions} from '../../store/transactions/actions';
 
 export const Dash = ({navigation}) => {
-  // const {transactions, totalsMonth} = TransactionsModel();
+  const {transactions, totalsMonth} = TransactionsModel();
 
   return (
     <S.Container>
       <S.HaederLogo>
         <S.Logo source={AppLogo} />
       </S.HaederLogo>
-      {/* <S.CompHead>
+      <S.CompHead>
         <S.IncomeCardsWrapper>
           <S.IncomeCard color={colors.appColor2}>
             <S.Label>Receitas</S.Label>
@@ -46,8 +46,7 @@ export const Dash = ({navigation}) => {
             {formatMoney(totalsMonth.totalIncome - totalsMonth.totalExpense)}
           </S.TxtSaldo>
         </S.ContainerSaldo>
-      </S.CompHead> */}
-      {/* <SlideBanners cards={[{titleHead: 'Últimas Transações', transactions}]} /> */}
+      </S.CompHead>
       <Tabs navigation={navigation} />
       <S.ContentWrapper>
         <S.ContainerBorderPage>
@@ -60,7 +59,7 @@ export const Dash = ({navigation}) => {
             </S.SeeMoreBtn>
           </SelectModalHeader>
         </S.ContainerBorderPage>
-        {/* <TransactionsList transactions={transactions} /> */}
+        <TransactionsList transactions={transactions} />
       </S.ContentWrapper>
       <S.Footer>
         {/* <Button
