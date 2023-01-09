@@ -16,7 +16,12 @@ export async function fetchTransactions(
   externalRealmInstance?: Realm,
 ) {
   let realm = await handleRealmInstance(externalRealmInstance);
-  const response = await loadData({schema: SCHEMAS.TRANSACTION, realm, filter});
+  const response = await loadData({
+    schema: SCHEMAS.TRANSACTION,
+    realm,
+    filter,
+    sort: 'date',
+  });
   if (response) {
     return response as Transaction[];
   }
@@ -55,8 +60,6 @@ export async function saveTransaction(transaction: Transaction) {
         transactionType: transaction.type,
         valueType: transaction.valueType,
       });
-      console.log('new account balance: ---->', value);
-
       await handleAccountBalance(account, value, realm);
     }
     await writeData({

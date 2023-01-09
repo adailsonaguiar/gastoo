@@ -10,7 +10,7 @@ const AccountSchema = {
     description: 'string',
     balance: 'int',
     color: 'string?',
-    test1: 'string?',
+    createdAt: 'date?',
   },
   primaryKey: '_id',
 };

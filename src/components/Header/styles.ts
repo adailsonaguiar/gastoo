@@ -53,6 +53,7 @@ export const BtnFechar = styled.TouchableOpacity`
   width: 35px;
   height: 35px;
   align-items: flex-end;
+  flex: 1;
 `;
 
 type LineProps = {
@@ -73,4 +74,9 @@ export const Subtitle = styled.View`
   color: ${colors.fontLight};
   font-family: ${fontMedium};
   margin-top: 5px;
+`;
+
+export const CloseIcon = styled.Image`
+  width: 20px;
+  height: 20px;
 `;

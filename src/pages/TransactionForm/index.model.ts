@@ -203,6 +203,7 @@ export function TransactionFormModel() {
         valueType: valueType,
         createdAt: values.createdAt,
         initialValue: values.initialValue,
+        date: values.date,
       });
       await saveTransaction(transactionToSave);
       navigation.goBack();

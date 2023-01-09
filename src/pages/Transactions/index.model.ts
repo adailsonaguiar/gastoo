@@ -49,7 +49,9 @@ export function TransactionsModel() {
 
   useFocusEffect(
     React.useCallback(() => {
-      getTransactions();
+      if (!transactions.length) {
+        getTransactions();
+      }
     }, []),
   );
 

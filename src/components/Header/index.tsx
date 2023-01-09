@@ -35,7 +35,7 @@ const Header = ({
                   onClose();
                 }
               }}>
-              <Image source={closeIcon} />
+              <S.CloseIcon source={closeIcon} />
             </S.BtnFechar>
           )}
           {children && <S.Subtitle>{children}</S.Subtitle>}

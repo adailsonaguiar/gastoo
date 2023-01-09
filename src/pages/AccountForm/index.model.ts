@@ -37,6 +37,7 @@ export const AccountFormViewModel = () => {
     month: accountItem?.month || '',
     year: accountItem?.year || '',
     color: accountItem?.color || '',
+    createdAt: new Date(),
   };
 
   function validateForm(values: AccountFormProps) {
@@ -97,6 +98,7 @@ export const AccountFormViewModel = () => {
       accountToSave.year = String(date.getFullYear());
       accountToSave.description = values.description;
       accountToSave.color = values.color;
+      accountToSave.createdAt = values.createdAt;
       await saveAccount(accountToSave, realm);
       navigation.goBack();
     }

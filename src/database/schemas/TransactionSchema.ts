@@ -15,6 +15,7 @@ export const TransactionSchema = {
     status: 'int',
     category: 'int',
     createdAt: 'date',
+    date: 'date?',
   },
   primaryKey: '_id',
 };

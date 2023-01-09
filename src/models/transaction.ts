@@ -12,6 +12,7 @@ export type Transaction = {
   category: number | string;
   valueType: number;
   createdAt: Date;
+  date: Date;
 };
 
 export function TransactionBuilder(props: Transaction) {

@@ -64,6 +64,7 @@ const TransactionForm = () => {
           <InputMask
             label="Valor"
             type={'money'}
+            autoFocus
             options={{
               precision: 2,
               separator: ',',

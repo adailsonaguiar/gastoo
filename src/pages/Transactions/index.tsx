@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const Transactions = () => {
   const {transactions, getTransactions} = TransactionsModel();
+
   const navigation = useNavigation();
   return (
     <>

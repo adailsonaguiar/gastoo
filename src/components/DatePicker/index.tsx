@@ -17,7 +17,6 @@ const DatePicker = ({date, setDate, ...rest}: DatePickerProps) => {
   const [show, setShow] = useState(false);
 
   function toogleShow() {
-    console.log(show);
     setShow(!show);
   }
 
