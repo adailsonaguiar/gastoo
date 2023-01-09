@@ -61,14 +61,14 @@ export const Dash = ({navigation}) => {
         </S.ContainerBorderPage>
         <TransactionsList transactions={transactions} />
       </S.ContentWrapper>
-      <S.Footer>
-        {/* <Button
+      {/* <S.Footer>
+        <Button
           label="Ver todas as transações"
           onPress={() => {
             navigation.navigate(pages.transactions);
           }}
-        /> */}
-      </S.Footer>
+        />
+      </S.Footer> */}
     </S.Container>
   );
 };

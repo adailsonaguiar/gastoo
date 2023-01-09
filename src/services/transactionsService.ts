@@ -55,6 +55,8 @@ export async function saveTransaction(transaction: Transaction) {
         transactionType: transaction.type,
         valueType: transaction.valueType,
       });
+      console.log('new account balance: ---->', value);
+
       await handleAccountBalance(account, value, realm);
     }
     await writeData({

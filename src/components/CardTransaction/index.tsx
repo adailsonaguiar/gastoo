@@ -14,6 +14,7 @@ type CardTransactionProps = {
   date: {day: string; month: string; year: string};
   type?: 'TRANSACTION_IN' | 'TRANSACTION_OUT';
   screenNavigate: string;
+  transactionStatus?: number;
 };
 
 const CardTransaction = ({
@@ -23,6 +24,7 @@ const CardTransaction = ({
   categoryTransaction,
   value,
   status = '',
+  transactionStatus,
   date,
   type = 'TRANSACTION_IN',
   screenNavigate,
@@ -35,7 +37,7 @@ const CardTransaction = ({
       }>
       {lineLeftColor && <S.LineLeft lineLeftColor={lineLeftColor} />}
       <S.ColLeft>
-        <S.TitleConta>{transactionTitle.toUpperCase()}</S.TitleConta>
+        <S.TitleConta>{transactionTitle}</S.TitleConta>
         <S.CategoryConta>{categoryTransaction}</S.CategoryConta>
       </S.ColLeft>
       <S.ColRight>
@@ -46,6 +48,7 @@ const CardTransaction = ({
           date.month,
         )}`}</S.Atualizado>
       </S.ColRight>
+      {transactionStatus === 0 ? <S.BadgeStatus /> : null}
     </S.Conta>
   );
 };
