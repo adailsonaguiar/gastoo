@@ -69,7 +69,7 @@ export const SelectModalHeader = ({
                   navigation.goBack();
                 }
               }}>
-              <Image source={closeIcon} />
+              <S.CloseIcon source={closeIcon} />
             </S.BtnFechar>
           )}
           {children && <S.Subtitle>{children}</S.Subtitle>}
