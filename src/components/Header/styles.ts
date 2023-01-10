@@ -50,8 +50,6 @@ export const TxtHeaderForm = styled.Text`
 `;
 
 export const BtnFechar = styled.TouchableOpacity`
-  width: 35px;
-  height: 35px;
   align-items: flex-end;
   flex: 1;
 `;

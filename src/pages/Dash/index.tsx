@@ -16,8 +16,12 @@ import {formatMoney} from '../../utils/FunctionUtils';
 // import SlideBanners from '../../components/SlideBanners';
 // import {loadTransactions} from '../../store/transactions/actions';
 
+import EyeIcon from '../../assets/eye-open.png';
+import EyeIconClose from '../../assets/eye-close.png';
+
 export const Dash = ({navigation}) => {
   const {transactions, totalsMonth} = TransactionsModel();
+  const [showMoney, setShowMoney] = React.useState(true);
 
   return (
     <S.Container>
@@ -45,6 +49,13 @@ export const Dash = ({navigation}) => {
           <S.TxtSaldo>
             {formatMoney(totalsMonth.totalIncome - totalsMonth.totalExpense)}
           </S.TxtSaldo>
+          <S.EyeBtn onPress={() => setShowMoney(!showMoney)}>
+            {showMoney ? (
+              <S.eyeIcon source={EyeIcon} />
+            ) : (
+              <S.eyeIcon source={EyeIconClose} />
+            )}
+          </S.EyeBtn>
         </S.ContainerSaldo>
       </S.CompHead>
       <Tabs navigation={navigation} />

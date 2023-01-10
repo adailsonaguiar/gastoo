@@ -2,9 +2,8 @@ import React, {ReactNode} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import * as S from './styles';
 import MonthHeader from '../MothHeader';
-import {Image} from 'react-native';
 
-import closeIcon from '../../assets/close.png';
+import closeIcon from '../../assets/close-icon.png';
 
 type HeaderProps = {
   title: string;

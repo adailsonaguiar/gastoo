@@ -108,3 +108,12 @@ export const Logo = styled.Image`
   width: 75px;
   height: 75px;
 `;
+
+export const EyeBtn = styled.TouchableOpacity`
+  margin-left: 10px;
+`;
+
+export const eyeIcon = styled.Image`
+  width: 30px;
+  height: 30px;
+`;
