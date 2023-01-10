@@ -12,6 +12,10 @@ export const categoriesExpense: {[key: string]: Category} = {
     label: 'Assinaturas e serviços',
     value: 3,
   },
+  10: {
+    label: 'Cartão de crédito',
+    value: 10,
+  },
   5: {
     label: 'Compras online',
     value: 5,
@@ -31,6 +35,10 @@ export const categoriesExpense: {[key: string]: Category} = {
   2: {
     label: 'Veículos',
     value: 2,
+  },
+  9: {
+    label: 'Transferência entre contas',
+    value: 9,
   },
   8: {
     label: 'Outros',
@@ -54,6 +62,10 @@ export const categoriesIncome: {[key: string]: Category} = {
   3: {
     label: 'Empréstimos',
     value: 3,
+  },
+  6: {
+    label: 'Transferencia entre contas',
+    value: 6,
   },
   5: {
     label: 'Outras receitas',
