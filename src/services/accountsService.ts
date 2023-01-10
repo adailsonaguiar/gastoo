@@ -51,14 +51,12 @@ export async function handleAccountBalance(
   valueToUpdate: number,
   realmInstance: Realm,
 ) {
-  if ((account && valueToUpdate > 0) || (account && valueToUpdate < 0)) {
-    account.balance = valueToUpdate;
-    if (account.balance >= 0) {
-      await saveAccount(account, realmInstance);
-    } else {
-      showAlertError('Saldo da conta não pode ser menor que zero.');
-      throw new Error('Saldo da conta não pode ser menor que zero.');
-    }
+  account.balance = valueToUpdate;
+  if (account.balance >= 0) {
+    await saveAccount(account, realmInstance);
+  } else {
+    showAlertError('Saldo da conta não pode ser menor que zero.');
+    throw new Error('Saldo da conta não pode ser menor que zero.');
   }
 }
 
