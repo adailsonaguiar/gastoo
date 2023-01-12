@@ -4,9 +4,12 @@ import Header from '../../components/Header';
 import {TransactionsModel} from './index.model';
 import {TransactionsList} from '../../components/TransactionsList';
 import {useNavigation} from '@react-navigation/native';
+import {formatMoney} from '../../utils/FunctionUtils';
+import incomeIcon from '../../assets/arrow-income.png';
+import expanseIcon from '../../assets/arrow-expanse.png';
 
 const Transactions = () => {
-  const {transactions, getTransactions} = TransactionsModel();
+  const {transactions, getTransactions, totalsMonth} = TransactionsModel();
 
   const navigation = useNavigation();
   return (
@@ -21,9 +24,18 @@ const Transactions = () => {
           <TransactionsList transactions={transactions} />
         </S.List>
         <S.Footer>
-          {/* <S.SaldoTotal>
-            Economia do mês: R$ {formatMoney(totalValueIn - totalValueOut)}
-          </S.SaldoTotal> */}
+          <S.Incomes>
+            <S.IconTotal source={incomeIcon} />
+            <S.SaldoTotal>
+              R$ {formatMoney(totalsMonth.totalIncome)}
+            </S.SaldoTotal>
+          </S.Incomes>
+          <S.Expanse>
+            <S.IconTotal source={expanseIcon} />
+            <S.SaldoTotal>
+              R$ {formatMoney(totalsMonth.totalExpense)}
+            </S.SaldoTotal>
+          </S.Expanse>
         </S.Footer>
       </S.Container>
     </>

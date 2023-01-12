@@ -44,6 +44,10 @@ export function TransactionsModel() {
       setTransactions(response);
     } else {
       setTransactions([]);
+      setTotalsMonth({
+        totalIncome: 0,
+        totalExpense: 0,
+      });
     }
   }
 

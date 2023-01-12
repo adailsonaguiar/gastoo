@@ -30,6 +30,7 @@ export const HaederLogo = styled.View`
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
+  padding: 0 20px;
 `;
 
 export const ContainerSaldo = styled.View`

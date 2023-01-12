@@ -27,8 +27,6 @@ export const Dash = ({navigation}) => {
 
   async function handleShowValuesStorageData() {
     const value = await getData('_show_money_values');
-    console.log('_show_money_values::::', value);
-
     setShowMoney(value === 'true');
   }
 
@@ -47,7 +45,9 @@ export const Dash = ({navigation}) => {
   return (
     <S.Container>
       <S.HaederLogo>
-        <S.Logo source={AppLogo} />
+        <S.SeeMoreBtn onPress={() => navigation.navigate(pages.config)}>
+          <S.Logo source={AppLogo} />
+        </S.SeeMoreBtn>
       </S.HaederLogo>
       <S.CompHead>
         <S.IncomeCardsWrapper>

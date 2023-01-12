@@ -7,6 +7,7 @@ import Accounts from './pages/Accounts';
 import AccountForm from './pages/AccountForm';
 import TransactionForm from './pages/TransactionForm';
 import Transactions from './pages/Transactions';
+import {Config} from './pages/Config';
 
 export const pages = {
   dash: 'Dash',
@@ -14,6 +15,7 @@ export const pages = {
   accountForm: 'AccountForm',
   transactions: 'Transactions',
   transactionForm: 'transactionForm',
+  config: 'Config',
 };
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +36,7 @@ export default () => {
           component={TransactionForm}
         />
         <Stack.Screen name={pages.transactions} component={Transactions} />
+        <Stack.Screen name={pages.config} component={Config} />
       </Stack.Navigator>
     </NavigationContainer>
   );
