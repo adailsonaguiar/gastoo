@@ -13,5 +13,6 @@ export default {
   gray500: '#8C8C8C',
   gray400: '#B1B7BC',
   gray300: '#CCD4DC',
+  gray100: '#EFEFEF',
   fontLight100: '#ffff',
 };

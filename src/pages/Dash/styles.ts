@@ -114,6 +114,13 @@ export const EyeBtn = styled.TouchableOpacity`
 `;
 
 export const eyeIcon = styled.Image`
-  width: 30px;
+  width: 25px;
+  height: 25px;
+`;
+
+export const WrapperMoneyHidden = styled.View`
+  background-color: ${colors.gray100};
+  width: 100px;
   height: 30px;
+  border-radius: 5px;
 `;

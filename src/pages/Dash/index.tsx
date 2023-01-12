@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {SelectModalHeader} from '../../components/Header';
 import Tabs from '../../components/Tabs';
 import {TransactionsList} from '../../components/TransactionsList';
@@ -18,10 +19,30 @@ import {formatMoney} from '../../utils/FunctionUtils';
 
 import EyeIcon from '../../assets/eye-open.png';
 import EyeIconClose from '../../assets/eye-close.png';
+import {getData, storeData} from '../../services/asyncStorageService';
 
 export const Dash = ({navigation}) => {
   const {transactions, totalsMonth} = TransactionsModel();
   const [showMoney, setShowMoney] = React.useState(true);
+
+  async function handleShowValuesStorageData() {
+    const value = await getData('_show_money_values');
+    console.log('_show_money_values::::', value);
+
+    setShowMoney(value === 'true');
+  }
+
+  async function toggleShowValuesStorageData() {
+    storeData({
+      key: '_show_money_values',
+      value: showMoney ? 'false' : 'true',
+    });
+    setShowMoney(!showMoney);
+  }
+
+  React.useEffect(() => {
+    handleShowValuesStorageData();
+  }, []);
 
   return (
     <S.Container>
@@ -32,24 +53,36 @@ export const Dash = ({navigation}) => {
         <S.IncomeCardsWrapper>
           <S.IncomeCard color={colors.appColor2}>
             <S.Label>Receitas</S.Label>
-            <S.IncomeCardValue>
-              {formatMoney(totalsMonth.totalIncome)}
-            </S.IncomeCardValue>
+            {showMoney ? (
+              <S.IncomeCardValue>
+                {formatMoney(totalsMonth.totalIncome)}
+              </S.IncomeCardValue>
+            ) : (
+              <S.WrapperMoneyHidden />
+            )}
           </S.IncomeCard>
           <S.IncomeCard>
             <S.Label>Despesas</S.Label>
-            <S.IncomeCardValue>
-              {formatMoney(totalsMonth.totalExpense)}
-            </S.IncomeCardValue>
+            {showMoney ? (
+              <S.IncomeCardValue>
+                {formatMoney(totalsMonth.totalExpense)}
+              </S.IncomeCardValue>
+            ) : (
+              <S.WrapperMoneyHidden />
+            )}
           </S.IncomeCard>
         </S.IncomeCardsWrapper>
         <S.TxtDescricao>Saldo disponível</S.TxtDescricao>
         <S.ContainerSaldo>
           <S.Cifra>R$</S.Cifra>
-          <S.TxtSaldo>
-            {formatMoney(totalsMonth.totalIncome - totalsMonth.totalExpense)}
-          </S.TxtSaldo>
-          <S.EyeBtn onPress={() => setShowMoney(!showMoney)}>
+          {showMoney ? (
+            <S.TxtSaldo>
+              {formatMoney(totalsMonth.totalIncome - totalsMonth.totalExpense)}
+            </S.TxtSaldo>
+          ) : (
+            <S.WrapperMoneyHidden />
+          )}
+          <S.EyeBtn onPress={toggleShowValuesStorageData}>
             {showMoney ? (
               <S.eyeIcon source={EyeIcon} />
             ) : (
