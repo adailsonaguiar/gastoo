@@ -1,10 +1,10 @@
 import React from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 
 import {SelectModalHeader} from '../../components/Header';
 import Tabs from '../../components/Tabs';
 import {TransactionsList} from '../../components/TransactionsList';
 import {pages} from '../../routes';
-import colors from '../../styles/colors';
 import {TransactionsModel} from '../Transactions/index.model';
 // import {loadAccounts} from '../../store/accounts/actions';
 // import Tabs from '../../components/Tabs';
@@ -22,7 +22,7 @@ import EyeIconClose from '../../assets/eye-close.png';
 import {getData, storeData} from '../../services/asyncStorageService';
 
 export const Dash = ({navigation}) => {
-  const {transactions, totalsMonth} = TransactionsModel();
+  const {transactions, totalsMonth, getTransactions} = TransactionsModel();
   const [showMoney, setShowMoney] = React.useState(true);
 
   async function handleShowValuesStorageData() {
@@ -38,9 +38,24 @@ export const Dash = ({navigation}) => {
     setShowMoney(!showMoney);
   }
 
-  React.useEffect(() => {
-    handleShowValuesStorageData();
-  }, []);
+  const getCurrentDate = () => {
+    const date = new Date();
+    return {month: date.getMonth() + 1, year: date.getFullYear()};
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!transactions.length) {
+        getTransactions({
+          month: getCurrentDate().month,
+          year: getCurrentDate().year,
+        });
+        handleShowValuesStorageData();
+      }
+    }, []),
+  );
+
+  React.useEffect(() => {}, []);
 
   return (
     <S.Container>

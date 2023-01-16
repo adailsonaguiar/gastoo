@@ -3,6 +3,7 @@ import React from 'react';
 import {transactionType} from '../../database/schemas/TransactionSchema';
 import {Transaction} from '../../models/transaction';
 import {fetchTransactions} from '../../services/transactionsService';
+import {useDate} from '../../store/date';
 
 export function TransactionsModel() {
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
@@ -10,11 +11,7 @@ export function TransactionsModel() {
     totalIncome: 0,
     totalExpense: 0,
   });
-  const getCurrentDate = () => {
-    const date = new Date();
-    return {month: date.getMonth() + 1, year: date.getFullYear()};
-  };
-
+  const {month, year} = useDate(state => state);
   async function getAllTransactionsData(items: Transaction[]) {
     const totalValues = {totalIncome: 0, totalExpense: 0};
     items.map(transaction => {
@@ -29,13 +26,12 @@ export function TransactionsModel() {
   }
 
   async function getTransactions(props?: {
-    month?: number;
-    year?: number;
+    month: number;
+    year: number;
     realmInstance?: Realm;
   }) {
-    const {month, year} = getCurrentDate();
     const response = await fetchTransactions(
-      `month = "${props?.month || month}" AND year = "${props?.year || year}"`,
+      `month = "${props?.month}" AND year = "${props?.year}"`,
       props?.realmInstance,
     );
 
@@ -51,13 +47,9 @@ export function TransactionsModel() {
     }
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!transactions.length) {
-        getTransactions();
-      }
-    }, []),
-  );
+  React.useEffect(() => {
+    getTransactions({month: month + 1, year});
+  }, [month]);
 
   return {transactions, getTransactions, totalsMonth};
 }

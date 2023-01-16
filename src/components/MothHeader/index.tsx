@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import months, {monthsAbbreviated} from '../../utils/months';
 
 import ArrowLeft from '../../assets/chevron-left-black.png';
@@ -7,22 +7,20 @@ import ArrowRight from '../../assets/chevron-right-black.png';
 import {
   Container,
   Month,
-  ButtonMonth,
-  ButtonMonthIcon,
   ButtonPrevMonth,
   ButtonNextMonth,
   ButtonMonthIconPrev,
   ButtonMonthIconNext,
   MonthCenter,
 } from './styles';
+import {useDate} from '../../store/date';
 
 type MothHeaderProps = {
   onChangeMonth: (props: {month: number; year: number}) => void;
 };
 
 export default function MothHeader({onChangeMonth}: MothHeaderProps) {
-  const [month, setMonth] = useState(0);
-  const [year, setYear] = useState(0);
+  const {month, year, setMonthYear} = useDate(state => state);
 
   useEffect(() => {
     getDate();
@@ -30,27 +28,24 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
 
   const getDate = () => {
     const date = new Date();
-    setMonth(date.getMonth());
-    setYear(date.getFullYear());
+    setMonthYear(date.getMonth(), date.getFullYear());
   };
 
   const nextMonth = () => {
     if (month === 11) {
-      setMonth(0);
-      setYear(year + 1);
+      setMonthYear(0, year + 1);
       onChangeMonth({month: 1, year: year + 1});
     } else {
-      setMonth(month + 1);
+      setMonthYear(month + 1, year);
       onChangeMonth({month: month + 2, year: year});
     }
   };
   const previousMonth = () => {
     if (month === 0) {
-      setMonth(11);
-      setYear(year - 1);
+      setMonthYear(11, year - 1);
       onChangeMonth({month: 12, year: year - 1});
     } else {
-      setMonth(month - 1);
+      setMonthYear(month - 1, year);
       onChangeMonth({month: month, year: year});
     }
   };
@@ -103,7 +98,7 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
     if (yearToShow === currentYear) {
       return `${monthToShow}`;
     }
-    return `${monthToShow}/${year}`;
+    return `${monthToShow}/${yearToShow}`;
   };
 
   return (
