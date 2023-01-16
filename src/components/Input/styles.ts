@@ -3,9 +3,7 @@ import colors from '../../styles/colors';
 import {FontInputStyles, InputWrapperStyles} from '../InputWrapperStyles';
 import {css} from 'styled-components';
 
-export const Container = styled.View`
-  margin-bottom: 10px;
-`;
+export const Container = styled.View``;
 
 export const Input = styled.TextInput.attrs({
   placeholderTextColor: colors.gray400,

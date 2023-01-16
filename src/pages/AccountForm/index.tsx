@@ -13,6 +13,7 @@ import {
 import {AccountFormViewModel} from './index.model';
 import {ColorsList} from '../../components/ColorsList';
 import {useNavigation} from '@react-navigation/native';
+import {FormContentWrapper} from '../../components/FormContentWrapper';
 
 export default function AccountForm() {
   const {loading, currentAccount, askDelection, onSubmit} =
@@ -30,15 +31,21 @@ export default function AccountForm() {
         onSubmit={values => onSubmit(values)}>
         {({setFieldValue, handleSubmit, values}) => (
           <Form>
-            <Input
-              label="Descrição"
-              value={values.description}
-              onChangeText={text => {
-                setFieldValue('description', text);
-              }}
-              lineLeftColor={values.color}
-            />
-            <ColorsList handleColor={color => setFieldValue('color', color)} />
+            <FormContentWrapper>
+              <Input
+                label="Descrição"
+                value={values.description}
+                onChangeText={text => {
+                  setFieldValue('description', text);
+                }}
+                lineLeftColor={values.color}
+              />
+            </FormContentWrapper>
+            <FormContentWrapper>
+              <ColorsList
+                handleColor={color => setFieldValue('color', color)}
+              />
+            </FormContentWrapper>
             <ContainerFormFooter>
               <ButtonSave
                 label="Salvar"

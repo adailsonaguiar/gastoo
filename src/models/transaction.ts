@@ -13,6 +13,7 @@ export type Transaction = {
   valueType: number;
   createdAt: Date;
   date: Date;
+  recurrence: boolean;
 };
 
 export function TransactionBuilder(props: Transaction) {

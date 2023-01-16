@@ -2,9 +2,7 @@ import styled from 'styled-components/native';
 import RNDatePicker from 'react-native-modern-datepicker';
 import {FontInputStyles, InputWrapperStyles} from '../InputWrapperStyles';
 
-export const Container = styled.View`
-  margin-bottom: 10px;
-`;
+export const Container = styled.View``;
 
 export const PickerWrapper = styled.TouchableOpacity`
   padding-left: 10px;

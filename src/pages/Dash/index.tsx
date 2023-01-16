@@ -51,7 +51,7 @@ export const Dash = ({navigation}) => {
       </S.HaederLogo>
       <S.CompHead>
         <S.IncomeCardsWrapper>
-          <S.IncomeCard color={colors.appColor2}>
+          <S.IncomeCard>
             <S.Label>Receitas</S.Label>
             {showMoney ? (
               <S.IncomeCardValue>

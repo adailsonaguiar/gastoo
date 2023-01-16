@@ -16,6 +16,7 @@ export const TransactionSchema = {
     category: 'int',
     createdAt: 'date',
     date: 'date?',
+    recurrence: 'bool?',
   },
   primaryKey: '_id',
 };

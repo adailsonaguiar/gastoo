@@ -51,6 +51,13 @@ function calculateAccountBalance(props: {
 
 export async function saveTransaction(transaction: Transaction) {
   const realm = await getRealm();
+  console.log(
+    transaction.date,
+    transaction.day,
+    transaction.month,
+    transaction.year,
+  );
+
   try {
     const account = await getTransactionAccount(transaction.accountId, realm);
     if (account) {

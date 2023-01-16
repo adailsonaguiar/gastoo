@@ -35,6 +35,7 @@ type RouterProps = RouteProp<TransactionFormRouteProps, 'props'>;
 
 export function TransactionFormModel() {
   const route = useRoute<RouterProps>();
+  const [loading, setLoading] = React.useState(false);
   const FORM_TYPE = route.params?.formType;
   const INITIAL_FORM_VALUES: FormProps = {
     _id: String(uuid.v4()),
@@ -47,6 +48,7 @@ export function TransactionFormModel() {
     type: !FORM_TYPE
       ? transactionType.TRANSACTION_OUT
       : transactionType.TRANSACTION_IN,
+    recurrence: false,
     status: 0,
     day: '',
     month: '',
@@ -150,6 +152,7 @@ export function TransactionFormModel() {
         categoryOption: getCategories()[expenseEdit.category],
         valueType: expenseEdit.valueType,
         createdAt: expenseEdit.createdAt,
+        recurrence: expenseEdit.recurrence,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -181,33 +184,78 @@ export function TransactionFormModel() {
     return 0;
   }
 
-  async function onSubmit(values: FormProps) {
-    const convertedValue = Math.round(Number(values.rawValue) * 100);
+  function handleRecurrenceTransactions(
+    values: FormProps,
+    recurrence: boolean,
+    transaction: Transaction,
+  ) {
+    const transactions = [] as Transaction[];
+    transactions.push(transaction);
+    if (recurrence && !expenseEdit?.recurrence) {
+      const dates = [] as Date[];
+      for (let i = 0; i < 11; i++) {
+        const transactionDate = dates[i] || values.date;
+        dates.push(
+          new Date(transactionDate.setMonth(transactionDate.getMonth() + 1)),
+        );
+      }
+      dates.map(date => {
+        transactions.push({
+          ...transaction,
+          _id: String(uuid.v4()),
+          date: date,
+          day: String(date.getDate()),
+          month: String(date.getMonth() + 1),
+          year: String(date.getFullYear()),
+        });
+      });
+    }
 
+    return transactions;
+  }
+
+  async function onSubmit(values: FormProps) {
+    setLoading(true);
+    const convertedValue = Math.round(Number(values.rawValue) * 100);
     let valueType = 0;
     if (values.status) {
       valueType = handleValueType(values.type, convertedValue);
     }
+    const transactionToSave = TransactionBuilder({
+      accountId: values.accountOption.value.toString(),
+      category: values.categoryOption.value,
+      day: String(values.date.getDate()),
+      month: String(values.date.getMonth() + 1),
+      year: String(values.date.getFullYear()),
+      description: values.description,
+      _id: values._id,
+      status: values.status,
+      type: values.type,
+      value: convertedValue,
+      valueType: valueType,
+      createdAt: values.createdAt,
+      initialValue: values.initialValue,
+      date: values.date,
+      recurrence: !!values.recurrence,
+    });
     if (validateForm(values)) {
-      const transactionToSave = TransactionBuilder({
-        accountId: values.accountOption.value.toString(),
-        category: values.categoryOption.value,
-        day: String(values.date.getDate()),
-        month: String(values.date.getMonth() + 1),
-        year: String(values.date.getFullYear()),
-        description: values.description,
-        _id: values._id,
-        status: values.status,
-        type: values.type,
-        value: convertedValue,
-        valueType: valueType,
-        createdAt: values.createdAt,
-        initialValue: values.initialValue,
-        date: values.date,
+      const transactions = handleRecurrenceTransactions(
+        values,
+        values.recurrence,
+        transactionToSave,
+      );
+
+      const transactionsToSave = [] as Promise<void>[];
+      transactions.map(item => {
+        async function createTransaction() {
+          await saveTransaction(item);
+        }
+        transactionsToSave.push(createTransaction());
       });
-      await saveTransaction(transactionToSave);
+      await Promise.all(transactionsToSave);
       navigation.goBack();
     }
+    setLoading(false);
   }
 
   const handleDelete = (transaction: Transaction) => {
@@ -222,5 +270,6 @@ export function TransactionFormModel() {
     FORM_TYPE,
     accounts,
     handleDelete,
+    loading,
   };
 }
