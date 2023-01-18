@@ -14,7 +14,10 @@ export function useExportData() {
     if (accounts) {
       data.accounts = accounts;
     }
-    return [data.accounts, data.transactions];
+    return {
+      accounts: data.accounts,
+      transactions: data.transactions,
+    };
   }
 
   return {getAllData};

@@ -1,7 +1,8 @@
+import React from 'react';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useFormik} from 'formik';
-import React from 'react';
 import uuid from 'react-native-uuid';
+import {isFuture, isSameDay, isToday} from 'date-fns';
 import {Option} from '../../components/Select';
 import {transactionType} from '../../database/schemas/TransactionSchema';
 import {Account} from '../../models/Accounts';
@@ -16,6 +17,7 @@ import {
   categoriesExpense,
   categoriesIncome,
 } from '../../utils/categoriesTransactions';
+import {handleRealmInstance} from '../../database/realm';
 
 type TransactionFormRouteProps = {
   props: {
@@ -144,11 +146,12 @@ export function TransactionFormModel() {
         month: expenseEdit.month,
         year: expenseEdit.year,
 
-        date: new Date(
-          `${expenseEdit.year}-${expenseEdit.month}-${
-            Number(expenseEdit.day) + 1
-          }`,
-        ),
+        // date: new Date(
+        //   `${expenseEdit.year}-${expenseEdit.month}-${
+        //     Number(expenseEdit.day) + 1
+        //   }`,
+        // ),
+        date: new Date(expenseEdit.date),
         categoryOption: getCategories()[expenseEdit.category],
         valueType: expenseEdit.valueType,
         createdAt: expenseEdit.createdAt,
@@ -159,6 +162,10 @@ export function TransactionFormModel() {
   }, [accounts.length]);
 
   function validateForm(values: FormProps) {
+    if (!isToday(values.date) && isFuture(values.date) && values.status) {
+      showAlertError('Não é possível processar uma transação com data futura');
+      return false;
+    }
     if (!values.description.length) {
       showAlertError('Digite uma descrição');
       return false;
@@ -185,21 +192,21 @@ export function TransactionFormModel() {
   }
 
   function handleRecurrenceTransactions(
-    values: FormProps,
     recurrence: boolean,
     transaction: Transaction,
   ) {
-    const transactions = [] as Transaction[];
-    transactions.push(transaction);
+    const transactions = [transaction] as Transaction[];
     if (recurrence && !expenseEdit?.recurrence) {
       const dates = [] as Date[];
+      const transactionDate = new Date();
+      transactionDate.setMonth(transaction.date.getMonth());
+      transactionDate.setDate(transaction.date.getDate());
       for (let i = 0; i < 11; i++) {
-        const transactionDate = dates[i] || values.date;
         dates.push(
           new Date(transactionDate.setMonth(transactionDate.getMonth() + 1)),
         );
       }
-      dates.map(date => {
+      dates.forEach(date => {
         transactions.push({
           ...transaction,
           _id: String(uuid.v4()),
@@ -207,10 +214,11 @@ export function TransactionFormModel() {
           day: String(date.getDate()),
           month: String(date.getMonth() + 1),
           year: String(date.getFullYear()),
+          status: 0,
+          valueType: 0,
         });
       });
     }
-
     return transactions;
   }
 
@@ -240,19 +248,20 @@ export function TransactionFormModel() {
     });
     if (validateForm(values)) {
       const transactions = handleRecurrenceTransactions(
-        values,
         values.recurrence,
         transactionToSave,
       );
 
+      const realm = await handleRealmInstance();
       const transactionsToSave = [] as Promise<void>[];
       transactions.map(item => {
-        async function createTransaction() {
-          await saveTransaction(item);
-        }
+        const createTransaction = async () => {
+          await saveTransaction(item, realm);
+        };
         transactionsToSave.push(createTransaction());
       });
       await Promise.all(transactionsToSave);
+      realm.close();
       navigation.goBack();
     }
     setLoading(false);
