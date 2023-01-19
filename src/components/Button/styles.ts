@@ -8,7 +8,9 @@ type ButtonProps = {
   color?: string;
 };
 
-const Button = styled(TouchableOpacity)<ButtonProps>`
+const Button = styled(TouchableOpacity).attrs({
+  activeOpacity: 0.9,
+})<ButtonProps>`
   ${({background, color}) => css`
     background: ${background ? background : colors.appColor};
     align-items: center;
@@ -31,4 +33,9 @@ const Label = styled.Text<ButtonProps>`
   `}
 `;
 
-export {Button, Label};
+const Loading = styled.ActivityIndicator.attrs({
+  size: 'small',
+  color: '#fff',
+})``;
+
+export {Button, Label, Loading};

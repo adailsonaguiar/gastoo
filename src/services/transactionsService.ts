@@ -10,13 +10,19 @@ import {SCHEMAS} from '../database/schemas';
 import {Transaction} from '../models/transaction';
 import {getTransactionAccount, handleAccountBalance} from './accountsService';
 import {transactionType} from '../database/schemas/TransactionSchema';
+import {isFuture, isToday} from 'date-fns';
 
 export async function fetchTransactions(
   filter?: string,
   externalRealmInstance?: Realm,
 ) {
   let realm = await handleRealmInstance(externalRealmInstance);
-  const response = await loadData({schema: SCHEMAS.TRANSACTION, realm, filter});
+  const response = await loadData({
+    schema: SCHEMAS.TRANSACTION,
+    realm,
+    filter,
+    sort: 'date',
+  });
   if (response) {
     return response as Transaction[];
   }
@@ -31,24 +37,27 @@ function calculateAccountBalance(props: {
 }) {
   if (props.transactionType === transactionType.TRANSACTION_OUT) {
     if (props.valueType === 0) {
-      return props.accountBalance + props.initialValue;
+      return props.accountBalance + props.initialValue || 0;
     } else {
-      return props.accountBalance + +props.initialValue + props.valueType;
+      return props.accountBalance + +props.initialValue + props.valueType || 0;
     }
   } else {
     if (props.valueType === 0) {
-      return props.accountBalance - props.initialValue;
+      return props.accountBalance - props.initialValue || 0;
     } else {
-      return props.accountBalance - props.initialValue + props.valueType;
+      return props.accountBalance - props.initialValue + props.valueType || 0;
     }
   }
 }
 
-export async function saveTransaction(transaction: Transaction) {
-  const realm = await getRealm();
+export async function saveTransaction(
+  transaction: Transaction,
+  externalRealmInstance?: Realm,
+) {
+  let realm = await handleRealmInstance(externalRealmInstance);
   try {
     const account = await getTransactionAccount(transaction.accountId, realm);
-    if (account) {
+    if (account && !isFuture(transaction.date)) {
       const value = calculateAccountBalance({
         accountBalance: account.balance,
         initialValue: transaction.initialValue,
@@ -62,9 +71,10 @@ export async function saveTransaction(transaction: Transaction) {
       realm,
       data: transaction,
     });
-    realm.close();
+    closeRealmInstance(realm, externalRealmInstance);
   } catch (error) {
     console.error(error);
+    closeRealmInstance(realm, externalRealmInstance);
   }
 }
 

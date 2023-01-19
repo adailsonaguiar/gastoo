@@ -5,9 +5,7 @@ import {InputWrapperStyles} from '../InputWrapperStyles';
 import {css} from 'styled-components';
 import {fontSemibold} from '../../styles/fonts';
 
-export const Container = styled.View`
-  margin-bottom: 10px;
-`;
+export const Container = styled.View``;
 
 const inputMainStyle = css`
   border-width: 0;

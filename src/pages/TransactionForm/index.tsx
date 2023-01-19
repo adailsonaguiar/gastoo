@@ -12,14 +12,19 @@ import colors from '../../styles/colors';
 import {Container, Form, ButtonSave, Switch, CustomDatePicker} from './styles';
 
 import Header from '../../components/Header';
-import {BtnRemove, ContainerFormFooter} from '../AccountForm/styles';
+import {
+  BtnRemove,
+  ContainerFormFooter,
+  ContentWrapper,
+} from '../AccountForm/styles';
 import {Transaction} from '../../models/transaction';
 import InputMask from '../../components/InputMask';
 import {TransactionFormModel} from './index.model';
 import {useNavigation} from '@react-navigation/native';
+import {FormContentWrapper} from '../../components/FormContentWrapper';
 
 const TransactionForm = () => {
-  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE} =
+  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE, loading} =
     TransactionFormModel();
   const navigation = useNavigation();
   function handleSceneTitle() {
@@ -61,74 +66,101 @@ const TransactionForm = () => {
       />
       <Container>
         <Form>
-          <InputMask
-            label="Valor"
-            type={'money'}
-            options={{
-              precision: 2,
-              separator: ',',
-              delimiter: '.',
-              unit: 'R$',
-              suffixUnit: '',
-            }}
-            onChangeMasked={(maskedValue: string, rawValue: string) => {
-              formik.setFieldValue('value', maskedValue);
-              formik.setFieldValue('rawValue', rawValue);
-            }}
-            value={String(formik.values.value * 100)}
-            includeRawValueInChangeText={true}
-            placeholder="R$ 120,00"
-            mainInput
-          />
-
-          <Select
-            placeholder="Selecione uma categoria"
-            label="Categoria"
-            options={
-              !FORM_TYPE
-                ? getArrayCategoriesExpense()
-                : getArrayCategoriesIncome()
-            }
-            value={formik.values.categoryOption}
-            onValueChange={obj => formik.setFieldValue('categoryOption', obj)}
-          />
-
-          <Select
-            placeholder="Selecione uma conta"
-            label="Contas"
-            options={accounts}
-            value={formik.values.accountOption}
-            onValueChange={selected =>
-              formik.setFieldValue('accountOption', selected)
-            }
-          />
-          <CustomDatePicker
-            date={formik.values.date}
-            setDate={value => {
-              if (value) {
-                formik.setFieldValue('date', new Date(value));
+          <FormContentWrapper>
+            <InputMask
+              label="Valor"
+              type={'money'}
+              autoFocus
+              options={{
+                precision: 2,
+                separator: ',',
+                delimiter: '.',
+                unit: 'R$',
+                suffixUnit: '',
+              }}
+              onChangeMasked={(maskedValue: string, rawValue: string) => {
+                formik.setFieldValue('value', maskedValue);
+                formik.setFieldValue('rawValue', rawValue);
+              }}
+              value={String(formik.values.value * 100)}
+              includeRawValueInChangeText={true}
+              placeholder="R$ 120,00"
+              mainInput
+            />
+          </FormContentWrapper>
+          <FormContentWrapper>
+            <Select
+              placeholder="Selecione uma categoria"
+              label="Categoria"
+              options={
+                !FORM_TYPE
+                  ? getArrayCategoriesExpense()
+                  : getArrayCategoriesIncome()
               }
-            }}
-          />
-          <Input
-            label="Descrição"
-            value={formik.values.description}
-            onChangeText={text => formik.setFieldValue('description', text)}
-            placeholder={
-              !FORM_TYPE ? 'Compras mercadinho' : 'Prestação de serviço'
-            }
-          />
+              value={formik.values.categoryOption}
+              onValueChange={obj => formik.setFieldValue('categoryOption', obj)}
+            />
+          </FormContentWrapper>
+          <FormContentWrapper>
+            <Select
+              placeholder="Selecione uma conta"
+              label="Contas"
+              options={accounts}
+              value={formik.values.accountOption}
+              onValueChange={selected =>
+                formik.setFieldValue('accountOption', selected)
+              }
+            />
+          </FormContentWrapper>
+          <FormContentWrapper>
+            <CustomDatePicker
+              date={formik.values.date}
+              setDate={value => {
+                if (value) {
+                  formik.setFieldValue('date', new Date(value));
+                }
+              }}
+            />
+          </FormContentWrapper>
+          <FormContentWrapper>
+            <Input
+              label="Descrição"
+              value={formik.values.description}
+              onChangeText={text => formik.setFieldValue('description', text)}
+              placeholder={
+                !FORM_TYPE ? 'Compras mercadinho' : 'Prestação de serviço'
+              }
+            />
+          </FormContentWrapper>
+          {!expenseEdit?.recurrence && (
+            <FormContentWrapper>
+              <Switch
+                toggleSwitch={value =>
+                  formik.setFieldValue('recurrence', value ? 1 : 0)
+                }
+                isEnabled={!!formik.values.recurrence}
+                labelEnable={'REPETIR A CADA MÊS'}
+                labelDisable={'NÃO REPETIR'}
+              />
+            </FormContentWrapper>
+          )}
 
-          <Switch
-            toggleSwitch={value =>
-              formik.setFieldValue('status', value ? 1 : 0)
-            }
-            isEnabled={!!formik.values.status}
-            labelEnable={!FORM_TYPE ? 'PAGO' : 'RECEBIDO'}
-            labelDisable={!FORM_TYPE ? 'NÃO PAGO' : 'NÃO RECEBIDO'}
-          />
+          <FormContentWrapper>
+            <Switch
+              toggleSwitch={value =>
+                formik.setFieldValue('status', value ? 1 : 0)
+              }
+              isEnabled={!!formik.values.status}
+              labelEnable={!FORM_TYPE ? 'PAGO' : 'RECEBIDO'}
+              labelDisable={!FORM_TYPE ? 'NÃO PAGO' : 'NÃO RECEBIDO'}
+            />
+          </FormContentWrapper>
           <ContainerFormFooter>
-            <ButtonSave label="Salvar" onPress={formik.handleSubmit} />
+            <ButtonSave
+              label="Salvar"
+              onPress={formik.handleSubmit}
+              loading={loading}
+            />
             {expenseEdit && (
               <BtnRemove
                 label="Deletar transação"

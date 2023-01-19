@@ -30,6 +30,7 @@ export const HaederLogo = styled.View`
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
+  padding: 0 20px;
 `;
 
 export const ContainerSaldo = styled.View`
@@ -72,7 +73,7 @@ export const Footer = styled.View`
 `;
 
 export const IncomeCard = styled.View<{color?: string}>`
-  background-color: ${props => (props.color ? props.color : colors.appColor)};
+  background-color: ${colors.appColor2};
   border-radius: 15px;
   margin-right: 10px;
   padding: 14px 10px;
@@ -107,4 +108,20 @@ export const SeeMore = styled.Text`
 export const Logo = styled.Image`
   width: 75px;
   height: 75px;
+`;
+
+export const EyeBtn = styled.TouchableOpacity`
+  margin-left: 10px;
+`;
+
+export const eyeIcon = styled.Image`
+  width: 25px;
+  height: 25px;
+`;
+
+export const WrapperMoneyHidden = styled.View`
+  background-color: ${colors.gray100};
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
 `;

@@ -13,6 +13,7 @@ export const Conta = styled(TouchableOpacity)`
   border-radius: 5px;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.gray300};
+  position: relative;
 `;
 
 export const ColLeft = styled.View`
@@ -62,4 +63,14 @@ export const LineLeft = styled.View<LineLeftProps>`
     background-color: ${lineLeftColor ? lineLeftColor : '#90909C'};
     margin-right: 10px;
   `}
+`;
+
+export const BadgeStatus = styled.View`
+  width: 5px;
+  height: 5px;
+  border-radius: 25px;
+  background-color: ${colors.appColor2};
+  position: absolute;
+  right: 20px;
+  top: 5px;
 `;

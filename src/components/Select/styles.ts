@@ -10,7 +10,6 @@ import {
 
 export const PickerWrapper = styled.View`
   border-radius: 10px;
-  margin-bottom: 10px;
   ${SelectWrapperStyles}
 `;
 

@@ -2,9 +2,8 @@ import React, {ReactNode} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import * as S from './styles';
 import MonthHeader from '../MothHeader';
-import {Image} from 'react-native';
 
-import closeIcon from '../../assets/close.png';
+import closeIcon from '../../assets/close-icon.png';
 
 type HeaderProps = {
   title: string;
@@ -35,7 +34,7 @@ const Header = ({
                   onClose();
                 }
               }}>
-              <Image source={closeIcon} />
+              <S.CloseIcon source={closeIcon} />
             </S.BtnFechar>
           )}
           {children && <S.Subtitle>{children}</S.Subtitle>}
@@ -69,7 +68,7 @@ export const SelectModalHeader = ({
                   navigation.goBack();
                 }
               }}>
-              <Image source={closeIcon} />
+              <S.CloseIcon source={closeIcon} />
             </S.BtnFechar>
           )}
           {children && <S.Subtitle>{children}</S.Subtitle>}

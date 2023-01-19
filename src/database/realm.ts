@@ -4,12 +4,10 @@ import AccountSchema from './schemas/AccountSchema';
 import {TransactionSchema} from './schemas/TransactionSchema';
 
 export const getRealm = async () => {
-  console.log('calll:::getRealm');
-
   return await Realm.open({
     path: 'gastoo',
     schema: [TransactionSchema, AccountSchema],
-    schemaVersion: 2,
+    schemaVersion: 5,
   });
 };
 
@@ -32,6 +30,7 @@ export const loadData = async (props: {
   realm: Realm;
   schema: string;
   filter?: string;
+  sort?: string;
 }) => {
   try {
     let response = null;
@@ -42,6 +41,7 @@ export const loadData = async (props: {
       response = props.realm
         .objects(props.schema)
         .filtered(props.filter)
+        .sorted(props.sort || 'createdAt', true)
         .toJSON();
     }
     return response;

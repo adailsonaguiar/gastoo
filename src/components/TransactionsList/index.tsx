@@ -28,6 +28,7 @@ export function TransactionsList({transactions}: TransactionListProps) {
             status={getTransactionStatus(item.status)}
             type={item.type}
             screenNavigate={pages.transactionForm}
+            transactionStatus={item.status}
           />
         )}
         keyExtractor={item => item._id}

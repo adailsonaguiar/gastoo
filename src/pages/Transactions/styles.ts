@@ -71,9 +71,9 @@ export const Footer = styled.View`
 
 export const SaldoTotal = styled.Text`
   color: ${colors.fontLight};
-  flex: 3;
+  flex: 1;
   font-family: ${fontMedium};
-  font-size: 11px;
+  font-size: 13px;
 `;
 
 export const BtnNovaConta = styled.TouchableOpacity`
@@ -91,4 +91,17 @@ export const TxtNovaConta = styled.Text`
   color: ${colors.fontLight};
   font-family: Roboto-Bold;
   font-size: 11px;
+`;
+
+export const Incomes = styled.View`
+  flex-direction: row;
+  flex: 1;
+`;
+export const Expanse = styled.View`
+  flex-direction: row;
+  flex: 1;
+`;
+export const IconTotal = styled.Image`
+  width: 20px;
+  height: 20px;
 `;

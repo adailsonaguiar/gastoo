@@ -10,7 +10,7 @@ import {
 } from 'react-native-custom-picker';
 import {Label} from '../Label';
 
-import ArrowRightIcon from '../../assets/chevron-right.png';
+import ArrowRightIcon from '../../assets/arrow-right-blue.png';
 import * as S from './styles';
 import Header, {SelectModalHeader} from '../Header';
 

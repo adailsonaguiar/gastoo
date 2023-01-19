@@ -12,6 +12,8 @@ export type Transaction = {
   category: number | string;
   valueType: number;
   createdAt: Date;
+  date: Date;
+  recurrence: boolean;
 };
 
 export function TransactionBuilder(props: Transaction) {

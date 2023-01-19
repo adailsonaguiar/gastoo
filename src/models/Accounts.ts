@@ -6,4 +6,5 @@ export type Account = {
   description: string;
   balance: number;
   color: string;
+  createdAt: Date;
 };
