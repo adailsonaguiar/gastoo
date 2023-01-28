@@ -1,8 +1,9 @@
 import React from 'react';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useFormik} from 'formik';
+import Realm from 'realm';
 import uuid from 'react-native-uuid';
-import {isFuture, isSameDay, isToday} from 'date-fns';
+import {isFuture, isToday} from 'date-fns';
 import {Option} from '../../components/Select';
 import {transactionType} from '../../database/schemas/TransactionSchema';
 import {Account} from '../../models/Accounts';
@@ -11,7 +12,6 @@ import {fetchAccounts} from '../../services/accountsService';
 import {showAlertError} from '../../services/alertService';
 import {deleteTransaction, saveTransaction} from '../../services/transactionsService';
 import {categoriesExpense, categoriesIncome} from '../../utils/categoriesTransactions';
-import {handleRealmInstance} from '../../database/realm';
 
 type TransactionFormRouteProps = {
   props: {
@@ -29,7 +29,7 @@ type FormProps = {
 
 type RouterProps = RouteProp<TransactionFormRouteProps, 'props'>;
 
-export function TransactionFormModel() {
+export function TransactionFormModel(realm: Realm | null) {
   const route = useRoute<RouterProps>();
   const [loading, setLoading] = React.useState(false);
   const FORM_TYPE = route.params?.formType;
@@ -93,7 +93,7 @@ export function TransactionFormModel() {
   }
 
   async function mapAccounts() {
-    const response = await fetchAccounts();
+    const response = await fetchAccounts({realm});
     if (response?.length) {
       getTransactionAccount(response);
       const mappedSelectOptions = response.map(item => {
@@ -228,16 +228,14 @@ export function TransactionFormModel() {
     if (validateForm(values)) {
       const transactions = handleRecurrenceTransactions(values.recurrence, transactionToSave);
 
-      const realm = await handleRealmInstance();
       const transactionsToSave = [] as Promise<void>[];
       transactions.map(item => {
         const createTransaction = async () => {
-          await saveTransaction(item, realm);
+          saveTransaction(item, realm);
         };
         transactionsToSave.push(createTransaction());
       });
       await Promise.all(transactionsToSave);
-      realm.close();
       navigation.goBack();
     }
     setLoading(false);
@@ -245,7 +243,7 @@ export function TransactionFormModel() {
 
   const handleDelete = (transaction: Transaction) => {
     transaction.valueType = 0;
-    deleteTransaction(transaction);
+    deleteTransaction(transaction, realm);
     navigation.goBack();
   };
 

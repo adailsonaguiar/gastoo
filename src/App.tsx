@@ -4,6 +4,8 @@ import {LogBox, StatusBar} from 'react-native';
 import Routes from './routes';
 import 'react-native-gesture-handler';
 import styled from 'styled-components/native';
+import {useRealm} from './store/realm';
+import {getRealm} from './database/realm';
 
 const Cotainer = styled.SafeAreaView`
   flex: 1;
@@ -16,6 +18,15 @@ LogBox.ignoreLogs([
 ]);
 
 const App = () => {
+  const {realm, setRealm} = useRealm();
+  async function handleRealm() {
+    if (realm) {
+      setRealm(await getRealm());
+    }
+  }
+  React.useEffect(() => {
+    handleRealm();
+  }, []);
   return (
     <Cotainer>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />

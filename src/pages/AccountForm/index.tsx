@@ -8,9 +8,12 @@ import {AccountFormViewModel} from './index.model';
 import {ColorsList} from '../../components/ColorsList';
 import {useNavigation} from '@react-navigation/native';
 import {FormContentWrapper} from '../../components/FormContentWrapper';
+import {useRealm} from '../../store/realm';
 
 export default function AccountForm() {
-  const {loading, currentAccount, askDelection, onSubmit} = AccountFormViewModel();
+  const {realm} = useRealm();
+
+  const {loading, currentAccount, askDelection, onSubmit} = AccountFormViewModel(realm);
   const navigation = useNavigation();
 
   return (

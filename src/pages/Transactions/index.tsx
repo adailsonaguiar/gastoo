@@ -7,9 +7,13 @@ import {useNavigation} from '@react-navigation/native';
 import {formatMoney} from '../../utils/FunctionUtils';
 import incomeIcon from '../../assets/arrow-income.png';
 import expanseIcon from '../../assets/arrow-expanse.png';
+// import {Loading} from '../../components/Loading';
+import {useRealm} from '../../store/realm';
 
 const Transactions = () => {
-  const {transactions, getTransactions, totalsMonth} = TransactionsModel();
+  const {realm} = useRealm();
+
+  const {transactions, getTransactions, totalsMonth} = TransactionsModel({realm});
 
   const navigation = useNavigation();
   return (
@@ -30,6 +34,7 @@ const Transactions = () => {
           </S.Expanse>
         </S.Footer>
       </S.Container>
+      {/* <Loading isLoading={loading} /> */}
     </>
   );
 };
