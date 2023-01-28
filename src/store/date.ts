@@ -7,11 +7,16 @@ type UseDateProps = {
 };
 
 export const useDate = create<UseDateProps>(set => ({
-  month: new Date().getMonth(),
-  year: new Date().getFullYear(),
+  month: 0,
+  year: 0,
   setMonthYear: (month: number, year: number) =>
     set({
       month,
       year,
+    }),
+  setCurrentDate: () =>
+    set({
+      month: new Date().getMonth(),
+      year: new Date().getFullYear(),
     }),
 }));

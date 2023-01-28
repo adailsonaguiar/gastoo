@@ -31,10 +31,7 @@ export default () => {
         <Stack.Screen name={pages.dash} component={Dash} />
         <Stack.Screen name={pages.accounts} component={Accounts} />
         <Stack.Screen name={pages.accountForm} component={AccountForm} />
-        <Stack.Screen
-          name={pages.transactionForm}
-          component={TransactionForm}
-        />
+        <Stack.Screen name={pages.transactionForm} component={TransactionForm} />
         <Stack.Screen name={pages.transactions} component={Transactions} />
         <Stack.Screen name={pages.config} component={Config} />
       </Stack.Navigator>

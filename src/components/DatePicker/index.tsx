@@ -31,16 +31,9 @@ const DatePicker = ({date, setDate, ...rest}: DatePickerProps) => {
       <Label>Data</Label>
       <S.PickerWrapper onPress={() => toogleShow()}>
         <S.Value>{format(date, 'dd/MM/yyyy')}</S.Value>
-        <Modal
-          animationType="slide"
-          visible={show}
-          onRequestClose={() => setShow(false)}>
+        <Modal animationType="slide" visible={show} onRequestClose={() => setShow(false)}>
           <S.ModalContainer>
-            <Header
-              title="Selecione uma data"
-              lineColor={colors.appColor}
-              onClose={() => setShow(false)}
-            />
+            <Header title="Selecione uma data" lineColor={colors.appColor} onClose={() => setShow(false)} />
             <S.CustomDatePicker
               mode="calendar"
               selected={format(date, 'yyyy-MM-dd')}

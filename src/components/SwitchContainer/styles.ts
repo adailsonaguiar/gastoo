@@ -26,9 +26,7 @@ export const TitleLabel = styled.Text<TitleLabelProps>`
 
 export const Option = styled.TouchableOpacity<TitleLabelProps>`
   ${({isEnabled}) => css`
-    background-color: ${
-      isEnabled ? colors.appColor : colors.backgroundColorPrimary
-    }
+    background-color: ${isEnabled ? colors.appColor : colors.backgroundColorPrimary}
     border-radius: 24px;
     padding: 7px 20px;
     margin-right: 7px;

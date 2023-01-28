@@ -7,18 +7,18 @@ import {useNavigation} from '@react-navigation/native';
 import {formatMoney} from '../../utils/FunctionUtils';
 import incomeIcon from '../../assets/arrow-income.png';
 import expanseIcon from '../../assets/arrow-expanse.png';
+// import {Loading} from '../../components/Loading';
+import {useRealm} from '../../store/realm';
 
 const Transactions = () => {
-  const {transactions, getTransactions, totalsMonth} = TransactionsModel();
+  const {realm} = useRealm();
+
+  const {transactions, getTransactions, totalsMonth} = TransactionsModel({realm});
 
   const navigation = useNavigation();
   return (
     <>
-      <Header
-        title="Transações"
-        onChangeMonth={getTransactions}
-        onClose={() => navigation.goBack()}
-      />
+      <Header title="Transações" onChangeMonth={getTransactions} onClose={() => navigation.goBack()} />
       <S.Container>
         <S.List>
           <TransactionsList transactions={transactions} />
@@ -26,18 +26,15 @@ const Transactions = () => {
         <S.Footer>
           <S.Incomes>
             <S.IconTotal source={incomeIcon} />
-            <S.SaldoTotal>
-              R$ {formatMoney(totalsMonth.totalIncome)}
-            </S.SaldoTotal>
+            <S.SaldoTotal>R$ {formatMoney(totalsMonth.totalIncome)}</S.SaldoTotal>
           </S.Incomes>
           <S.Expanse>
             <S.IconTotal source={expanseIcon} />
-            <S.SaldoTotal>
-              R$ {formatMoney(totalsMonth.totalExpense)}
-            </S.SaldoTotal>
+            <S.SaldoTotal>R$ {formatMoney(totalsMonth.totalExpense)}</S.SaldoTotal>
           </S.Expanse>
         </S.Footer>
       </S.Container>
+      {/* <Loading isLoading={loading} /> */}
     </>
   );
 };

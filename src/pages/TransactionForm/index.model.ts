@@ -1,23 +1,17 @@
 import React from 'react';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useFormik} from 'formik';
+import Realm from 'realm';
 import uuid from 'react-native-uuid';
-import {isFuture, isSameDay, isToday} from 'date-fns';
+import {isFuture, isToday} from 'date-fns';
 import {Option} from '../../components/Select';
 import {transactionType} from '../../database/schemas/TransactionSchema';
 import {Account} from '../../models/Accounts';
 import {Transaction, TransactionBuilder} from '../../models/transaction';
 import {fetchAccounts} from '../../services/accountsService';
 import {showAlertError} from '../../services/alertService';
-import {
-  deleteTransaction,
-  saveTransaction,
-} from '../../services/transactionsService';
-import {
-  categoriesExpense,
-  categoriesIncome,
-} from '../../utils/categoriesTransactions';
-import {handleRealmInstance} from '../../database/realm';
+import {deleteTransaction, saveTransaction} from '../../services/transactionsService';
+import {categoriesExpense, categoriesIncome} from '../../utils/categoriesTransactions';
 
 type TransactionFormRouteProps = {
   props: {
@@ -35,7 +29,7 @@ type FormProps = {
 
 type RouterProps = RouteProp<TransactionFormRouteProps, 'props'>;
 
-export function TransactionFormModel() {
+export function TransactionFormModel(realm: Realm | null) {
   const route = useRoute<RouterProps>();
   const [loading, setLoading] = React.useState(false);
   const FORM_TYPE = route.params?.formType;
@@ -47,9 +41,7 @@ export function TransactionFormModel() {
     initialValue: 0,
     description: '',
     accountId: '',
-    type: !FORM_TYPE
-      ? transactionType.TRANSACTION_OUT
-      : transactionType.TRANSACTION_IN,
+    type: !FORM_TYPE ? transactionType.TRANSACTION_OUT : transactionType.TRANSACTION_IN,
     recurrence: false,
     status: 0,
     day: '',
@@ -62,9 +54,7 @@ export function TransactionFormModel() {
     createdAt: new Date(),
   };
   const navigation = useNavigation();
-  const expenseEdit = route.params?.transaction
-    ? route.params?.transaction
-    : null;
+  const expenseEdit = route.params?.transaction ? route.params?.transaction : null;
 
   const formik = useFormik({
     initialValues: INITIAL_FORM_VALUES,
@@ -80,9 +70,7 @@ export function TransactionFormModel() {
     return categoriesExpense;
   }
 
-  const [accounts, setAccounts] = React.useState<
-    {value: string; label: string}[]
-  >([]);
+  const [accounts, setAccounts] = React.useState<{value: string; label: string}[]>([]);
 
   function handleNoAccounts() {
     showAlertError('Você precisa cadastrar uma conta primeiro!');
@@ -94,9 +82,7 @@ export function TransactionFormModel() {
   }
 
   function getTransactionAccount(accountsResponse: Account[]) {
-    const account = accountsResponse.find(
-      item => item._id === expenseEdit?.accountId,
-    );
+    const account = accountsResponse.find(item => item._id === expenseEdit?.accountId);
     if (account) {
       updateFormValues({
         ...formik.values,
@@ -107,7 +93,7 @@ export function TransactionFormModel() {
   }
 
   async function mapAccounts() {
-    const response = await fetchAccounts();
+    const response = await fetchAccounts({realm});
     if (response?.length) {
       getTransactionAccount(response);
       const mappedSelectOptions = response.map(item => {
@@ -138,9 +124,7 @@ export function TransactionFormModel() {
         description: expenseEdit.description,
         accountId: expenseEdit.accountId,
 
-        type: !FORM_TYPE
-          ? transactionType.TRANSACTION_OUT
-          : transactionType.TRANSACTION_IN,
+        type: !FORM_TYPE ? transactionType.TRANSACTION_OUT : transactionType.TRANSACTION_IN,
         status: expenseEdit.status,
         day: expenseEdit.day,
         month: expenseEdit.month,
@@ -191,10 +175,7 @@ export function TransactionFormModel() {
     return 0;
   }
 
-  function handleRecurrenceTransactions(
-    recurrence: boolean,
-    transaction: Transaction,
-  ) {
+  function handleRecurrenceTransactions(recurrence: boolean, transaction: Transaction) {
     const transactions = [transaction] as Transaction[];
     if (recurrence && !expenseEdit?.recurrence) {
       const dates = [] as Date[];
@@ -202,9 +183,7 @@ export function TransactionFormModel() {
       transactionDate.setMonth(transaction.date.getMonth());
       transactionDate.setDate(transaction.date.getDate());
       for (let i = 0; i < 11; i++) {
-        dates.push(
-          new Date(transactionDate.setMonth(transactionDate.getMonth() + 1)),
-        );
+        dates.push(new Date(transactionDate.setMonth(transactionDate.getMonth() + 1)));
       }
       dates.forEach(date => {
         transactions.push({
@@ -247,21 +226,16 @@ export function TransactionFormModel() {
       recurrence: !!values.recurrence,
     });
     if (validateForm(values)) {
-      const transactions = handleRecurrenceTransactions(
-        values.recurrence,
-        transactionToSave,
-      );
+      const transactions = handleRecurrenceTransactions(values.recurrence, transactionToSave);
 
-      const realm = await handleRealmInstance();
       const transactionsToSave = [] as Promise<void>[];
       transactions.map(item => {
         const createTransaction = async () => {
-          await saveTransaction(item, realm);
+          saveTransaction(item, realm);
         };
         transactionsToSave.push(createTransaction());
       });
       await Promise.all(transactionsToSave);
-      realm.close();
       navigation.goBack();
     }
     setLoading(false);
@@ -269,7 +243,7 @@ export function TransactionFormModel() {
 
   const handleDelete = (transaction: Transaction) => {
     transaction.valueType = 0;
-    deleteTransaction(transaction);
+    deleteTransaction(transaction, realm);
     navigation.goBack();
   };
 

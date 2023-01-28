@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React from 'react';
 import months, {monthsAbbreviated} from '../../utils/months';
 
 import ArrowLeft from '../../assets/chevron-left-black.png';
@@ -13,40 +14,31 @@ import {
   ButtonMonthIconNext,
   MonthCenter,
 } from './styles';
-import {useDate} from '../../store/date';
 
 type MothHeaderProps = {
   onChangeMonth: (props: {month: number; year: number}) => void;
 };
 
 export default function MothHeader({onChangeMonth}: MothHeaderProps) {
-  const {month, year, setMonthYear} = useDate(state => state);
+  const currentDate = new Date();
+  const [date, setDate] = React.useState({month: currentDate.getMonth(), year: currentDate.getFullYear()});
 
-  useEffect(() => {
-    getDate();
-  }, []);
-
-  const getDate = () => {
-    const date = new Date();
-    setMonthYear(date.getMonth(), date.getFullYear());
-  };
+  React.useEffect(() => {
+    onChangeMonth({month: date.month + 1, year: date.year});
+  }, [date]);
 
   const nextMonth = () => {
-    if (month === 11) {
-      setMonthYear(0, year + 1);
-      onChangeMonth({month: 1, year: year + 1});
+    if (date.month === 11) {
+      setDate({month: 0, year: date.year + 1});
     } else {
-      setMonthYear(month + 1, year);
-      onChangeMonth({month: month + 2, year: year});
+      setDate({month: date.month + 1, year: date.year});
     }
   };
   const previousMonth = () => {
-    if (month === 0) {
-      setMonthYear(11, year - 1);
-      onChangeMonth({month: 12, year: year - 1});
+    if (date.month === 0) {
+      setDate({month: 11, year: date.year - 1});
     } else {
-      setMonthYear(month - 1, year);
-      onChangeMonth({month: month, year: year});
+      setDate({month: date.month - 1, year: date.year});
     }
   };
 
@@ -56,9 +48,7 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
       return `${months[props.month] ? months[props.month] : ''}`;
     }
     if (props.year < currentYear) {
-      return `${
-        monthsAbbreviated[props.month] ? monthsAbbreviated[props.month] : ''
-      }/${props.year}`;
+      return `${monthsAbbreviated[props.month] ? monthsAbbreviated[props.month] : ''}/${props.year}`;
     }
     return `${months[props.month] ? months[props.month] : ''} ${props.year}`;
   };
@@ -67,14 +57,12 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
     const currentYear = new Date().getFullYear();
     let yearToShow = 0;
     let monthToShow = '';
-    if (month === 0) {
+    if (date.month === 0) {
       yearToShow = props.year - 1;
       monthToShow = monthsAbbreviated[11] ? monthsAbbreviated[11] : '';
     } else {
       yearToShow = props.year;
-      monthToShow = monthsAbbreviated[props.month - 1]
-        ? monthsAbbreviated[props.month - 1]
-        : '';
+      monthToShow = monthsAbbreviated[props.month - 1] ? monthsAbbreviated[props.month - 1] : '';
     }
     if (yearToShow === currentYear) {
       return `${monthToShow}`;
@@ -86,13 +74,11 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
     const currentYear = new Date().getFullYear();
     let yearToShow = 0;
     let monthToShow = '';
-    if (month === 11) {
+    if (date.month === 11) {
       monthToShow = monthsAbbreviated[0];
       yearToShow = props.year + 1;
     } else {
-      monthToShow = monthsAbbreviated[props.month + 1]
-        ? monthsAbbreviated[props.month + 1]
-        : '';
+      monthToShow = monthsAbbreviated[props.month + 1] ? monthsAbbreviated[props.month + 1] : '';
       yearToShow = props.year;
     }
     if (yearToShow === currentYear) {
@@ -105,11 +91,11 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
     <Container>
       <ButtonPrevMonth onPress={previousMonth} style={{opacity: 0.5}}>
         <ButtonMonthIconPrev source={ArrowLeft} />
-        <Month>{showPreviousMonth({month, year})}</Month>
+        <Month>{showPreviousMonth(date)}</Month>
       </ButtonPrevMonth>
-      <MonthCenter>{handleDateDisplay({month, year})}</MonthCenter>
+      <MonthCenter>{handleDateDisplay(date)}</MonthCenter>
       <ButtonNextMonth onPress={nextMonth} style={{opacity: 0.5}}>
-        <Month>{showNextMonth({month, year})}</Month>
+        <Month>{showNextMonth(date)}</Month>
         <ButtonMonthIconNext source={ArrowRight} />
       </ButtonNextMonth>
     </Container>

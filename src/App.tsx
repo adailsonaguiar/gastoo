@@ -1,19 +1,11 @@
 import React from 'react';
 import FlashMessage from 'react-native-flash-message';
-import {LogBox, PermissionsAndroid, StatusBar} from 'react-native';
+import {LogBox, StatusBar} from 'react-native';
 import Routes from './routes';
 import 'react-native-gesture-handler';
 import styled from 'styled-components/native';
-
-import {
-  fetchTransactions,
-  saveTransaction,
-} from './services/transactionsService';
-import {handleRealmInstance} from './database/realm';
-import {saveAccount} from './services/accountsService';
-import {Account} from './models/Accounts';
-import {Transaction} from './models/transaction';
-import {reatDataFileBackup} from './services/csvFileService';
+import {useRealm} from './store/realm';
+import {getRealm} from './database/realm';
 
 const Cotainer = styled.SafeAreaView`
   flex: 1;
@@ -26,6 +18,15 @@ LogBox.ignoreLogs([
 ]);
 
 const App = () => {
+  const {realm, setRealm} = useRealm();
+  async function handleRealm() {
+    if (realm) {
+      setRealm(await getRealm());
+    }
+  }
+  React.useEffect(() => {
+    handleRealm();
+  }, []);
   return (
     <Cotainer>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />

@@ -22,27 +22,19 @@ const styles = StyleSheet.create({
 
 const Tabs = ({navigation}) => (
   <TabsContainer>
-    <TabItem
-      style={styles.tab}
-      onPress={() => navigation.navigate(pages.transactionForm)}>
+    <TabItem style={styles.tab} onPress={() => navigation.navigate(pages.transactionForm)}>
       <IconArea>
         <ImageIcon source={despesaIcon} />
       </IconArea>
       <TitleCard>Despesa</TitleCard>
     </TabItem>
-    <TabItem
-      style={styles.tab}
-      onPress={() =>
-        navigation.navigate(pages.transactionForm, {formType: true})
-      }>
+    <TabItem style={styles.tab} onPress={() => navigation.navigate(pages.transactionForm, {formType: true})}>
       <IconArea>
         <ImageIcon source={receitaIcon} />
       </IconArea>
       <TitleCard>Receita</TitleCard>
     </TabItem>
-    <TabItem
-      style={styles.tab}
-      onPress={() => navigation.navigate(pages.accounts)}>
+    <TabItem style={styles.tab} onPress={() => navigation.navigate(pages.accounts)}>
       <IconArea>
         <ImageIcon source={contasIcon} />
       </IconArea>

@@ -9,15 +9,18 @@ import {pages} from '../../routes';
 import Button from '../../components/Button';
 import {Account} from '../../models/Accounts';
 import {fetchAccounts} from '../../services/accountsService';
+import {useRealm} from '../../store/realm';
 
 type AccountPageProps = {
   navigation: any;
 };
 
 const Accounts = ({navigation}: AccountPageProps) => {
+  const {realm} = useRealm();
+
   const [accounts, setAccounts] = React.useState<Account[]>([]);
   async function getAccounts() {
-    const response = await fetchAccounts();
+    const response = await fetchAccounts({realm});
     if (response) {
       setAccounts(response);
     }
@@ -26,6 +29,7 @@ const Accounts = ({navigation}: AccountPageProps) => {
   useFocusEffect(
     React.useCallback(() => {
       getAccounts();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
 

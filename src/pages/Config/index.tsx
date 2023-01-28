@@ -4,17 +4,11 @@ import ArrowRightIcon from '../../assets/arrow-right-blue.png';
 import {version} from '../../../package.json';
 
 import * as S from './styles';
-import {
-  exportDataToExcel,
-  reatDataFileBackup,
-} from '../../services/csvFileService';
+import {exportDataToExcel, reatDataFileBackup} from '../../services/csvFileService';
 import {PermissionsAndroid} from 'react-native';
 import {useExportData} from '../../hooks/useExportData';
 import {handleRealmInstance} from '../../database/realm';
-import {
-  fetchTransactions,
-  saveTransaction,
-} from '../../services/transactionsService';
+import {fetchTransactions, saveTransaction} from '../../services/transactionsService';
 import {Account} from '../../models/Accounts';
 import {Transaction} from '../../models/transaction';
 import {saveAccount} from '../../services/accountsService';
@@ -34,9 +28,7 @@ export const Config = ({navigation}: ConfigProps) => {
       );
 
       if (!isPermitedExternalStorage) {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        );
+        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
 
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           exportDataToExcel(dataToExport);
@@ -50,10 +42,7 @@ export const Config = ({navigation}: ConfigProps) => {
     }
   };
 
-  async function handleBackup(backup: {
-    accounts: Account[];
-    transactions: Transaction[];
-  }) {
+  async function handleBackup(backup: {accounts: Account[]; transactions: Transaction[]}) {
     const realm = await handleRealmInstance();
     const response = await fetchTransactions('', realm);
 
@@ -67,8 +56,7 @@ export const Config = ({navigation}: ConfigProps) => {
           createdAt: new Date(account.createdAt),
           balance: 0,
         } as Account;
-        const createPromise = async () =>
-          await saveAccount(accountToSave, realm);
+        const createPromise = async () => await saveAccount(accountToSave, realm);
         accountPromises.push(createPromise());
       });
       backup.transactions.map(async transaction => {
@@ -79,8 +67,7 @@ export const Config = ({navigation}: ConfigProps) => {
           status: 0,
           valueType: 0,
         } as Transaction;
-        const createPromise = async () =>
-          await saveTransaction(transactionToSave, realm);
+        const createPromise = async () => await saveTransaction(transactionToSave, realm);
         transactionPromises.push(createPromise());
       });
 
@@ -93,16 +80,13 @@ export const Config = ({navigation}: ConfigProps) => {
 
   async function handleImportData() {
     try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-        {
-          title: 'Cool Photo App Camera Permission',
-          message: 'Your app needs permission.',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE, {
+        title: 'Cool Photo App Camera Permission',
+        message: 'Your app needs permission.',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      });
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const file = JSON.parse(await reatDataFileBackup());
         handleBackup(

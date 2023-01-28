@@ -20,9 +20,12 @@ import {formatMoney} from '../../utils/FunctionUtils';
 import EyeIcon from '../../assets/eye-open.png';
 import EyeIconClose from '../../assets/eye-close.png';
 import {getData, storeData} from '../../services/asyncStorageService';
+import {useRealm} from '../../store/realm';
 
 export const Dash = ({navigation}) => {
-  const {transactions, totalsMonth, getTransactions} = TransactionsModel();
+  const {realm} = useRealm();
+
+  const {transactions, totalsMonth, getTransactions} = TransactionsModel({realm});
   const [showMoney, setShowMoney] = React.useState(true);
 
   async function handleShowValuesStorageData() {
@@ -52,10 +55,9 @@ export const Dash = ({navigation}) => {
         });
         handleShowValuesStorageData();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
-
-  React.useEffect(() => {}, []);
 
   return (
     <S.Container>
@@ -69,9 +71,7 @@ export const Dash = ({navigation}) => {
           <S.IncomeCard>
             <S.Label>Receitas</S.Label>
             {showMoney ? (
-              <S.IncomeCardValue>
-                {formatMoney(totalsMonth.totalIncome)}
-              </S.IncomeCardValue>
+              <S.IncomeCardValue>{formatMoney(totalsMonth.totalIncome)}</S.IncomeCardValue>
             ) : (
               <S.WrapperMoneyHidden />
             )}
@@ -79,9 +79,7 @@ export const Dash = ({navigation}) => {
           <S.IncomeCard>
             <S.Label>Despesas</S.Label>
             {showMoney ? (
-              <S.IncomeCardValue>
-                {formatMoney(totalsMonth.totalExpense)}
-              </S.IncomeCardValue>
+              <S.IncomeCardValue>{formatMoney(totalsMonth.totalExpense)}</S.IncomeCardValue>
             ) : (
               <S.WrapperMoneyHidden />
             )}
@@ -91,18 +89,12 @@ export const Dash = ({navigation}) => {
         <S.ContainerSaldo>
           <S.Cifra>R$</S.Cifra>
           {showMoney ? (
-            <S.TxtSaldo>
-              {formatMoney(totalsMonth.totalIncome - totalsMonth.totalExpense)}
-            </S.TxtSaldo>
+            <S.TxtSaldo>{formatMoney(totalsMonth.totalIncome - totalsMonth.totalExpense)}</S.TxtSaldo>
           ) : (
             <S.WrapperMoneyHidden />
           )}
           <S.EyeBtn onPress={toggleShowValuesStorageData}>
-            {showMoney ? (
-              <S.eyeIcon source={EyeIcon} />
-            ) : (
-              <S.eyeIcon source={EyeIconClose} />
-            )}
+            {showMoney ? <S.eyeIcon source={EyeIcon} /> : <S.eyeIcon source={EyeIconClose} />}
           </S.EyeBtn>
         </S.ContainerSaldo>
       </S.CompHead>

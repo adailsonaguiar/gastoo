@@ -2,8 +2,8 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {Alert} from 'react-native';
 import React from 'react';
 import uuid from 'react-native-uuid';
+import Realm from 'realm';
 
-import {getRealm} from '../../database/realm';
 import {Account} from '../../models/Accounts';
 import {showAlertError} from '../../services/alertService';
 import {deleteAccount, saveAccount} from '../../services/accountsService';
@@ -22,7 +22,7 @@ type AccountFormRouteProps = {
 
 type RouterProps = RouteProp<AccountFormRouteProps, 'props'>;
 
-export const AccountFormViewModel = () => {
+export const AccountFormViewModel = (realm: Realm | null) => {
   const navigation = useNavigation();
   const {params} = useRoute<RouterProps>();
   const accountItem = (params?.account as Account) || null;
@@ -76,15 +76,15 @@ export const AccountFormViewModel = () => {
     );
   }
 
-  async function verifyTransactionsAsociate(id: string, realm: Realm) {
-    const data = await fetchTransactions(`accountId = '${id}'`, realm);
+  async function verifyTransactionsAsociate(id: string) {
+    const data = fetchTransactions({filter: `accountId = '${id}'`, realm});
     if (data?.length) {
       return true;
     }
     return false;
   }
 
-  async function saveAccountBd(values: AccountFormProps, realm: Realm) {
+  async function saveAccountBd(values: AccountFormProps) {
     setLoading(true);
     if (validateForm(values)) {
       const accountToSave = {_id: values._id} as Account;
@@ -106,21 +106,15 @@ export const AccountFormViewModel = () => {
   }
 
   async function onSubmit(values: AccountFormProps) {
-    const realm = await getRealm();
     if (currentAccount._id) {
-      const transactionsAssociate = await verifyTransactionsAsociate(
-        values._id,
-        realm,
-      );
+      const transactionsAssociate = await verifyTransactionsAsociate(values._id);
       if (transactionsAssociate) {
-        showAlertError(
-          'Você não pode editar essa conta, ela ainda contém transações',
-        );
+        showAlertError('Você não pode editar essa conta, ela ainda contém transações');
       } else {
-        await saveAccountBd(values, realm);
+        await saveAccountBd(values);
       }
     } else {
-      await saveAccountBd(values, realm);
+      await saveAccountBd(values);
     }
   }
 
