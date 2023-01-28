@@ -30,43 +30,23 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
   }
 
   async function getTransactions(props?: {month: number; year: number}) {
-    setLoading(true);
-    console.log('started', new Date());
+    const response = fetchTransactions({filter: `month = "${props?.month}" AND year = "${props?.year}"`, realm});
 
-    // const response = await fetchTransactions({filter: `month = "${props?.month}" AND year = "${props?.year}"`, realm});
-
-    // if (response?.length) {
-    //   setTransactions(response);
-    //   getAllTransactionsData(response);
-    // }
-    // //  else {
-    // //   setTransactions([]);
-    // //   setTotalsMonth({
-    // //     totalIncome: 0,
-    // //     totalExpense: 0,
-    // //   });
-    // // }
-
-    const response = loadData({
-      schema: SCHEMAS.TRANSACTION,
-      realm: realm,
-      filter: `month = "${props?.month}" AND year = "${props?.year}"`,
-      sort: 'date',
-    });
-    console.log('finish+fetchTransactions...', new Date());
-
-    if (response) {
-      setTransactions(response as Transaction[]);
+    if (response?.length) {
+      setTransactions(response);
+      getAllTransactionsData(response);
+    } else {
+      setTransactions([]);
+      setTotalsMonth({
+        totalIncome: 0,
+        totalExpense: 0,
+      });
     }
-    console.log('finish', new Date());
-
-    setLoading(false);
   }
 
-  // React.useEffect(() => {
-  //   console.log(month, year);
-  //   getTransactions({month: month + 1, year});
-  // }, [month]);
+  React.useEffect(() => {
+    getTransactions({month: month + 1, year});
+  }, [month]);
 
   return {transactions, getTransactions, totalsMonth, loading};
 }

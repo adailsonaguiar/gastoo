@@ -55,10 +55,9 @@ export const Dash = ({navigation}) => {
         });
         handleShowValuesStorageData();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
-
-  React.useEffect(() => {}, []);
 
   return (
     <S.Container>

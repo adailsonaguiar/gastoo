@@ -13,42 +13,31 @@ import {
   ButtonMonthIconNext,
   MonthCenter,
 } from './styles';
-import {useDate} from '../../store/date';
 
 type MothHeaderProps = {
   onChangeMonth: (props: {month: number; year: number}) => void;
 };
 
 export default function MothHeader({onChangeMonth}: MothHeaderProps) {
-  const {setMonthYear} = useDate(state => state);
   const currentDate = new Date();
   const [date, setDate] = React.useState({month: currentDate.getMonth(), year: currentDate.getFullYear()});
-
-  React.useEffect(() => {
-    // setMonthYear(date.month, date.year);
-    onChangeMonth(date);
-  }, [date]);
 
   const nextMonth = () => {
     if (date.month === 11) {
       setDate({month: 0, year: date.year + 1});
-      // setMonthYear(0, date.year + 1);
-      // onChangeMonth({month: 0, year: date.year + 1});
+      onChangeMonth({month: 0, year: date.year + 1});
     } else {
       setDate({month: date.month + 1, year: date.year});
-      // setMonthYear(date.month + 1, date.year);
-      // onChangeMonth({month: date.month + 1, year: date.year});
+      onChangeMonth({month: date.month + 1, year: date.year});
     }
   };
   const previousMonth = () => {
     if (date.month === 0) {
       setDate({month: 11, year: date.year - 1});
-      // setMonthYear(11, date.year - 1);
-      // onChangeMonth({month: 11, year: date.year - 1});
+      onChangeMonth({month: 11, year: date.year - 1});
     } else {
       setDate({month: date.month - 1, year: date.year});
-      // setMonthYear(date.month - 1, date.year);
-      // onChangeMonth({month: date.month - 1, year: date.year});
+      onChangeMonth({month: date.month - 1, year: date.year});
     }
   };
 

@@ -15,9 +15,12 @@ import InputMask from '../../components/InputMask';
 import {TransactionFormModel} from './index.model';
 import {useNavigation} from '@react-navigation/native';
 import {FormContentWrapper} from '../../components/FormContentWrapper';
+import {useRealm} from '../../store/realm';
 
 const TransactionForm = () => {
-  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE, loading} = TransactionFormModel();
+  const {realm} = useRealm();
+
+  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE, loading} = TransactionFormModel(realm);
   const navigation = useNavigation();
   function handleSceneTitle() {
     if (expenseEdit) {
