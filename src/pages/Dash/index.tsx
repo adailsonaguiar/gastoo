@@ -20,9 +20,12 @@ import {formatMoney} from '../../utils/FunctionUtils';
 import EyeIcon from '../../assets/eye-open.png';
 import EyeIconClose from '../../assets/eye-close.png';
 import {getData, storeData} from '../../services/asyncStorageService';
+import {useRealm} from '../../store/realm';
 
 export const Dash = ({navigation}) => {
-  const {transactions, totalsMonth, getTransactions} = TransactionsModel();
+  const {realm} = useRealm();
+
+  const {transactions, totalsMonth, getTransactions} = TransactionsModel({realm});
   const [showMoney, setShowMoney] = React.useState(true);
 
   async function handleShowValuesStorageData() {

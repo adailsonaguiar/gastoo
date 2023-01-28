@@ -20,33 +20,35 @@ type MothHeaderProps = {
 };
 
 export default function MothHeader({onChangeMonth}: MothHeaderProps) {
-  const {month, year, setMonthYear} = useDate(state => state);
+  const {setMonthYear} = useDate(state => state);
+  const currentDate = new Date();
+  const [date, setDate] = React.useState({month: currentDate.getMonth(), year: currentDate.getFullYear()});
 
-  useEffect(() => {
-    getDate();
-  }, []);
-
-  const getDate = () => {
-    const date = new Date();
-    setMonthYear(date.getMonth(), date.getFullYear());
-  };
+  React.useEffect(() => {
+    // setMonthYear(date.month, date.year);
+    onChangeMonth(date);
+  }, [date]);
 
   const nextMonth = () => {
-    if (month === 11) {
-      setMonthYear(0, year + 1);
-      onChangeMonth({month: 1, year: year + 1});
+    if (date.month === 11) {
+      setDate({month: 0, year: date.year + 1});
+      // setMonthYear(0, date.year + 1);
+      // onChangeMonth({month: 0, year: date.year + 1});
     } else {
-      setMonthYear(month + 1, year);
-      onChangeMonth({month: month + 2, year: year});
+      setDate({month: date.month + 1, year: date.year});
+      // setMonthYear(date.month + 1, date.year);
+      // onChangeMonth({month: date.month + 1, year: date.year});
     }
   };
   const previousMonth = () => {
-    if (month === 0) {
-      setMonthYear(11, year - 1);
-      onChangeMonth({month: 12, year: year - 1});
+    if (date.month === 0) {
+      setDate({month: 11, year: date.year - 1});
+      // setMonthYear(11, date.year - 1);
+      // onChangeMonth({month: 11, year: date.year - 1});
     } else {
-      setMonthYear(month - 1, year);
-      onChangeMonth({month: month, year: year});
+      setDate({month: date.month - 1, year: date.year});
+      // setMonthYear(date.month - 1, date.year);
+      // onChangeMonth({month: date.month - 1, year: date.year});
     }
   };
 
@@ -65,7 +67,7 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
     const currentYear = new Date().getFullYear();
     let yearToShow = 0;
     let monthToShow = '';
-    if (month === 0) {
+    if (date.month === 0) {
       yearToShow = props.year - 1;
       monthToShow = monthsAbbreviated[11] ? monthsAbbreviated[11] : '';
     } else {
@@ -82,7 +84,7 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
     const currentYear = new Date().getFullYear();
     let yearToShow = 0;
     let monthToShow = '';
-    if (month === 11) {
+    if (date.month === 11) {
       monthToShow = monthsAbbreviated[0];
       yearToShow = props.year + 1;
     } else {
@@ -99,11 +101,11 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
     <Container>
       <ButtonPrevMonth onPress={previousMonth} style={{opacity: 0.5}}>
         <ButtonMonthIconPrev source={ArrowLeft} />
-        <Month>{showPreviousMonth({month, year})}</Month>
+        <Month>{showPreviousMonth(date)}</Month>
       </ButtonPrevMonth>
-      <MonthCenter>{handleDateDisplay({month, year})}</MonthCenter>
+      <MonthCenter>{handleDateDisplay(date)}</MonthCenter>
       <ButtonNextMonth onPress={nextMonth} style={{opacity: 0.5}}>
-        <Month>{showNextMonth({month, year})}</Month>
+        <Month>{showNextMonth(date)}</Month>
         <ButtonMonthIconNext source={ArrowRight} />
       </ButtonNextMonth>
     </Container>

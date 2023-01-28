@@ -3,20 +3,22 @@ import {SCHEMAS} from '../database/schemas';
 import {Transaction} from '../models/transaction';
 import {getTransactionAccount, handleAccountBalance} from './accountsService';
 import {transactionType} from '../database/schemas/TransactionSchema';
-import {isFuture, isToday} from 'date-fns';
+import {isFuture} from 'date-fns';
 
-export async function fetchTransactions(filter?: string, externalRealmInstance?: Realm) {
-  let realm = await handleRealmInstance(externalRealmInstance);
+export async function fetchTransactions(props: {filter?: string; realm: Realm | null}) {
+  console.log('started+fetchTransactions', new Date());
+
   const response = await loadData({
     schema: SCHEMAS.TRANSACTION,
-    realm,
-    filter,
+    realm: props.realm,
+    filter: props.filter,
     sort: 'date',
   });
+  console.log('finish+fetchTransactions...', new Date());
+
   if (response) {
     return response as Transaction[];
   }
-  closeRealmInstance(realm, externalRealmInstance);
 }
 
 function calculateAccountBalance(props: {
