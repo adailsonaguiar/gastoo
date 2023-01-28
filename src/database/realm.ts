@@ -26,12 +26,7 @@ export const getId = async (schema: string) => {
   }
 };
 
-export const loadData = async (props: {
-  realm: Realm;
-  schema: string;
-  filter?: string;
-  sort?: string;
-}) => {
+export const loadData = async (props: {realm: Realm; schema: string; filter?: string; sort?: string}) => {
   try {
     let response = null;
     if (!props.filter?.length) {
@@ -50,11 +45,7 @@ export const loadData = async (props: {
   }
 };
 
-export const writeData = async (props: {
-  realm: Realm;
-  schema: string;
-  data: any;
-}) => {
+export const writeData = async (props: {realm: Realm; schema: string; data: any}) => {
   try {
     return props.realm.write(() => {
       props.realm.create(props.schema, props.data, true);
@@ -64,11 +55,7 @@ export const writeData = async (props: {
   }
 };
 
-export const removeById = async (props: {
-  realm: Realm;
-  schema: string;
-  id: string;
-}) => {
+export const removeById = async (props: {realm: Realm; schema: string; id: string}) => {
   try {
     props.realm.write(() => {
       const data = props.realm.objectForPrimaryKey(props.schema, props.id);
@@ -87,10 +74,7 @@ export async function handleRealmInstance(externalRealmInstance?: Realm) {
   }
 }
 
-export async function closeRealmInstance(
-  localInstance: Realm,
-  externalRealmInstance?: Realm,
-) {
+export async function closeRealmInstance(localInstance: Realm, externalRealmInstance?: Realm) {
   if (!externalRealmInstance) {
     localInstance.close();
   }

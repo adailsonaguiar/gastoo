@@ -25,11 +25,7 @@ export function TransactionsModel() {
     setTotalsMonth(totalValues);
   }
 
-  async function getTransactions(props?: {
-    month: number;
-    year: number;
-    realmInstance?: Realm;
-  }) {
+  async function getTransactions(props?: {month: number; year: number; realmInstance?: Realm}) {
     const response = await fetchTransactions(
       `month = "${props?.month}" AND year = "${props?.year}"`,
       props?.realmInstance,

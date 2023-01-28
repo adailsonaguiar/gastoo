@@ -31,22 +31,15 @@ const CardTransaction = ({
 }: CardTransactionProps) => {
   const navigation = useNavigation();
   return (
-    <S.Conta
-      onPress={() =>
-        navigation && navigation.navigate(screenNavigate, routeParameters)
-      }>
+    <S.Conta onPress={() => navigation && navigation.navigate(screenNavigate, routeParameters)}>
       {lineLeftColor && <S.LineLeft lineLeftColor={lineLeftColor} />}
       <S.ColLeft>
         <S.TitleConta>{transactionTitle}</S.TitleConta>
         <S.CategoryConta>{categoryTransaction}</S.CategoryConta>
       </S.ColLeft>
       <S.ColRight>
-        <S.Saldo type={type}>
-          {`${type === 'TRANSACTION_OUT' ? '-' : ''}R$${formatMoney(value)}`}
-        </S.Saldo>
-        <S.Atualizado>{`${status} ${formatteNumber(date.day)}/${formatteNumber(
-          date.month,
-        )}`}</S.Atualizado>
+        <S.Saldo type={type}>{`${type === 'TRANSACTION_OUT' ? '-' : ''}R$${formatMoney(value)}`}</S.Saldo>
+        <S.Atualizado>{`${status} ${formatteNumber(date.day)}/${formatteNumber(date.month)}`}</S.Atualizado>
       </S.ColRight>
       {transactionStatus === 0 ? <S.BadgeStatus /> : null}
     </S.Conta>

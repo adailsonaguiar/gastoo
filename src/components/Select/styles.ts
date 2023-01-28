@@ -2,11 +2,7 @@ import {StyleSheet} from 'react-native';
 import styled, {css} from 'styled-components/native';
 import colors from '../../styles/colors';
 import {fontMedium, fontRegular} from '../../styles/fonts';
-import {
-  FontInputStyles,
-  InputWrapperStyles,
-  SelectWrapperStyles,
-} from '../InputWrapperStyles';
+import {FontInputStyles, InputWrapperStyles, SelectWrapperStyles} from '../InputWrapperStyles';
 
 export const PickerWrapper = styled.View`
   border-radius: 10px;

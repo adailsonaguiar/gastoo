@@ -26,9 +26,7 @@ export const formatMoney = (value: number) => {
 
     const negativeSign = amount < 0 ? '-' : '';
 
-    let i = parseInt(
-      (amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)),
-    ).toString();
+    let i = parseInt((amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))).toString();
     let j = i.length > 3 ? i.length % 3 : 0;
 
     return (

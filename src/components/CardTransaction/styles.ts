@@ -41,9 +41,7 @@ export const ColRight = styled.View`
 
 export const Saldo = styled.Text<{type: string}>`
   ${({type}) => css`
-    color: ${type === transactionType.TRANSACTION_IN
-      ? colors.greenApp
-      : colors.colorDanger};
+    color: ${type === transactionType.TRANSACTION_IN ? colors.greenApp : colors.colorDanger};
     font-size: 16px;
     font-family: ${fontMedium};
   `}

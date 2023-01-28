@@ -14,11 +14,7 @@ export function ColorsList({handleColor}: ColorsListProps) {
       <S.Container>
         <S.Carrousel>
           {mdColors.map((color, index) => (
-            <S.Color
-              key={index + color}
-              color={color}
-              onPress={() => handleColor(color)}
-            />
+            <S.Color key={index + color} color={color} onPress={() => handleColor(color)} />
           ))}
         </S.Carrousel>
       </S.Container>

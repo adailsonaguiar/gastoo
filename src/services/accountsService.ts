@@ -1,18 +1,9 @@
-import {
-  closeRealmInstance,
-  handleRealmInstance,
-  loadData,
-  removeById,
-  writeData,
-} from '../database/realm';
+import {closeRealmInstance, handleRealmInstance, loadData, removeById, writeData} from '../database/realm';
 import {SCHEMAS} from '../database/schemas';
 import {Account} from '../models/Accounts';
 import {showAlertError} from './alertService';
 
-export async function fetchAccounts(
-  filter?: string,
-  externalRealmInstance?: Realm,
-) {
+export async function fetchAccounts(filter?: string, externalRealmInstance?: Realm) {
   let realm = await handleRealmInstance(externalRealmInstance);
 
   const response = await loadData({schema: SCHEMAS.ACCOUNT, realm, filter});
@@ -23,34 +14,21 @@ export async function fetchAccounts(
   closeRealmInstance(realm, externalRealmInstance);
 }
 
-export async function getTransactionAccount(
-  accountId: string,
-  localRealmInstance: Realm,
-) {
-  const transactionAccount = await fetchAccounts(
-    `_id = '${accountId}'`,
-    localRealmInstance,
-  );
+export async function getTransactionAccount(accountId: string, localRealmInstance: Realm) {
+  const transactionAccount = await fetchAccounts(`_id = '${accountId}'`, localRealmInstance);
   if (transactionAccount?.length) {
     return transactionAccount[0];
   }
   return null;
 }
 
-export async function saveAccount(
-  account: Account,
-  externalRealmInstance?: Realm,
-) {
+export async function saveAccount(account: Account, externalRealmInstance?: Realm) {
   let realm = await handleRealmInstance(externalRealmInstance);
   await writeData({schema: SCHEMAS.ACCOUNT, data: account, realm});
   closeRealmInstance(realm, externalRealmInstance);
 }
 
-export async function handleAccountBalance(
-  account: Account,
-  valueToUpdate: number,
-  realmInstance: Realm,
-) {
+export async function handleAccountBalance(account: Account, valueToUpdate: number, realmInstance: Realm) {
   account.balance = valueToUpdate;
   if (account.balance >= 0) {
     await saveAccount(account, realmInstance);
@@ -60,10 +38,7 @@ export async function handleAccountBalance(
   }
 }
 
-export async function deleteAccount(
-  account: Account,
-  externalRealmInstance?: Realm,
-) {
+export async function deleteAccount(account: Account, externalRealmInstance?: Realm) {
   let realm = await handleRealmInstance(externalRealmInstance);
   const data = await loadData({
     schema: SCHEMAS.TRANSACTION,
@@ -71,9 +46,7 @@ export async function deleteAccount(
     realm,
   });
   if (data?.length) {
-    showAlertError(
-      'Você não pode remover essa conta, ela ainda contém transações',
-    );
+    showAlertError('Você não pode remover essa conta, ela ainda contém transações');
   } else {
     removeById({id: account._id, schema: SCHEMAS.ACCOUNT, realm});
   }

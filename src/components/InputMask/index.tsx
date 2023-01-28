@@ -17,14 +17,7 @@ type InputProps = {
   mainInput?: boolean;
 } & TextInputMaskProps;
 
-const InputMask = ({
-  label,
-  type,
-  options,
-  onChangeMasked,
-  mainInput,
-  ...rest
-}: InputProps) => {
+const InputMask = ({label, type, options, onChangeMasked, mainInput, ...rest}: InputProps) => {
   return (
     <S.Container>
       <Label>{label}</Label>
@@ -34,9 +27,7 @@ const InputMask = ({
           type={type}
           options={options}
           mainInput={mainInput}
-          onChangeText={(maskedValue: string, rawValue: string) =>
-            onChangeMasked(maskedValue, rawValue)
-          }
+          onChangeText={(maskedValue: string, rawValue: string) => onChangeMasked(maskedValue, rawValue)}
         />
       </S.InputWrapper>
     </S.Container>

@@ -69,9 +69,7 @@ export const Dash = ({navigation}) => {
           <S.IncomeCard>
             <S.Label>Receitas</S.Label>
             {showMoney ? (
-              <S.IncomeCardValue>
-                {formatMoney(totalsMonth.totalIncome)}
-              </S.IncomeCardValue>
+              <S.IncomeCardValue>{formatMoney(totalsMonth.totalIncome)}</S.IncomeCardValue>
             ) : (
               <S.WrapperMoneyHidden />
             )}
@@ -79,9 +77,7 @@ export const Dash = ({navigation}) => {
           <S.IncomeCard>
             <S.Label>Despesas</S.Label>
             {showMoney ? (
-              <S.IncomeCardValue>
-                {formatMoney(totalsMonth.totalExpense)}
-              </S.IncomeCardValue>
+              <S.IncomeCardValue>{formatMoney(totalsMonth.totalExpense)}</S.IncomeCardValue>
             ) : (
               <S.WrapperMoneyHidden />
             )}
@@ -91,18 +87,12 @@ export const Dash = ({navigation}) => {
         <S.ContainerSaldo>
           <S.Cifra>R$</S.Cifra>
           {showMoney ? (
-            <S.TxtSaldo>
-              {formatMoney(totalsMonth.totalIncome - totalsMonth.totalExpense)}
-            </S.TxtSaldo>
+            <S.TxtSaldo>{formatMoney(totalsMonth.totalIncome - totalsMonth.totalExpense)}</S.TxtSaldo>
           ) : (
             <S.WrapperMoneyHidden />
           )}
           <S.EyeBtn onPress={toggleShowValuesStorageData}>
-            {showMoney ? (
-              <S.eyeIcon source={EyeIcon} />
-            ) : (
-              <S.eyeIcon source={EyeIconClose} />
-            )}
+            {showMoney ? <S.eyeIcon source={EyeIcon} /> : <S.eyeIcon source={EyeIconClose} />}
           </S.EyeBtn>
         </S.ContainerSaldo>
       </S.CompHead>

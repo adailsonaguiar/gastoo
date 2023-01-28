@@ -56,9 +56,7 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
       return `${months[props.month] ? months[props.month] : ''}`;
     }
     if (props.year < currentYear) {
-      return `${
-        monthsAbbreviated[props.month] ? monthsAbbreviated[props.month] : ''
-      }/${props.year}`;
+      return `${monthsAbbreviated[props.month] ? monthsAbbreviated[props.month] : ''}/${props.year}`;
     }
     return `${months[props.month] ? months[props.month] : ''} ${props.year}`;
   };
@@ -72,9 +70,7 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
       monthToShow = monthsAbbreviated[11] ? monthsAbbreviated[11] : '';
     } else {
       yearToShow = props.year;
-      monthToShow = monthsAbbreviated[props.month - 1]
-        ? monthsAbbreviated[props.month - 1]
-        : '';
+      monthToShow = monthsAbbreviated[props.month - 1] ? monthsAbbreviated[props.month - 1] : '';
     }
     if (yearToShow === currentYear) {
       return `${monthToShow}`;
@@ -90,9 +86,7 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
       monthToShow = monthsAbbreviated[0];
       yearToShow = props.year + 1;
     } else {
-      monthToShow = monthsAbbreviated[props.month + 1]
-        ? monthsAbbreviated[props.month + 1]
-        : '';
+      monthToShow = monthsAbbreviated[props.month + 1] ? monthsAbbreviated[props.month + 1] : '';
       yearToShow = props.year;
     }
     if (yearToShow === currentYear) {

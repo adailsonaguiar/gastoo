@@ -108,14 +108,9 @@ export const AccountFormViewModel = () => {
   async function onSubmit(values: AccountFormProps) {
     const realm = await getRealm();
     if (currentAccount._id) {
-      const transactionsAssociate = await verifyTransactionsAsociate(
-        values._id,
-        realm,
-      );
+      const transactionsAssociate = await verifyTransactionsAsociate(values._id, realm);
       if (transactionsAssociate) {
-        showAlertError(
-          'Você não pode editar essa conta, ela ainda contém transações',
-        );
+        showAlertError('Você não pode editar essa conta, ela ainda contém transações');
       } else {
         await saveAccountBd(values, realm);
       }

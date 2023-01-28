@@ -3,20 +3,13 @@ import {Alert} from 'react-native';
 
 import Input from '../../components/Input';
 import Select from '../../components/Select';
-import {
-  getArrayCategoriesIncome,
-  getArrayCategoriesExpense,
-} from '../../utils/categoriesTransactions';
+import {getArrayCategoriesIncome, getArrayCategoriesExpense} from '../../utils/categoriesTransactions';
 
 import colors from '../../styles/colors';
 import {Container, Form, ButtonSave, Switch, CustomDatePicker} from './styles';
 
 import Header from '../../components/Header';
-import {
-  BtnRemove,
-  ContainerFormFooter,
-  ContentWrapper,
-} from '../AccountForm/styles';
+import {BtnRemove, ContainerFormFooter} from '../AccountForm/styles';
 import {Transaction} from '../../models/transaction';
 import InputMask from '../../components/InputMask';
 import {TransactionFormModel} from './index.model';
@@ -24,8 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import {FormContentWrapper} from '../../components/FormContentWrapper';
 
 const TransactionForm = () => {
-  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE, loading} =
-    TransactionFormModel();
+  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE, loading} = TransactionFormModel();
   const navigation = useNavigation();
   function handleSceneTitle() {
     if (expenseEdit) {
@@ -92,11 +84,7 @@ const TransactionForm = () => {
             <Select
               placeholder="Selecione uma categoria"
               label="Categoria"
-              options={
-                !FORM_TYPE
-                  ? getArrayCategoriesExpense()
-                  : getArrayCategoriesIncome()
-              }
+              options={!FORM_TYPE ? getArrayCategoriesExpense() : getArrayCategoriesIncome()}
               value={formik.values.categoryOption}
               onValueChange={obj => formik.setFieldValue('categoryOption', obj)}
             />
@@ -107,9 +95,7 @@ const TransactionForm = () => {
               label="Contas"
               options={accounts}
               value={formik.values.accountOption}
-              onValueChange={selected =>
-                formik.setFieldValue('accountOption', selected)
-              }
+              onValueChange={selected => formik.setFieldValue('accountOption', selected)}
             />
           </FormContentWrapper>
           <FormContentWrapper>
@@ -127,17 +113,13 @@ const TransactionForm = () => {
               label="Descrição"
               value={formik.values.description}
               onChangeText={text => formik.setFieldValue('description', text)}
-              placeholder={
-                !FORM_TYPE ? 'Compras mercadinho' : 'Prestação de serviço'
-              }
+              placeholder={!FORM_TYPE ? 'Compras mercadinho' : 'Prestação de serviço'}
             />
           </FormContentWrapper>
           {!expenseEdit?.recurrence && (
             <FormContentWrapper>
               <Switch
-                toggleSwitch={value =>
-                  formik.setFieldValue('recurrence', value ? 1 : 0)
-                }
+                toggleSwitch={value => formik.setFieldValue('recurrence', value ? 1 : 0)}
                 isEnabled={!!formik.values.recurrence}
                 labelEnable={'REPETIR A CADA MÊS'}
                 labelDisable={'NÃO REPETIR'}
@@ -147,20 +129,14 @@ const TransactionForm = () => {
 
           <FormContentWrapper>
             <Switch
-              toggleSwitch={value =>
-                formik.setFieldValue('status', value ? 1 : 0)
-              }
+              toggleSwitch={value => formik.setFieldValue('status', value ? 1 : 0)}
               isEnabled={!!formik.values.status}
               labelEnable={!FORM_TYPE ? 'PAGO' : 'RECEBIDO'}
               labelDisable={!FORM_TYPE ? 'NÃO PAGO' : 'NÃO RECEBIDO'}
             />
           </FormContentWrapper>
           <ContainerFormFooter>
-            <ButtonSave
-              label="Salvar"
-              onPress={formik.handleSubmit}
-              loading={loading}
-            />
+            <ButtonSave label="Salvar" onPress={formik.handleSubmit} loading={loading} />
             {expenseEdit && (
               <BtnRemove
                 label="Deletar transação"

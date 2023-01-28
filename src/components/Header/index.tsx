@@ -14,13 +14,7 @@ type HeaderProps = {
   padding?: boolean;
 };
 
-const Header = ({
-  title,
-  lineColor,
-  children,
-  onClose,
-  onChangeMonth,
-}: HeaderProps) => {
+const Header = ({title, lineColor, children, onClose, onChangeMonth}: HeaderProps) => {
   return (
     <>
       {onChangeMonth && <MonthHeader onChangeMonth={onChangeMonth} />}
@@ -45,13 +39,7 @@ const Header = ({
   );
 };
 
-export const SelectModalHeader = ({
-  title,
-  lineColor,
-  children,
-  onClose,
-  onChangeMonth,
-}: HeaderProps) => {
+export const SelectModalHeader = ({title, lineColor, children, onClose, onChangeMonth}: HeaderProps) => {
   const navigation = useNavigation();
   return (
     <>

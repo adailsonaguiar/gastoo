@@ -9,14 +9,8 @@ import {Account} from '../../models/Accounts';
 import {Transaction, TransactionBuilder} from '../../models/transaction';
 import {fetchAccounts} from '../../services/accountsService';
 import {showAlertError} from '../../services/alertService';
-import {
-  deleteTransaction,
-  saveTransaction,
-} from '../../services/transactionsService';
-import {
-  categoriesExpense,
-  categoriesIncome,
-} from '../../utils/categoriesTransactions';
+import {deleteTransaction, saveTransaction} from '../../services/transactionsService';
+import {categoriesExpense, categoriesIncome} from '../../utils/categoriesTransactions';
 import {handleRealmInstance} from '../../database/realm';
 
 type TransactionFormRouteProps = {
@@ -47,9 +41,7 @@ export function TransactionFormModel() {
     initialValue: 0,
     description: '',
     accountId: '',
-    type: !FORM_TYPE
-      ? transactionType.TRANSACTION_OUT
-      : transactionType.TRANSACTION_IN,
+    type: !FORM_TYPE ? transactionType.TRANSACTION_OUT : transactionType.TRANSACTION_IN,
     recurrence: false,
     status: 0,
     day: '',
@@ -62,9 +54,7 @@ export function TransactionFormModel() {
     createdAt: new Date(),
   };
   const navigation = useNavigation();
-  const expenseEdit = route.params?.transaction
-    ? route.params?.transaction
-    : null;
+  const expenseEdit = route.params?.transaction ? route.params?.transaction : null;
 
   const formik = useFormik({
     initialValues: INITIAL_FORM_VALUES,
@@ -80,9 +70,7 @@ export function TransactionFormModel() {
     return categoriesExpense;
   }
 
-  const [accounts, setAccounts] = React.useState<
-    {value: string; label: string}[]
-  >([]);
+  const [accounts, setAccounts] = React.useState<{value: string; label: string}[]>([]);
 
   function handleNoAccounts() {
     showAlertError('Você precisa cadastrar uma conta primeiro!');
@@ -94,9 +82,7 @@ export function TransactionFormModel() {
   }
 
   function getTransactionAccount(accountsResponse: Account[]) {
-    const account = accountsResponse.find(
-      item => item._id === expenseEdit?.accountId,
-    );
+    const account = accountsResponse.find(item => item._id === expenseEdit?.accountId);
     if (account) {
       updateFormValues({
         ...formik.values,
@@ -138,9 +124,7 @@ export function TransactionFormModel() {
         description: expenseEdit.description,
         accountId: expenseEdit.accountId,
 
-        type: !FORM_TYPE
-          ? transactionType.TRANSACTION_OUT
-          : transactionType.TRANSACTION_IN,
+        type: !FORM_TYPE ? transactionType.TRANSACTION_OUT : transactionType.TRANSACTION_IN,
         status: expenseEdit.status,
         day: expenseEdit.day,
         month: expenseEdit.month,
@@ -191,10 +175,7 @@ export function TransactionFormModel() {
     return 0;
   }
 
-  function handleRecurrenceTransactions(
-    recurrence: boolean,
-    transaction: Transaction,
-  ) {
+  function handleRecurrenceTransactions(recurrence: boolean, transaction: Transaction) {
     const transactions = [transaction] as Transaction[];
     if (recurrence && !expenseEdit?.recurrence) {
       const dates = [] as Date[];
@@ -202,9 +183,7 @@ export function TransactionFormModel() {
       transactionDate.setMonth(transaction.date.getMonth());
       transactionDate.setDate(transaction.date.getDate());
       for (let i = 0; i < 11; i++) {
-        dates.push(
-          new Date(transactionDate.setMonth(transactionDate.getMonth() + 1)),
-        );
+        dates.push(new Date(transactionDate.setMonth(transactionDate.getMonth() + 1)));
       }
       dates.forEach(date => {
         transactions.push({
@@ -247,10 +226,7 @@ export function TransactionFormModel() {
       recurrence: !!values.recurrence,
     });
     if (validateForm(values)) {
-      const transactions = handleRecurrenceTransactions(
-        values.recurrence,
-        transactionToSave,
-      );
+      const transactions = handleRecurrenceTransactions(values.recurrence, transactionToSave);
 
       const realm = await handleRealmInstance();
       const transactionsToSave = [] as Promise<void>[];

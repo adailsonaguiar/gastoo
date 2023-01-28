@@ -24,13 +24,7 @@ type SelectProps = {
   btnClear?: boolean;
 } & CustomPickerProps;
 
-const Select = ({
-  placeholder,
-  label,
-  options = [],
-  btnClear = false,
-  ...rest
-}: SelectProps) => {
+const Select = ({placeholder, label, options = [], btnClear = false, ...rest}: SelectProps) => {
   function renderOption(settings: OptionTemplateSettings) {
     const {item, getLabel} = settings;
 
@@ -66,9 +60,7 @@ const Select = ({
   }
 
   function renderHeader(settings: CustomPickerActions) {
-    return (
-      <SelectModalHeader title={'Selecione'} onClose={() => settings.close()} />
-    );
+    return <SelectModalHeader title={'Selecione'} onClose={() => settings.close()} />;
   }
 
   return (

@@ -14,11 +14,7 @@ const Transactions = () => {
   const navigation = useNavigation();
   return (
     <>
-      <Header
-        title="Transações"
-        onChangeMonth={getTransactions}
-        onClose={() => navigation.goBack()}
-      />
+      <Header title="Transações" onChangeMonth={getTransactions} onClose={() => navigation.goBack()} />
       <S.Container>
         <S.List>
           <TransactionsList transactions={transactions} />
@@ -26,15 +22,11 @@ const Transactions = () => {
         <S.Footer>
           <S.Incomes>
             <S.IconTotal source={incomeIcon} />
-            <S.SaldoTotal>
-              R$ {formatMoney(totalsMonth.totalIncome)}
-            </S.SaldoTotal>
+            <S.SaldoTotal>R$ {formatMoney(totalsMonth.totalIncome)}</S.SaldoTotal>
           </S.Incomes>
           <S.Expanse>
             <S.IconTotal source={expanseIcon} />
-            <S.SaldoTotal>
-              R$ {formatMoney(totalsMonth.totalExpense)}
-            </S.SaldoTotal>
+            <S.SaldoTotal>R$ {formatMoney(totalsMonth.totalExpense)}</S.SaldoTotal>
           </S.Expanse>
         </S.Footer>
       </S.Container>

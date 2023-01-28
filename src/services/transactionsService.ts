@@ -1,21 +1,11 @@
-import {
-  closeRealmInstance,
-  getRealm,
-  handleRealmInstance,
-  loadData,
-  removeById,
-  writeData,
-} from '../database/realm';
+import {closeRealmInstance, getRealm, handleRealmInstance, loadData, removeById, writeData} from '../database/realm';
 import {SCHEMAS} from '../database/schemas';
 import {Transaction} from '../models/transaction';
 import {getTransactionAccount, handleAccountBalance} from './accountsService';
 import {transactionType} from '../database/schemas/TransactionSchema';
 import {isFuture, isToday} from 'date-fns';
 
-export async function fetchTransactions(
-  filter?: string,
-  externalRealmInstance?: Realm,
-) {
+export async function fetchTransactions(filter?: string, externalRealmInstance?: Realm) {
   let realm = await handleRealmInstance(externalRealmInstance);
   const response = await loadData({
     schema: SCHEMAS.TRANSACTION,
@@ -50,10 +40,7 @@ function calculateAccountBalance(props: {
   }
 }
 
-export async function saveTransaction(
-  transaction: Transaction,
-  externalRealmInstance?: Realm,
-) {
+export async function saveTransaction(transaction: Transaction, externalRealmInstance?: Realm) {
   let realm = await handleRealmInstance(externalRealmInstance);
   try {
     const account = await getTransactionAccount(transaction.accountId, realm);
@@ -78,10 +65,7 @@ export async function saveTransaction(
   }
 }
 
-export async function deleteTransaction(
-  transaction: Transaction,
-  externalRealmInstance?: Realm,
-) {
+export async function deleteTransaction(transaction: Transaction, externalRealmInstance?: Realm) {
   let realm = await handleRealmInstance(externalRealmInstance);
   const account = await getTransactionAccount(transaction.accountId, realm);
   if (account) {
