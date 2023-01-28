@@ -12,7 +12,6 @@ import {fetchAccounts} from '../../services/accountsService';
 import {showAlertError} from '../../services/alertService';
 import {deleteTransaction, saveTransaction} from '../../services/transactionsService';
 import {categoriesExpense, categoriesIncome} from '../../utils/categoriesTransactions';
-import {handleRealmInstance} from '../../database/realm';
 
 type TransactionFormRouteProps = {
   props: {
@@ -232,7 +231,7 @@ export function TransactionFormModel(realm: Realm | null) {
       const transactionsToSave = [] as Promise<void>[];
       transactions.map(item => {
         const createTransaction = async () => {
-          await saveTransaction(item, realm);
+          saveTransaction(item, realm);
         };
         transactionsToSave.push(createTransaction());
       });
@@ -244,7 +243,7 @@ export function TransactionFormModel(realm: Realm | null) {
 
   const handleDelete = (transaction: Transaction) => {
     transaction.valueType = 0;
-    deleteTransaction(transaction);
+    deleteTransaction(transaction, realm);
     navigation.goBack();
   };
 

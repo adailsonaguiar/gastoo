@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React from 'react';
 import months, {monthsAbbreviated} from '../../utils/months';
 
 import ArrowLeft from '../../assets/chevron-left-black.png';
@@ -22,22 +23,22 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
   const currentDate = new Date();
   const [date, setDate] = React.useState({month: currentDate.getMonth(), year: currentDate.getFullYear()});
 
+  React.useEffect(() => {
+    onChangeMonth({month: date.month + 1, year: date.year});
+  }, [date]);
+
   const nextMonth = () => {
     if (date.month === 11) {
       setDate({month: 0, year: date.year + 1});
-      onChangeMonth({month: 0, year: date.year + 1});
     } else {
       setDate({month: date.month + 1, year: date.year});
-      onChangeMonth({month: date.month + 1, year: date.year});
     }
   };
   const previousMonth = () => {
     if (date.month === 0) {
       setDate({month: 11, year: date.year - 1});
-      onChangeMonth({month: 11, year: date.year - 1});
     } else {
       setDate({month: date.month - 1, year: date.year});
-      onChangeMonth({month: date.month - 1, year: date.year});
     }
   };
 

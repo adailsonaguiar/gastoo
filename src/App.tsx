@@ -18,9 +18,11 @@ LogBox.ignoreLogs([
 ]);
 
 const App = () => {
-  const {setRealm} = useRealm();
+  const {realm, setRealm} = useRealm();
   async function handleRealm() {
-    setRealm(await getRealm());
+    if (realm) {
+      setRealm(await getRealm());
+    }
   }
   React.useEffect(() => {
     handleRealm();
