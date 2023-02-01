@@ -6,15 +6,12 @@ import {transactionType} from '../database/schemas/TransactionSchema';
 import {isFuture} from 'date-fns';
 
 export function fetchTransactions(props: {filter?: string; realm: Realm | null}) {
-  console.log('started+fetchTransactions', new Date());
-
   const response = loadData({
     schema: SCHEMAS.TRANSACTION,
     realm: props.realm,
     filter: props.filter,
     sort: 'date',
   });
-  console.log('finish+fetchTransactions...', new Date());
 
   if (response) {
     return response as Transaction[];
@@ -42,16 +39,34 @@ function calculateAccountBalance(props: {
   }
 }
 
-export function saveTransaction(transaction: Transaction, realm: Realm | null) {
+function calculateAccountBalanceBackup(props: {
+  transactionType: string;
+  valueType: number;
+  initialValue: number;
+  accountBalance: number;
+}) {
+  return props.accountBalance + props.valueType;
+}
+
+export function saveTransaction(transaction: Transaction, realm: Realm | null, isBackup?: boolean) {
   try {
     const account = getTransactionAccount({accountId: transaction.accountId, realm});
-    if (account && !isFuture(transaction.date)) {
-      const value = calculateAccountBalance({
-        accountBalance: account.balance,
-        initialValue: transaction.initialValue,
-        transactionType: transaction.type,
-        valueType: transaction.valueType,
-      });
+    const formattedDate = new Date(transaction.date.toISOString().split('T')[0]);
+    if (account && !isFuture(formattedDate)) {
+      const value = isBackup
+        ? calculateAccountBalanceBackup({
+            accountBalance: account.balance,
+            initialValue: transaction.initialValue,
+            transactionType: transaction.type,
+            valueType: transaction.valueType,
+          })
+        : calculateAccountBalance({
+            accountBalance: account.balance,
+            initialValue: transaction.initialValue,
+            transactionType: transaction.type,
+            valueType: transaction.valueType,
+          });
+
       handleAccountBalance(account, value, realm);
     }
     writeData({

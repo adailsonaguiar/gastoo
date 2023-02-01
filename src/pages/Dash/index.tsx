@@ -41,22 +41,14 @@ export const Dash = ({navigation}) => {
     setShowMoney(!showMoney);
   }
 
-  const getCurrentDate = () => {
-    const date = new Date();
-    return {month: date.getMonth() + 1, year: date.getFullYear()};
-  };
-
   useFocusEffect(
     React.useCallback(() => {
-      if (!transactions.length) {
-        getTransactions({
-          month: getCurrentDate().month,
-          year: getCurrentDate().year,
-        });
+      if (!transactions.length && realm) {
+        getTransactions({month: new Date().getMonth() + 1, year: new Date().getFullYear()});
         handleShowValuesStorageData();
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
+    }, [realm]),
   );
 
   return (
