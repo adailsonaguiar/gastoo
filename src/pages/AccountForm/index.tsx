@@ -40,7 +40,10 @@ export default function AccountForm() {
                 label="Tipo de conta"
                 options={getAccountCategoriesList()}
                 value={values.accountType}
-                onValueChange={obj => setFieldValue('accountType', obj)}
+                onValueChange={obj => {
+                  setFieldValue('accountType', obj);
+                  setFieldValue('type', obj.value);
+                }}
               />
             </FormContentWrapper>
             <FormContentWrapper>

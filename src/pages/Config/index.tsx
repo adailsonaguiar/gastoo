@@ -13,7 +13,7 @@ import {Transaction} from '../../models/transaction';
 import {saveAccount} from '../../services/accountsService';
 import {useRealm} from '../../store/realm';
 
-import databackup from '../../../gastoo_data_backup.json';
+// import databackup from '../../../gastoo_data_backup.json';
 import {transactionType} from '../../database/schemas/TransactionSchema';
 
 type ConfigProps = {
@@ -63,6 +63,7 @@ export const Config = ({navigation}: ConfigProps) => {
         const createPromise = async () => await saveAccount(accountToSave, realm);
         accountPromises.push(createPromise());
       });
+
       backup.transactions.map(async transaction => {
         if (transaction.type === transactionType.TRANSACTION_IN) {
           const transactionToSave = {
@@ -106,8 +107,8 @@ export const Config = ({navigation}: ConfigProps) => {
         buttonPositive: 'OK',
       });
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        // const file = JSON.parse(await reatDataFileBackup());
-        const file = databackup;
+        const file = JSON.parse(await reatDataFileBackup());
+        // const file = databackup;
         handleBackup(
           file as unknown as {
             accounts: Account[];

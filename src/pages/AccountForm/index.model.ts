@@ -9,9 +9,9 @@ import {showAlertError} from '../../services/alertService';
 import {deleteAccount, saveAccount} from '../../services/accountsService';
 import {fetchTransactions} from '../../services/transactionsService';
 import {Option} from '../../components/Select';
+import {accountCategories} from '../../utils/categoriesAccounts';
 
 type AccountFormProps = {
-  initialBalance: number;
   accountType: Option;
 } & Account;
 
@@ -29,23 +29,30 @@ export const AccountFormViewModel = (realm: Realm | null) => {
   const {params} = useRoute<RouterProps>();
   const accountItem = (params?.account as Account) || null;
   const [loading, setLoading] = React.useState(false);
+  console.log({accountItem});
 
   const currentAccount: AccountFormProps = {
     _id: accountItem ? accountItem._id : '',
     description: accountItem ? accountItem.description : '',
-    balance: accountItem ? accountItem.balance / 100 : 0,
-    initialBalance: accountItem ? accountItem.balance / 100 : 0,
+    balance: accountItem ? accountItem.balance : 0,
     day: accountItem?.day || '',
     month: accountItem?.month || '',
     year: accountItem?.year || '',
     color: accountItem?.color || '',
     createdAt: new Date(),
-    accountType: {value: '', label: 'Selecione o tipo da conta'},
+    accountType: accountItem.type
+      ? {value: accountCategories[accountItem.type].value, label: accountCategories[accountItem.type].label}
+      : {value: '', label: 'Selecione o tipo da conta'},
+    type: accountItem.type,
   };
 
   function validateForm(values: AccountFormProps) {
     if (!values.description.length) {
       showAlertError('Digite uma descrição!');
+      return false;
+    }
+    if (!values.type) {
+      showAlertError('Selecione um tipo de conta.');
       return false;
     }
     return true;
@@ -59,24 +66,29 @@ export const AccountFormViewModel = (realm: Realm | null) => {
   };
 
   async function askDelection(account: Account) {
-    Alert.alert(
-      'Atenção',
-      'Deseja realmente deletar essa conta?',
-      [
-        {
-          text: 'Cancelar',
-          onPress: () => {},
-          style: 'cancel',
-        },
-        {
-          text: 'Sim',
-          onPress: () => {
-            handleDeleteAccount(account);
+    const transactionsAssociate = await verifyTransactionsAsociate(account._id);
+    if (transactionsAssociate) {
+      showAlertError('Você não pode remover essa conta, ela ainda contém transações');
+    } else {
+      Alert.alert(
+        'Atenção',
+        'Deseja realmente deletar essa conta?',
+        [
+          {
+            text: 'Cancelar',
+            onPress: () => {},
+            style: 'cancel',
           },
-        },
-      ],
-      {cancelable: false, userInterfaceStyle: 'dark'},
-    );
+          {
+            text: 'Sim',
+            onPress: () => {
+              handleDeleteAccount(account);
+            },
+          },
+        ],
+        {cancelable: false, userInterfaceStyle: 'dark'},
+      );
+    }
   }
 
   async function verifyTransactionsAsociate(id: string) {
@@ -102,6 +114,9 @@ export const AccountFormViewModel = (realm: Realm | null) => {
       accountToSave.description = values.description;
       accountToSave.color = values.color;
       accountToSave.createdAt = values.createdAt;
+      accountToSave.type = values.type;
+      accountToSave.balance = values.balance;
+
       await saveAccount(accountToSave, realm);
       navigation.goBack();
     }
@@ -110,12 +125,7 @@ export const AccountFormViewModel = (realm: Realm | null) => {
 
   async function onSubmit(values: AccountFormProps) {
     if (currentAccount._id) {
-      const transactionsAssociate = await verifyTransactionsAsociate(values._id);
-      if (transactionsAssociate) {
-        showAlertError('Você não pode editar essa conta, ela ainda contém transações');
-      } else {
-        await saveAccountBd(values);
-      }
+      await saveAccountBd(values);
     } else {
       await saveAccountBd(values);
     }

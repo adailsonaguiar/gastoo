@@ -7,7 +7,7 @@ export const getRealm = async () => {
   return await Realm.open({
     path: 'gastoo',
     schema: [TransactionSchema, AccountSchema],
-    schemaVersion: 5,
+    schemaVersion: 6,
   });
 };
 
