@@ -9,6 +9,8 @@ import {ColorsList} from '../../components/ColorsList';
 import {useNavigation} from '@react-navigation/native';
 import {FormContentWrapper} from '../../components/FormContentWrapper';
 import {useRealm} from '../../store/realm';
+import Select from '../../components/Select';
+import {getAccountCategoriesList} from '../../utils/categoriesAccounts';
 
 export default function AccountForm() {
   const {realm} = useRealm();
@@ -30,6 +32,15 @@ export default function AccountForm() {
                   setFieldValue('description', text);
                 }}
                 lineLeftColor={values.color}
+              />
+            </FormContentWrapper>
+            <FormContentWrapper>
+              <Select
+                placeholder="Selecione o tipo de conta"
+                label="Tipo de conta"
+                options={getAccountCategoriesList()}
+                value={values.accountType}
+                onValueChange={obj => setFieldValue('accountType', obj)}
               />
             </FormContentWrapper>
             <FormContentWrapper>

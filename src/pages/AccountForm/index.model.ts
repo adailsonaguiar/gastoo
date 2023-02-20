@@ -8,9 +8,11 @@ import {Account} from '../../models/Accounts';
 import {showAlertError} from '../../services/alertService';
 import {deleteAccount, saveAccount} from '../../services/accountsService';
 import {fetchTransactions} from '../../services/transactionsService';
+import {Option} from '../../components/Select';
 
 type AccountFormProps = {
   initialBalance: number;
+  accountType: Option;
 } & Account;
 
 type AccountFormRouteProps = {
@@ -38,6 +40,7 @@ export const AccountFormViewModel = (realm: Realm | null) => {
     year: accountItem?.year || '',
     color: accountItem?.color || '',
     createdAt: new Date(),
+    accountType: {value: '', label: 'Selecione o tipo da conta'},
   };
 
   function validateForm(values: AccountFormProps) {
