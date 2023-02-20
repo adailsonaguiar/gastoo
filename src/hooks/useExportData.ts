@@ -1,12 +1,11 @@
 import {fetchTransactions} from '../services/transactionsService';
 import {fetchAccounts} from '../services/accountsService';
-import {handleRealmInstance} from '../database/realm';
+import Realm from 'realm';
 
-export function useExportData() {
-  async function getAllData() {
-    const realm = await handleRealmInstance();
-    const transactions = await fetchTransactions(undefined, realm);
-    const accounts = await fetchAccounts(undefined, realm);
+export function useExportData(realm: Realm | null) {
+  function getAllData() {
+    const transactions = fetchTransactions({realm});
+    const accounts = fetchAccounts({realm});
     let data = {transactions: {}, accounts: {}};
     if (transactions) {
       data.transactions = transactions;

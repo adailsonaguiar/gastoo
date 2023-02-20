@@ -30,11 +30,19 @@ const CardTransaction = ({
   screenNavigate,
 }: CardTransactionProps) => {
   const navigation = useNavigation();
+
+  function handleTransactionTitle(title: string) {
+    const LIMIT_OF_TITLE_LENGTH = 25;
+    if (title.length > LIMIT_OF_TITLE_LENGTH) {
+      return `${transactionTitle.slice(0, LIMIT_OF_TITLE_LENGTH)}...`;
+    }
+    return title;
+  }
   return (
     <S.Conta onPress={() => navigation && navigation.navigate(screenNavigate, routeParameters)}>
       {lineLeftColor && <S.LineLeft lineLeftColor={lineLeftColor} />}
       <S.ColLeft>
-        <S.TitleConta>{transactionTitle}</S.TitleConta>
+        <S.TitleConta>{handleTransactionTitle(transactionTitle)}</S.TitleConta>
         <S.CategoryConta>{categoryTransaction}</S.CategoryConta>
       </S.ColLeft>
       <S.ColRight>

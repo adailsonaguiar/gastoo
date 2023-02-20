@@ -20,7 +20,7 @@ LogBox.ignoreLogs([
 const App = () => {
   const {realm, setRealm} = useRealm();
   async function handleRealm() {
-    if (realm) {
+    if (!realm) {
       setRealm(await getRealm());
     }
   }

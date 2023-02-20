@@ -7,4 +7,5 @@ export type Account = {
   balance: number;
   color: string;
   createdAt: Date;
+  type?: number;
 };

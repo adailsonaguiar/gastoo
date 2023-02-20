@@ -7,21 +7,26 @@ import * as S from './styles';
 import {exportDataToExcel, reatDataFileBackup} from '../../services/csvFileService';
 import {PermissionsAndroid} from 'react-native';
 import {useExportData} from '../../hooks/useExportData';
-import {handleRealmInstance} from '../../database/realm';
 import {fetchTransactions, saveTransaction} from '../../services/transactionsService';
 import {Account} from '../../models/Accounts';
 import {Transaction} from '../../models/transaction';
 import {saveAccount} from '../../services/accountsService';
+import {useRealm} from '../../store/realm';
+
+// import databackup from '../../../gastoo_data_backup.json';
+import {transactionType} from '../../database/schemas/TransactionSchema';
 
 type ConfigProps = {
   navigation: any;
 };
 
 export const Config = ({navigation}: ConfigProps) => {
-  const {getAllData} = useExportData();
+  const {realm} = useRealm();
+
+  const {getAllData} = useExportData(realm);
 
   const handleClick = async () => {
-    const dataToExport = await getAllData();
+    const dataToExport = getAllData();
     try {
       let isPermitedExternalStorage = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -43,8 +48,7 @@ export const Config = ({navigation}: ConfigProps) => {
   };
 
   async function handleBackup(backup: {accounts: Account[]; transactions: Transaction[]}) {
-    const realm = await handleRealmInstance();
-    const response = await fetchTransactions('', realm);
+    const response = fetchTransactions({realm});
 
     if (!response?.length) {
       console.log('...backup started');
@@ -59,23 +63,38 @@ export const Config = ({navigation}: ConfigProps) => {
         const createPromise = async () => await saveAccount(accountToSave, realm);
         accountPromises.push(createPromise());
       });
+
       backup.transactions.map(async transaction => {
-        const transactionToSave = {
-          ...transaction,
-          createdAt: new Date(transaction.createdAt),
-          date: new Date(transaction.date),
-          status: 0,
-          valueType: 0,
-        } as Transaction;
-        const createPromise = async () => await saveTransaction(transactionToSave, realm);
-        transactionPromises.push(createPromise());
+        if (transaction.type === transactionType.TRANSACTION_IN) {
+          const transactionToSave = {
+            ...transaction,
+            createdAt: new Date(transaction.createdAt),
+            date: new Date(transaction.date),
+            // status: 0,
+            // valueType: 0,
+          } as Transaction;
+          const createPromise = async () => saveTransaction(transactionToSave, realm, true);
+          transactionPromises.push(createPromise());
+        }
+      });
+      backup.transactions.map(async transaction => {
+        if (transaction.type === transactionType.TRANSACTION_OUT) {
+          const transactionToSave = {
+            ...transaction,
+            createdAt: new Date(transaction.createdAt),
+            date: new Date(transaction.date),
+            // status: 0,
+            // valueType: 0,
+          } as Transaction;
+          const createPromise = async () => saveTransaction(transactionToSave, realm, true);
+          transactionPromises.push(createPromise());
+        }
       });
 
       await Promise.all(accountPromises);
       await Promise.all(transactionPromises);
     }
     console.log('...backup finished');
-    realm.close();
   }
 
   async function handleImportData() {
@@ -89,8 +108,9 @@ export const Config = ({navigation}: ConfigProps) => {
       });
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const file = JSON.parse(await reatDataFileBackup());
+        // const file = databackup;
         handleBackup(
-          file as {
+          file as unknown as {
             accounts: Account[];
             transactions: Transaction[];
           },

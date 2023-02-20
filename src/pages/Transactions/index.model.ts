@@ -25,7 +25,6 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
 
   async function getTransactions(props?: {month: number; year: number}) {
     const response = fetchTransactions({filter: `month = "${props?.month}" AND year = "${props?.year}"`, realm});
-
     if (response?.length) {
       setTransactions(response);
       getAllTransactionsData(response);

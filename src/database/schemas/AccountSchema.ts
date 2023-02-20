@@ -11,6 +11,7 @@ const AccountSchema = {
     balance: 'int',
     color: 'string?',
     createdAt: 'date?',
+    type: 'int?',
   },
   primaryKey: '_id',
 };
