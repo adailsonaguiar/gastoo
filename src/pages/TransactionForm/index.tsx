@@ -77,7 +77,7 @@ const TransactionForm = () => {
                 formik.setFieldValue('value', maskedValue);
                 formik.setFieldValue('rawValue', rawValue);
               }}
-              value={String(formik.values.value * 100)}
+              value={String(Math.round(formik.values.value * 100))}
               includeRawValueInChangeText={true}
               placeholder="R$ 120,00"
               mainInput

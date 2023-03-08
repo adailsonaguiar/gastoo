@@ -54,7 +54,8 @@ export const Dash = ({navigation}) => {
   return (
     <S.Container>
       <S.HaederLogo>
-        <S.SeeMoreBtn onPress={() => navigation.navigate(pages.config)}>
+        {/* <S.SeeMoreBtn onPress={() => navigation.navigate(pages.config)}> */}
+        <S.SeeMoreBtn onPress={() => {}}>
           <S.Logo source={AppLogo} />
         </S.SeeMoreBtn>
       </S.HaederLogo>
@@ -77,7 +78,7 @@ export const Dash = ({navigation}) => {
             )}
           </S.IncomeCard>
         </S.IncomeCardsWrapper>
-        <S.TxtDescricao>Saldo disponível</S.TxtDescricao>
+        <S.TxtDescricao>Saldo do mês</S.TxtDescricao>
         <S.ContainerSaldo>
           <S.Cifra>R$</S.Cifra>
           {showMoney ? (

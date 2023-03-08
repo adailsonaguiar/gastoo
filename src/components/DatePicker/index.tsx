@@ -48,6 +48,7 @@ const DatePicker = ({date, setDate, ...rest}: DatePickerProps) => {
               onDateChange={value => {
                 onChange(value);
               }}
+              current={format(date, 'yyyy-MM-dd')}
             />
           </S.ModalContainer>
         </Modal>

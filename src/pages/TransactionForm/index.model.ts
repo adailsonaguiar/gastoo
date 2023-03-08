@@ -204,6 +204,7 @@ export function TransactionFormModel(realm: Realm | null) {
   async function onSubmit(values: FormProps) {
     setLoading(true);
     const convertedValue = Math.round(Number(values.rawValue) * 100);
+
     let valueType = 0;
     if (values.status) {
       valueType = handleValueType(values.type, convertedValue);
