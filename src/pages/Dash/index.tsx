@@ -54,8 +54,8 @@ export const Dash = ({navigation}) => {
   return (
     <S.Container>
       <S.HaederLogo>
-        {/* <S.SeeMoreBtn onPress={() => navigation.navigate(pages.config)}> */}
-        <S.SeeMoreBtn onPress={() => {}}>
+        <S.SeeMoreBtn onPress={() => navigation.navigate(pages.config)}>
+          {/* <S.SeeMoreBtn onPress={() => {}}> */}
           <S.Logo source={AppLogo} />
         </S.SeeMoreBtn>
       </S.HaederLogo>
