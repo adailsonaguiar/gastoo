@@ -2,28 +2,28 @@
 
 ## Tipography
 
-<img src=".github/StyleGuide/heading-tipography.png"/> <br>
+<img src="https://github.com/CleiltonRocha/gastoo/blob/main/.github/styleGuide/heading-tipography.png"/> <br>
 
 <p>Clique <a href="https://fonts.google.com/specimen/DM+Sans"> aqui </a> para visualizar a fonte no Google Fonts</p>
 
 **Titles & Headings**
 
-<img src=".github/StyleGuide/titles-headings.png"/> <br>
+<img src="https://github.com/CleiltonRocha/gastoo/blob/main/.github/styleGuide/titles-headings.png"/> <br>
 
 ***
 **Paragraphs**
 
-<img src=".github/StyleGuide/paragraphs.png"/> <br>
+<img src="https://github.com/CleiltonRocha/gastoo/blob/main/.github/styleGuide/paragraphs.png"/> <br>
 
 ## Colors
 
-**Brand Colors**
-<img src=".github/StyleGuide/brand-colors.png"/> <br>
+**Brand Colors** <br>
+<img src="https://github.com/CleiltonRocha/gastoo/blob/main/.github/styleGuide/brand-colors.png"/> <br>
 ***
-**Gray Colors**
-<img src=".github/StyleGuide/gray-colors.png"/> <br>
+**Gray Colors** <br>
+<img src="https://github.com/CleiltonRocha/gastoo/blob/main/.github/styleGuide/gray-colors.png"/> <br>
 ***
-**Support Colors**
-<img src=".github/StyleGuide/support-colors.png"/> <br>
+**Support Colors**<br>
+<img src="https://github.com/CleiltonRocha/gastoo/blob/main/.github/styleGuide/support-colors.png"/> <br>
 
 
