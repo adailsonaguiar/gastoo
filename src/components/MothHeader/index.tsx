@@ -14,6 +14,7 @@ import {
   ButtonMonthIconNext,
   MonthCenter,
 } from './styles';
+import {useFocusEffect} from '@react-navigation/native';
 
 type MothHeaderProps = {
   onChangeMonth: (props: {month: number; year: number}) => void;
@@ -23,9 +24,13 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
   const currentDate = new Date();
   const [date, setDate] = React.useState({month: currentDate.getMonth(), year: currentDate.getFullYear()});
 
-  React.useEffect(() => {
-    onChangeMonth({month: date.month + 1, year: date.year});
-  }, [date]);
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('useCallback', date);
+
+      onChangeMonth({month: date.month + 1, year: date.year});
+    }, [date]),
+  );
 
   const nextMonth = () => {
     if (date.month === 11) {

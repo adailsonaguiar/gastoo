@@ -3,7 +3,7 @@ import * as S from './styles';
 import Header from '../../components/Header';
 import {TransactionsModel} from './index.model';
 import {TransactionsList} from '../../components/TransactionsList';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {formatMoney} from '../../utils/FunctionUtils';
 import incomeIcon from '../../assets/arrow-income.png';
 import expanseIcon from '../../assets/arrow-expanse.png';
@@ -16,6 +16,7 @@ const Transactions = () => {
   const {transactions, getTransactions, totalsMonth} = TransactionsModel({realm});
 
   const navigation = useNavigation();
+
   return (
     <>
       <Header title="Transações" onChangeMonth={getTransactions} onClose={() => navigation.goBack()} />

@@ -22,6 +22,19 @@ type AccountFormRouteProps = {
   };
 };
 
+const INITIAL_ACCOUNT_PROPS: AccountFormProps = {
+  _id: '',
+  description: '',
+  balance: 0,
+  day: '',
+  month: '',
+  year: '',
+  color: '',
+  createdAt: new Date(),
+  accountType: {value: '', label: 'Selecione o tipo da conta'},
+  type: undefined,
+};
+
 type RouterProps = RouteProp<AccountFormRouteProps, 'props'>;
 
 export const AccountFormViewModel = (realm: Realm | null) => {
@@ -31,20 +44,22 @@ export const AccountFormViewModel = (realm: Realm | null) => {
   const [loading, setLoading] = React.useState(false);
   console.log({accountItem});
 
-  const currentAccount: AccountFormProps = {
-    _id: accountItem ? accountItem._id : '',
-    description: accountItem ? accountItem.description : '',
-    balance: accountItem ? accountItem.balance : 0,
-    day: accountItem?.day || '',
-    month: accountItem?.month || '',
-    year: accountItem?.year || '',
-    color: accountItem?.color || '',
-    createdAt: new Date(),
-    accountType: accountItem.type
-      ? {value: accountCategories[accountItem.type].value, label: accountCategories[accountItem.type].label}
-      : {value: '', label: 'Selecione o tipo da conta'},
-    type: accountItem.type,
-  };
+  const currentAccount: AccountFormProps = accountItem
+    ? {
+        _id: accountItem._id,
+        description: accountItem.description,
+        balance: accountItem.balance,
+        day: accountItem.day,
+        month: accountItem.month,
+        year: accountItem.year,
+        color: accountItem.color,
+        createdAt: new Date(),
+        accountType: accountItem?.type
+          ? {value: accountCategories[accountItem.type].value, label: accountCategories[accountItem.type].label}
+          : {value: '', label: 'Selecione o tipo da conta'},
+        type: accountItem?.type,
+      }
+    : INITIAL_ACCOUNT_PROPS;
 
   function validateForm(values: AccountFormProps) {
     if (!values.description.length) {
