@@ -1,10 +1,11 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {TabsContainer, TabItem, TitleCard, IconArea, ImageIcon} from './styles';
-import despesaIcon from '../../assets/cardIcons/despesa.png';
-import receitaIcon from '../../assets/cardIcons/receita.png';
-import contasIcon from '../../assets/cardIcons/contas.png';
+import despesaIcon from '../../assets/cardIcons/arrow-expanse.png';
+import receitaIcon from '../../assets/cardIcons/arrow-income.png';
+import contasIcon from '../../assets/cardIcons/Bank.png';
 import {pages} from '../../routes';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
   tab: {

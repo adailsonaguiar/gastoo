@@ -1,21 +1,23 @@
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
-import {fontBold, fontLight, fontMedium} from '../../styles/fonts';
+import {fontBold, fontMedium, fontRegular} from '../../styles/fonts';
+import {css} from 'styled-components';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${colors.backgroundColorPrimary};
+  background-color: ${colors.darkBackground};
 `;
 
-export const ContainerBorderPage = styled.View`
-  padding-left: 20px;
-  padding-right: 20px;
+export const HeaderWrapper = styled.View`
+  padding: 10px 0;
 `;
 
 export const CompHead = styled.View`
   flex-direction: column;
   align-items: flex-start;
-  padding: 5px 20px 5px 20px;
+  padding: 24px;
+  border-radius: 12px;
+  background: ${colors.eletricBlue};
 `;
 export const TitleGrid = styled.Text`
   color: #00d0b4;
@@ -37,30 +39,29 @@ export const ContainerSaldo = styled.View`
   flex-direction: row;
 `;
 
-export const Cifra = styled.Text`
-  color: ${colors.greenApp};
-  font-size: 16px;
-  font-family: ${fontMedium};
-  margin-top: 9px;
-`;
-
 export const TxtSaldo = styled.Text`
-  color: ${colors.greenApp};
-  font-size: 35px;
+  color: ${colors.backgroundColorPrimary};
+  font-size: 24px;
   font-family: ${fontBold};
   line-height: 40px;
 `;
 
 export const TxtDescricao = styled.Text`
-  font-family: ${fontMedium};
-  font-size: 13px;
-  color: ${colors.appColor};
-  margin-left: 25px;
+  font-family: ${fontBold};
+  font-size: 16px;
+  color: ${colors.backgroundColorPrimary};
 `;
 
-export const ContentWrapper = styled.View`
-  /* padding: 0 10px; */
-  flex: 1;
+export const LabelWrapper = styled.View`
+  flex-direction: row;
+`;
+
+export const ContentWrapper = styled.View<{background?: string}>`
+  ${({background}) => css`
+    background: ${background ? background : colors.darkBackground};
+    flex: 1;
+    /* padding: 0 24px; */
+  `}
 `;
 
 export const Footer = styled.View`
@@ -69,40 +70,40 @@ export const Footer = styled.View`
   padding-bottom: 20px;
   padding-top: 10px;
   flex-direction: row;
-  ${ContainerBorderPage}
 `;
 
-export const IncomeCard = styled.View<{color?: string}>`
-  background-color: ${colors.appColor2};
-  border-radius: 15px;
-  margin-right: 10px;
-  padding: 14px 10px;
+export const IncomeCard = styled.View<{color?: string; alignRight?: boolean}>`
+  ${({alignRight}) => css`
+    align-items: ${alignRight ? 'flex-end' : 'flex-start'};
+  `}
 `;
 
 export const IncomeCardsWrapper = styled.View`
   flex-direction: row;
-  margin-bottom: 10px;
+  justify-content: space-between;
 `;
 
-export const IncomeCardValue = styled.Text`
-  color: ${colors.backgroundColorPrimary};
-  font-size: 24px;
-  font-family: ${fontBold};
-  line-height: 30px;
+export const IncomeCardValue = styled.Text<{colorSuccess?: boolean}>`
+  ${({colorSuccess}) => css`
+    color: ${colorSuccess ? colors.supportSuccess : colors.supportDanger};
+    font-size: 18px;
+    font-family: ${fontBold};
+    line-height: 24px;
+  `}
 `;
 
 export const Label = styled.Text`
-  font-size: 13px;
-  font-family: ${fontLight};
+  font-size: 12px;
+  font-family: ${fontMedium};
   color: ${colors.backgroundColorPrimary};
 `;
 
 export const SeeMoreBtn = styled.TouchableOpacity``;
 
 export const SeeMore = styled.Text`
-  font-size: 13px;
-  font-family: ${fontBold};
-  color: ${colors.appColor2};
+  font-size: 16px;
+  font-family: ${fontRegular};
+  color: ${colors.eletricBlue};
 `;
 
 export const Logo = styled.Image`
@@ -124,4 +125,20 @@ export const WrapperMoneyHidden = styled.View`
   width: 100px;
   height: 30px;
   border-radius: 5px;
+`;
+
+export const CustomWrapper = styled.View<{background?: string; marginBottom?: string}>`
+  ${({background, marginBottom}) => css`
+    background: ${background ? background : colors.darkBackground};
+    padding: 0 24px;
+    margin-bottom: ${marginBottom ? marginBottom : '37px'};
+  `}
+`;
+
+export const CustomWrapperWithoutMargin = styled.View<{background?: string}>`
+  ${({background}) => css`
+    background: ${background ? background : colors.darkBackground};
+    padding: 0;
+    flex: 1;
+  `}
 `;

@@ -20,7 +20,11 @@ export default function AccountForm() {
 
   return (
     <Container>
-      <Header title={currentAccount._id ? 'Atualizar conta' : 'Nova conta'} onClose={() => navigation.goBack()} />
+      <Header
+        title={currentAccount._id ? 'Atualizar conta' : 'Nova conta'}
+        onClose={() => navigation.goBack()}
+        style="light"
+      />
       <Formik initialValues={currentAccount} onSubmit={values => onSubmit(values)}>
         {({setFieldValue, handleSubmit, values}) => (
           <Form>

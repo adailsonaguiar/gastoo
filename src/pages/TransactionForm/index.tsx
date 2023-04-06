@@ -54,11 +54,7 @@ const TransactionForm = () => {
 
   return (
     <>
-      <Header
-        title={handleSceneTitle()}
-        lineColor={!FORM_TYPE ? colors.colorDanger : colors.greenApp}
-        onClose={() => navigation.goBack()}
-      />
+      <Header title={handleSceneTitle()} style="light" onClose={() => navigation.goBack()} />
       <Container>
         <Form>
           <FormContentWrapper>

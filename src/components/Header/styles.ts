@@ -1,14 +1,14 @@
 import styled, {css} from 'styled-components/native';
 import colors from '../../styles/colors';
-import {fontMedium} from '../../styles/fonts';
+import {fontBold, fontMedium} from '../../styles/fonts';
 
 export const Container = styled.View`
   background: ${colors.backgroundColorPrimary};
   height: 50px;
   flex-direction: row;
   align-items: center;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 24px;
+  padding-right: 24px;
   justify-content: center;
 `;
 
@@ -17,23 +17,20 @@ export const Title = styled.Text`
   font-size: 17px;
 `;
 
-export const HeaderForm = styled.View<{padding?: boolean}>`
-  ${({padding}) => css`
+export const HeaderForm = styled.View<{padding?: boolean; style?: 'dark' | 'light'}>`
+  ${({padding, style}) => css`
     width: 100%;
-    background: ${colors.backgroundColorPrimary};
+    background: ${style === 'dark' ? colors.darkBackground : colors.backgroundColorPrimary};
     padding-left: ${padding ? '0' : '20px'};
     padding-right: ${padding ? '0' : '20px'};
     padding-top: ${padding ? '0' : '30px'};
-    padding-bottom: 15px;
   `}
 `;
 
 export const HeaderSelect = styled.View`
   ${({}) => css`
     width: 100%;
-    background: ${colors.backgroundColorPrimary};
-    padding-bottom: 15px;
-    padding-top: 10px;
+    padding: 10px 0;
   `}
 `;
 
@@ -43,29 +40,22 @@ export const RowWrapper = styled.View`
   align-items: center;
 `;
 
-export const TxtHeaderForm = styled.Text`
-  color: ${colors.fontLight};
-  font-size: 26px;
-  font-family: ${fontMedium};
-`;
-
-export const BtnFechar = styled.TouchableOpacity`
-  align-items: flex-end;
-  flex: 1;
-`;
-
-type LineProps = {
-  lineColor?: string;
-};
-
-export const Line = styled.View<LineProps>`
-  ${({lineColor}) => css`
-    width: 41px;
-    height: 4px;
-    margin-top: 5px;
-    background-color: ${lineColor ? lineColor : colors.appColor};
+export const SpaceWrapper = styled.View<{flex?: number; align?: string}>`
+  ${({flex, align}) => css`
+    flex: ${flex ? flex : 1};
+    align-items: ${align ? align : 'center'};
   `}
 `;
+
+export const TxtHeaderForm = styled.Text<{style?: 'dark' | 'light'}>`
+  ${({style}) => css`
+    color: ${style === 'dark' ? colors.backgroundColorPrimary : colors.darkBackground};
+    font-size: 24px;
+    font-family: ${fontBold};
+  `}
+`;
+
+export const HeaderBtn = styled.TouchableOpacity``;
 
 export const Subtitle = styled.View`
   font-size: 16px;
@@ -74,7 +64,4 @@ export const Subtitle = styled.View`
   margin-top: 5px;
 `;
 
-export const CloseIcon = styled.Image`
-  width: 20px;
-  height: 20px;
-`;
+export const HeaderBtnIcon = styled.Image``;

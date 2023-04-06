@@ -2,12 +2,11 @@
 import React from 'react';
 import months, {monthsAbbreviated} from '../../utils/months';
 
-import ArrowLeft from '../../assets/chevron-left-black.png';
-import ArrowRight from '../../assets/chevron-right-black.png';
+import ArrowLeft from '../../assets/CaretLeft-white.png';
+import ArrowRight from '../../assets/CaretRight-white.png';
 
 import {
   Container,
-  Month,
   ButtonPrevMonth,
   ButtonNextMonth,
   ButtonMonthIconPrev,
@@ -58,49 +57,13 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
     return `${months[props.month] ? months[props.month] : ''} ${props.year}`;
   };
 
-  const showPreviousMonth = (props: {month: number; year: number}) => {
-    const currentYear = new Date().getFullYear();
-    let yearToShow = 0;
-    let monthToShow = '';
-    if (date.month === 0) {
-      yearToShow = props.year - 1;
-      monthToShow = monthsAbbreviated[11] ? monthsAbbreviated[11] : '';
-    } else {
-      yearToShow = props.year;
-      monthToShow = monthsAbbreviated[props.month - 1] ? monthsAbbreviated[props.month - 1] : '';
-    }
-    if (yearToShow === currentYear) {
-      return `${monthToShow}`;
-    }
-    return `${monthToShow}/${yearToShow}`;
-  };
-
-  const showNextMonth = (props: {month: number; year: number}) => {
-    const currentYear = new Date().getFullYear();
-    let yearToShow = 0;
-    let monthToShow = '';
-    if (date.month === 11) {
-      monthToShow = monthsAbbreviated[0];
-      yearToShow = props.year + 1;
-    } else {
-      monthToShow = monthsAbbreviated[props.month + 1] ? monthsAbbreviated[props.month + 1] : '';
-      yearToShow = props.year;
-    }
-    if (yearToShow === currentYear) {
-      return `${monthToShow}`;
-    }
-    return `${monthToShow}/${yearToShow}`;
-  };
-
   return (
     <Container>
-      <ButtonPrevMonth onPress={previousMonth} style={{opacity: 0.5}}>
+      <ButtonPrevMonth onPress={previousMonth}>
         <ButtonMonthIconPrev source={ArrowLeft} />
-        <Month>{showPreviousMonth(date)}</Month>
       </ButtonPrevMonth>
       <MonthCenter>{handleDateDisplay(date)}</MonthCenter>
-      <ButtonNextMonth onPress={nextMonth} style={{opacity: 0.5}}>
-        <Month>{showNextMonth(date)}</Month>
+      <ButtonNextMonth onPress={nextMonth}>
         <ButtonMonthIconNext source={ArrowRight} />
       </ButtonNextMonth>
     </Container>

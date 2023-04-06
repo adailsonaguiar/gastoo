@@ -15,4 +15,15 @@ export default {
   gray300: '#CCD4DC',
   gray100: '#EFEFEF',
   fontLight100: '#ffff',
+
+  darkBackground: '#1C2437',
+  darkBlue: '#1C2437',
+  supportSuccess: '#1EC086',
+  supportDanger: '#FF4747',
+  supportWarning: '#FF971D',
+
+  eletricBlue: '#2E68FF',
+
+  gray40: '#97A3B6',
+  gray10: '#F2F5F9',
 };

@@ -6,6 +6,7 @@ import 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import {useRealm} from './store/realm';
 import {getRealm} from './database/realm';
+import colors from './styles/colors';
 
 const Cotainer = styled.SafeAreaView`
   flex: 1;
@@ -29,7 +30,7 @@ const App = () => {
   }, []);
   return (
     <Cotainer>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <StatusBar barStyle="dark-content" backgroundColor={colors.darkBlue} />
       <Routes />
       <FlashMessage />
     </Cotainer>

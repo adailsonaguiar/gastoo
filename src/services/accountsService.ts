@@ -3,8 +3,8 @@ import {SCHEMAS} from '../database/schemas';
 import {Account} from '../models/Accounts';
 import {showAlertError} from './alertService';
 
-export function fetchAccounts(props: {filter?: string; realm: Realm | null}) {
-  const response = loadData({schema: SCHEMAS.ACCOUNT, ...props});
+export async function fetchAccounts(props: {filter?: string; realm: Realm | null}) {
+  const response = await loadData({schema: SCHEMAS.ACCOUNT, ...props});
   return response as Account[];
 }
 

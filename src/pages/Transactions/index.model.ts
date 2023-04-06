@@ -2,9 +2,13 @@ import React from 'react';
 import {transactionType} from '../../database/schemas/TransactionSchema';
 import {Transaction} from '../../models/transaction';
 import {fetchTransactions} from '../../services/transactionsService';
+import {fetchAccounts} from '../../services/accountsService';
+import {Account} from '../../models/Accounts';
 
 export function TransactionsModel({realm}: {realm: Realm | null}) {
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
+  const [accounts, setAccounts] = React.useState<Account[]>([]);
+
   const [totalsMonth, setTotalsMonth] = React.useState({
     totalIncome: 0,
     totalExpense: 0,
@@ -37,5 +41,12 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
     }
   }
 
-  return {transactions, getTransactions, totalsMonth};
+  async function getAccounts() {
+    const response = await fetchAccounts({realm});
+    if (response) {
+      setAccounts(response);
+    }
+  }
+
+  return {transactions, getTransactions, totalsMonth, getAccounts, accounts};
 }

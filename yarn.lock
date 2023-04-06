@@ -5883,6 +5883,11 @@ npm-run-path@^4.0.0:
   dependencies:
     path-key "^3.0.0"
 
+nstall@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/nstall/-/nstall-0.2.0.tgz#5efdb47b79c609774caac4749d9df96d7f3b2d80"
+  integrity sha512-MFmREfmpBKuHho1VkqCnA2Y3K80MM6GHdug7BeW9JRDN446/tABtLlHQ4DibDffZSGtPPJs8Vi4AZ5HBMfDjvw==
+
 nullthrows@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/nullthrows/-/nullthrows-1.1.1.tgz#7818258843856ae971eae4208ad7d7eb19a431b1"
