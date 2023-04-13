@@ -11,15 +11,15 @@ type HeaderProps = {
   title: string;
   onClose?: () => void;
   onChangeMonth?: (props: {month: number; year: number}) => void;
-  padding?: boolean;
+  padding?: number;
   style?: 'dark' | 'light';
   children?: React.ReactNode;
 };
 
-const Header = ({title, onClose, onChangeMonth, style}: HeaderProps) => {
+const Header = ({title, onClose, onChangeMonth, style, padding}: HeaderProps) => {
   return (
     <>
-      <S.HeaderForm style={style}>
+      <S.HeaderForm style={style} padding={padding}>
         <S.RowWrapper>
           <S.SpaceWrapper align="flex-start">
             {onClose && (

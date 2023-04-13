@@ -1,16 +1,18 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
-import * as S from './styles';
 import Header from '../../components/Header';
 import CardTransaction from '../../components/CardTransaction';
-import {pages} from '../../routes';
 import Button from '../../components/Button';
 import {Account} from '../../models/Accounts';
 import {fetchAccounts} from '../../services/accountsService';
 import {useRealm} from '../../store/realm';
 import {BottomSheetModal} from '../../components/BottomSheetModal';
+import NewAccount from './Components/NewAccount';
+
+import * as S from './styles';
+import {accountCategories} from '../../utils/categoriesAccounts';
 
 type AccountPageProps = {
   navigation: any;
@@ -21,6 +23,8 @@ const Accounts = ({navigation}: AccountPageProps) => {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
 
   const [accounts, setAccounts] = React.useState<Account[]>([]);
+  const [selectedAccount, setSelectedAccount] = React.useState<Account>();
+
   async function getAccounts() {
     const response = await fetchAccounts({realm});
     if (response) {
@@ -35,6 +39,11 @@ const Accounts = ({navigation}: AccountPageProps) => {
     }, []),
   );
 
+  function handleSelectAccount(item: Account) {
+    setSelectedAccount(item);
+    setIsModalVisible(!isModalVisible);
+  }
+
   return (
     <>
       <Header title="Suas contas" onClose={() => navigation.goBack()} />
@@ -44,12 +53,12 @@ const Accounts = ({navigation}: AccountPageProps) => {
             data={accounts}
             renderItem={({item}) => (
               <CardTransaction
-                screenNavigate={pages.accountForm}
-                routeParameters={{account: item}}
+                onClickItem={() => handleSelectAccount(item)}
                 transactionTitle={item.description}
                 value={item.balance}
                 date={{day: item.day, month: item.month, year: item.year}}
                 lineLeftColor={item.color}
+                categoryTransaction={accountCategories[String(item.type)].label || ''}
               />
             )}
             keyExtractor={item => item._id.toString()}
@@ -67,19 +76,14 @@ const Accounts = ({navigation}: AccountPageProps) => {
           </S.BtnNovaConta> */}
 
           <BottomSheetModal visible={isModalVisible} toggleVisible={() => setIsModalVisible(!isModalVisible)}>
-            <Button
-              label="Close modal"
-              loading={false}
-              onPress={() => {
-                setIsModalVisible(!isModalVisible);
-              }}
-            />
+            <NewAccount account={selectedAccount} onFishInteration={() => setIsModalVisible(!isModalVisible)} />
           </BottomSheetModal>
 
           <Button
-            label="Open modal"
+            label="Adicionar conta"
             loading={false}
             onPress={() => {
+              setSelectedAccount(undefined);
               setIsModalVisible(!isModalVisible);
             }}
           />

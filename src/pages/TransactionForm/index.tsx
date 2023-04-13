@@ -5,10 +5,10 @@ import Input from '../../components/Input';
 import Select from '../../components/Select';
 import {getArrayCategoriesIncome, getArrayCategoriesExpense} from '../../utils/categoriesTransactions';
 
-import {Container, Form, ButtonSave, Switch, CustomDatePicker} from './styles';
+import {Container, Form, Switch, CustomDatePicker} from './styles';
 
 import Header from '../../components/Header';
-import {BtnRemove, ContainerFormFooter} from '../AccountForm/styles';
+// import {BtnRemove, ContainerFormFooter} from '../AccountForm/styles';
 import {Transaction} from '../../models/transaction';
 import InputMask from '../../components/InputMask';
 import {TransactionFormModel} from './index.model';
@@ -19,7 +19,7 @@ import {useRealm} from '../../store/realm';
 const TransactionForm = () => {
   const {realm} = useRealm();
 
-  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE, loading} = TransactionFormModel(realm);
+  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE} = TransactionFormModel(realm);
   const navigation = useNavigation();
   function handleSceneTitle() {
     if (expenseEdit) {
@@ -133,7 +133,7 @@ const TransactionForm = () => {
               labelDisable={!FORM_TYPE ? 'NÃO PAGO' : 'NÃO RECEBIDO'}
             />
           </FormContentWrapper>
-          <ContainerFormFooter>
+          {/* <ContainerFormFooter>
             <ButtonSave label="Salvar" onPress={formik.handleSubmit} loading={loading} />
             {expenseEdit && (
               <BtnRemove
@@ -143,7 +143,7 @@ const TransactionForm = () => {
                 }}
               />
             )}
-          </ContainerFormFooter>
+          </ContainerFormFooter> */}
         </Form>
       </Container>
     </>

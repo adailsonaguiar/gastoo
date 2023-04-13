@@ -53,11 +53,18 @@ export const Atualizado = styled.Text`
   font-size: 12px;
 `;
 
+export const CircleIconWrapper = styled.View`
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
 type LineLeftProps = {lineLeftColor?: string};
 export const LineLeft = styled.View<LineLeftProps>`
   ${({lineLeftColor}) => css`
-    width: 5px;
-    height: 37px;
+    width: 16px;
+    height: 16px;
+    border-radius: 24px;
     background-color: ${lineLeftColor ? lineLeftColor : '#90909C'};
     margin-right: 10px;
   `}

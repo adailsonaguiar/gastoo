@@ -1,11 +1,9 @@
 import React, {ReactNode} from 'react';
-import {useNavigation} from '@react-navigation/native';
 
 import {formatMoney, formatteNumber} from '../../utils/FunctionUtils';
 import * as S from './styles';
 
 type CardTransactionProps = {
-  routeParameters: any;
   lineLeftColor?: string;
   transactionTitle: string;
   categoryTransaction?: string;
@@ -13,13 +11,12 @@ type CardTransactionProps = {
   status?: string;
   date: {day: string; month: string; year: string};
   type?: 'TRANSACTION_IN' | 'TRANSACTION_OUT';
-  screenNavigate: string;
+  onClickItem: () => void;
   transactionStatus?: number;
   iconLeft?: ReactNode;
 };
 
 const CardTransaction = ({
-  routeParameters,
   lineLeftColor,
   transactionTitle,
   categoryTransaction,
@@ -28,11 +25,9 @@ const CardTransaction = ({
   transactionStatus,
   date,
   type = 'TRANSACTION_IN',
-  screenNavigate,
+  onClickItem,
   iconLeft,
 }: CardTransactionProps) => {
-  const navigation = useNavigation();
-
   function handleTransactionTitle(title: string) {
     const LIMIT_OF_TITLE_LENGTH = 23;
     if (title.length > LIMIT_OF_TITLE_LENGTH) {
@@ -40,9 +35,14 @@ const CardTransaction = ({
     }
     return title;
   }
+
   return (
-    <S.Conta onPress={() => navigation && navigation.navigate(screenNavigate, routeParameters)}>
-      {lineLeftColor && <S.LineLeft lineLeftColor={lineLeftColor} />}
+    <S.Conta onPress={onClickItem}>
+      {lineLeftColor && (
+        <S.CircleIconWrapper>
+          <S.LineLeft lineLeftColor={lineLeftColor} />
+        </S.CircleIconWrapper>
+      )}
       <S.WrapperIcon>{iconLeft && iconLeft}</S.WrapperIcon>
 
       <S.ColLeft>

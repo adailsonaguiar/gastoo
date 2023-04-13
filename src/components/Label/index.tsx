@@ -3,7 +3,7 @@ import colors from '../../styles/colors';
 import {fontMedium} from '../../styles/fonts';
 
 export const Label = styled.Text`
-  color: ${colors.fontLight};
-  font-size: 13px;
+  color: ${colors.gray50};
+  font-size: 14px;
   font-family: ${fontMedium};
 `;

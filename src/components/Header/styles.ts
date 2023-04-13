@@ -17,13 +17,13 @@ export const Title = styled.Text`
   font-size: 17px;
 `;
 
-export const HeaderForm = styled.View<{padding?: boolean; style?: 'dark' | 'light'}>`
+export const HeaderForm = styled.View<{padding?: number; style?: 'dark' | 'light'}>`
   ${({padding, style}) => css`
     width: 100%;
     background: ${style === 'dark' ? colors.darkBackground : colors.backgroundColorPrimary};
-    padding-left: ${padding ? '0' : '20px'};
-    padding-right: ${padding ? '0' : '20px'};
-    padding-top: ${padding ? '0' : '30px'};
+    padding-left: ${padding ? padding + 'px' : '20px'};
+    padding-right: ${padding ? padding + 'px' : '20px'};
+    padding-top: ${padding ? padding + 'px' : '30px'};
   `}
 `;
 

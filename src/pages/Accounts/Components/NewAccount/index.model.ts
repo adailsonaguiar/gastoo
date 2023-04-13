@@ -1,26 +1,18 @@
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {Alert} from 'react-native';
 import React from 'react';
 import uuid from 'react-native-uuid';
 import Realm from 'realm';
 
-import {Account} from '../../models/Accounts';
-import {showAlertError} from '../../services/alertService';
-import {deleteAccount, saveAccount} from '../../services/accountsService';
-import {fetchTransactions} from '../../services/transactionsService';
-import {Option} from '../../components/Select';
-import {accountCategories} from '../../utils/categoriesAccounts';
+import {Option} from '../../../../components/Select';
+import {Account} from '../../../../models/Accounts';
+import {accountCategories} from '../../../../utils/categoriesAccounts';
+import {showAlertError} from '../../../../services/alertService';
+import {deleteAccount, saveAccount} from '../../../../services/accountsService';
+import {fetchTransactions} from '../../../../services/transactionsService';
 
 type AccountFormProps = {
   accountType: Option;
 } & Account;
-
-type AccountFormRouteProps = {
-  props: {
-    formType: string;
-    account?: Account;
-  };
-};
 
 const INITIAL_ACCOUNT_PROPS: AccountFormProps = {
   _id: '',
@@ -35,14 +27,8 @@ const INITIAL_ACCOUNT_PROPS: AccountFormProps = {
   type: undefined,
 };
 
-type RouterProps = RouteProp<AccountFormRouteProps, 'props'>;
-
-export const AccountFormViewModel = (realm: Realm | null) => {
-  const navigation = useNavigation();
-  const {params} = useRoute<RouterProps>();
-  const accountItem = (params?.account as Account) || null;
+export const AccountFormViewModel = (realm: Realm | null, onFishInteration: () => void, accountItem?: Account) => {
   const [loading, setLoading] = React.useState(false);
-  console.log({accountItem});
 
   const currentAccount: AccountFormProps = accountItem
     ? {
@@ -76,7 +62,7 @@ export const AccountFormViewModel = (realm: Realm | null) => {
   const handleDeleteAccount = async (account: Account) => {
     setLoading(true);
     await deleteAccount(account);
-    navigation.goBack();
+    onFishInteration();
     setLoading(false);
   };
 
@@ -133,7 +119,7 @@ export const AccountFormViewModel = (realm: Realm | null) => {
       accountToSave.balance = values.balance;
 
       await saveAccount(accountToSave, realm);
-      navigation.goBack();
+      onFishInteration();
     }
     setLoading(false);
   }

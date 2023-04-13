@@ -3,7 +3,7 @@ import ReactNativeModal from 'react-native-modal';
 import styled from 'styled-components/native';
 
 export const ModalContent = styled.View`
-  padding: 12px 24px;
+  padding: 12px 0;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   margin-top: auto;

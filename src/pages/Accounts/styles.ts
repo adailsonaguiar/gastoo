@@ -5,6 +5,7 @@ import {fontMedium} from '../../styles/fonts';
 export const Container = styled.View`
   flex: 1;
   background: ${colors.backgroundColorPrimary};
+  padding-top: 20px;
 `;
 
 export const Lista = styled.View`

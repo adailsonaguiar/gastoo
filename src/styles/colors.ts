@@ -24,6 +24,8 @@ export default {
 
   eletricBlue: '#2E68FF',
 
+  gray50: '#687489',
   gray40: '#97A3B6',
+  gray20: '#E3E8EF',
   gray10: '#F2F5F9',
 };

@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Image} from 'react-native';
 import {
   CustomPicker,
   OptionTemplateSettings,
@@ -12,7 +11,7 @@ import {Label} from '../Label';
 
 import ArrowRightIcon from '../../assets/arrow-right-blue.png';
 import * as S from './styles';
-import Header, {SelectModalHeader} from '../Header';
+import {SelectModalHeader} from '../Header';
 
 export type Option = {value: string | number; label: string};
 

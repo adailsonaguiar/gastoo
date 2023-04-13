@@ -23,8 +23,9 @@ export const InputWrapper = styled.View`
 
 export const LineLeft = styled.View<{lineLeftColor: string}>`
   ${({lineLeftColor}) => css`
-    width: 5px;
-    height: 27px;
+    width: 16px;
+    height: 16px;
+    border-radius: 24px;
     background-color: ${lineLeftColor};
   `}
 `;

@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   flex-direction: row;
   position: relative;
+  margin-top: 10px;
 `;
 
 export const Carrousel = styled.ScrollView.attrs({

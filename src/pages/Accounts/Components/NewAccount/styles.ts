@@ -1,17 +1,9 @@
 import styled from 'styled-components/native';
-import Button from '../../components/Button';
-import colors from '../../styles/colors';
-import {fontMedium} from '../../styles/fonts';
-
-export const Container = styled.View`
-  flex: 1;
-  background: ${colors.backgroundColorPrimary};
-`;
+import colors from '../../../../styles/colors';
+import Button from '../../../../components/Button';
 
 export const Form = styled.ScrollView`
-  flex: 1;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 0 24px;
 `;
 
 export const InputContainer = styled.View`
@@ -27,8 +19,8 @@ export const InputContainer = styled.View`
 export const ContainerFormFooter = styled.View`
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
-  padding-bottom: 40px;
+  margin-top: 30px;
+  padding-bottom: 20px;
 `;
 
 export const BtnRemove = styled(Button).attrs({

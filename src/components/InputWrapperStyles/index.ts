@@ -10,16 +10,10 @@ export const FontInputStyles = css`
 
 export const InputWrapperStyles = css`
   border-width: 2px;
-  border-color: ${colors.gray300};
+  border-color: ${colors.gray20};
   border-radius: 10px;
   height: 66px;
-  ${FontInputStyles}
-`;
-
-export const SelectWrapperStyles = css`
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.gray300};
-  border-radius: 0;
-  height: 66px;
+  background-color: ${colors.gray10};
+  margin-top: 8px;
   ${FontInputStyles}
 `;

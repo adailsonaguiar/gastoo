@@ -1,36 +1,38 @@
 import React from 'react';
 import {Formik} from 'formik';
 
-import Input from '../../components/Input';
-import Header from '../../components/Header';
-import {Container, Form, BtnRemove, ContainerFormFooter, ButtonSave} from './styles';
 import {AccountFormViewModel} from './index.model';
-import {ColorsList} from '../../components/ColorsList';
-import {useNavigation} from '@react-navigation/native';
-import {FormContentWrapper} from '../../components/FormContentWrapper';
-import {useRealm} from '../../store/realm';
-import Select from '../../components/Select';
-import {getAccountCategoriesList} from '../../utils/categoriesAccounts';
+import {useRealm} from '../../../../store/realm';
 
-export default function AccountForm() {
+import Header from '../../../../components/Header';
+import {FormContentWrapper} from '../../../../components/FormContentWrapper';
+import Input from '../../../../components/Input';
+import Select from '../../../../components/Select';
+import {getAccountCategoriesList} from '../../../../utils/categoriesAccounts';
+import {ColorsList} from '../../../../components/ColorsList';
+
+import {BtnRemove, ContainerFormFooter, ButtonSave, Form} from './styles';
+import {Account} from '../../../../models/Accounts';
+
+type NewAccountProps = {
+  account?: Account;
+  onFishInteration: () => void;
+};
+
+export default function NewAccount({account, onFishInteration}: NewAccountProps) {
   const {realm} = useRealm();
 
-  const {loading, currentAccount, askDelection, onSubmit} = AccountFormViewModel(realm);
-  const navigation = useNavigation();
+  const {loading, currentAccount, askDelection, onSubmit} = AccountFormViewModel(realm, onFishInteration, account);
 
   return (
-    <Container>
-      <Header
-        title={currentAccount._id ? 'Atualizar conta' : 'Nova conta'}
-        onClose={() => navigation.goBack()}
-        style="light"
-      />
+    <>
+      <Header title={currentAccount._id ? 'Atualizar conta' : 'Nova conta'} style="light" padding={1} />
       <Formik initialValues={currentAccount} onSubmit={values => onSubmit(values)}>
         {({setFieldValue, handleSubmit, values}) => (
           <Form>
             <FormContentWrapper>
               <Input
-                label="Descrição"
+                label="Nome da conta"
                 value={values.description}
                 onChangeText={text => {
                   setFieldValue('description', text);
@@ -60,6 +62,6 @@ export default function AccountForm() {
           </Form>
         )}
       </Formik>
-    </Container>
+    </>
   );
 }
