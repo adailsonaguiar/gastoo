@@ -10,10 +10,9 @@ import {TransactionsModel} from '../Transactions/index.model';
 import * as S from './styles';
 import {formatMoney} from '../../utils/FunctionUtils';
 
-import EyeIcon from '../../assets/eye-open.png';
-import EyeIconClose from '../../assets/eye-close.png';
 import {getData, storeData} from '../../services/asyncStorageService';
 import {useRealm} from '../../store/realm';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 type DashProps = {
   navigation: any;
@@ -62,7 +61,11 @@ export const Dash = ({navigation}: DashProps) => {
           <S.LabelWrapper>
             <S.TxtDescricao>Saldo do mês</S.TxtDescricao>
             <S.EyeBtn onPress={toggleShowValuesStorageData}>
-              {showMoney ? <S.eyeIcon source={EyeIcon} /> : <S.eyeIcon source={EyeIconClose} />}
+              {showMoney ? (
+                <FeatherIcon name="eye" size={23} color="#fff" />
+              ) : (
+                <FeatherIcon name="eye-off" size={23} color="#fff" />
+              )}
             </S.EyeBtn>
           </S.LabelWrapper>
           <S.ContainerSaldo>

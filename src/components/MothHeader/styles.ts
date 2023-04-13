@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 import {TouchableOpacity} from 'react-native';
 import colors from '../../styles/colors';
 import {fontBold} from '../../styles/fonts';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const Container = styled.View`
   flex-direction: row;
@@ -21,11 +22,11 @@ export const MonthCenter = styled.Text`
   padding: 5px 20px;
 `;
 
-export const ButtonMonthIconPrev = styled.Image`
+export const ButtonMonthIconPrev = styled(MaterialIcons)`
   margin-right: 20px;
 `;
 
-export const ButtonMonthIconNext = styled.Image`
+export const ButtonMonthIconNext = styled(MaterialIcons)`
   margin-left: 20px;
 `;
 

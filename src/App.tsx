@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import FlashMessage from 'react-native-flash-message';
 import {LogBox, StatusBar} from 'react-native';
@@ -30,7 +31,7 @@ const App = () => {
   }, []);
   return (
     <Cotainer>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.darkBlue} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.darkBlue} />
       <Routes />
       <FlashMessage />
     </Cotainer>

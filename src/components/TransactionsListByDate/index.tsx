@@ -73,7 +73,7 @@ export function TransactionsListByDate({transactions, accounts = []}: Transactio
         {transactionsByDate.map((td, index) => (
           <S.DateSection key={td[0]._id + index}>
             <S.WrapperDate>
-              <S.Date>{format(td[0].date, 'dd/MM')}</S.Date>
+              <S.Date>{format(td[0].date, 'dd/MM/yyyy')}</S.Date>
             </S.WrapperDate>
             {td.map((transaction, idx) => (
               <CardTransaction

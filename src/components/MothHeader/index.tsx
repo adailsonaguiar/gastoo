@@ -2,9 +2,6 @@
 import React from 'react';
 import months, {monthsAbbreviated} from '../../utils/months';
 
-import ArrowLeft from '../../assets/CaretLeft-white.png';
-import ArrowRight from '../../assets/CaretRight-white.png';
-
 import {
   Container,
   ButtonPrevMonth,
@@ -60,11 +57,11 @@ export default function MothHeader({onChangeMonth}: MothHeaderProps) {
   return (
     <Container>
       <ButtonPrevMonth onPress={previousMonth}>
-        <ButtonMonthIconPrev source={ArrowLeft} />
+        <ButtonMonthIconPrev name="arrow-back-ios" size={20} color="#fff" />
       </ButtonPrevMonth>
       <MonthCenter>{handleDateDisplay(date)}</MonthCenter>
       <ButtonNextMonth onPress={nextMonth}>
-        <ButtonMonthIconNext source={ArrowRight} />
+        <ButtonMonthIconNext name="arrow-forward-ios" size={20} color="#fff" />
       </ButtonNextMonth>
     </Container>
   );

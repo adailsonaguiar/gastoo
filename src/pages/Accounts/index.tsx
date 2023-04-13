@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
 import * as S from './styles';
@@ -10,6 +10,7 @@ import Button from '../../components/Button';
 import {Account} from '../../models/Accounts';
 import {fetchAccounts} from '../../services/accountsService';
 import {useRealm} from '../../store/realm';
+import {BottomSheetModal} from '../../components/BottomSheetModal';
 
 type AccountPageProps = {
   navigation: any;
@@ -17,6 +18,7 @@ type AccountPageProps = {
 
 const Accounts = ({navigation}: AccountPageProps) => {
   const {realm} = useRealm();
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
 
   const [accounts, setAccounts] = React.useState<Account[]>([]);
   async function getAccounts() {
@@ -63,11 +65,22 @@ const Accounts = ({navigation}: AccountPageProps) => {
             }}>
             <S.TxtNovaConta>Adicionar Conta</S.TxtNovaConta>
           </S.BtnNovaConta> */}
+
+          <BottomSheetModal visible={isModalVisible} toggleVisible={() => setIsModalVisible(!isModalVisible)}>
+            <Button
+              label="Close modal"
+              loading={false}
+              onPress={() => {
+                setIsModalVisible(!isModalVisible);
+              }}
+            />
+          </BottomSheetModal>
+
           <Button
-            label="Adicionar Conta"
+            label="Open modal"
             loading={false}
             onPress={() => {
-              navigation.navigate(pages.accountForm, {});
+              setIsModalVisible(!isModalVisible);
             }}
           />
         </S.Footer>

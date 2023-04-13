@@ -5,7 +5,6 @@ import Input from '../../components/Input';
 import Select from '../../components/Select';
 import {getArrayCategoriesIncome, getArrayCategoriesExpense} from '../../utils/categoriesTransactions';
 
-import colors from '../../styles/colors';
 import {Container, Form, ButtonSave, Switch, CustomDatePicker} from './styles';
 
 import Header from '../../components/Header';

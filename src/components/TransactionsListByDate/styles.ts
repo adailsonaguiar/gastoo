@@ -9,7 +9,7 @@ export const WrapperDate = styled.View`
 `;
 
 export const Date = styled.Text`
-  font-size: 18px;
+  font-size: 17px;
   font-family: ${fontBold};
   color: ${colors.darkBlue};
   line-height: 24px;
@@ -17,5 +17,5 @@ export const Date = styled.Text`
 export const DateSection = styled.View`
   border-bottom-color: ${colors.gray10};
   border-bottom-width: 1px;
-  padding: 10px 0;
+  padding-top: 25px;
 `;

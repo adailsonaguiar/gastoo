@@ -3,7 +3,9 @@ import * as S from './styles';
 import MonthHeader from '../MothHeader';
 
 import closeIcon from '../../assets/ArrowLeft-white.png';
-import closeIconBlue from '../../assets/ArrowLeft-blue.png';
+
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import colors from '../../styles/colors';
 
 type HeaderProps = {
   title: string;
@@ -27,7 +29,7 @@ const Header = ({title, onClose, onChangeMonth, style}: HeaderProps) => {
                     onClose();
                   }
                 }}>
-                {style === 'dark' ? <S.HeaderBtnIcon source={closeIcon} /> : <S.HeaderBtnIcon source={closeIconBlue} />}
+                <FeatherIcon name="arrow-left" size={23} color={style === 'dark' ? '#fff' : colors.darkBlue} />
               </S.HeaderBtn>
             )}
           </S.SpaceWrapper>

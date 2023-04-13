@@ -54,6 +54,7 @@ export const TxtDescricao = styled.Text`
 
 export const LabelWrapper = styled.View`
   flex-direction: row;
+  align-items: center;
 `;
 
 export const ContentWrapper = styled.View<{background?: string}>`
