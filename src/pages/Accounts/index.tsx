@@ -1,6 +1,5 @@
 import React from 'react';
 import {FlatList} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
 
 import Header from '../../components/Header';
 import CardTransaction from '../../components/CardTransaction';
@@ -32,12 +31,10 @@ const Accounts = ({navigation}: AccountPageProps) => {
     }
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      getAccounts();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
-  );
+  React.useEffect(() => {
+    getAccounts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleSelectAccount(item: Account) {
     setSelectedAccount(item);
@@ -76,9 +73,14 @@ const Accounts = ({navigation}: AccountPageProps) => {
           </S.BtnNovaConta> */}
 
           <BottomSheetModal visible={isModalVisible} toggleVisible={() => setIsModalVisible(!isModalVisible)}>
-            <NewAccount account={selectedAccount} onFishInteration={() => setIsModalVisible(!isModalVisible)} />
+            <NewAccount
+              account={selectedAccount}
+              onFishInteration={() => {
+                setIsModalVisible(!isModalVisible);
+                getAccounts();
+              }}
+            />
           </BottomSheetModal>
-
           <Button
             label="Adicionar conta"
             loading={false}

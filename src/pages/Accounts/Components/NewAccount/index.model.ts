@@ -3,16 +3,13 @@ import React from 'react';
 import uuid from 'react-native-uuid';
 import Realm from 'realm';
 
-import {Option} from '../../../../components/Select';
 import {Account} from '../../../../models/Accounts';
-import {accountCategories} from '../../../../utils/categoriesAccounts';
+import {AccountCategories} from '../../../../utils/categoriesAccounts';
 import {showAlertError} from '../../../../services/alertService';
 import {deleteAccount, saveAccount} from '../../../../services/accountsService';
 import {fetchTransactions} from '../../../../services/transactionsService';
 
-type AccountFormProps = {
-  accountType: Option;
-} & Account;
+type AccountFormProps = {} & Account;
 
 const INITIAL_ACCOUNT_PROPS: AccountFormProps = {
   _id: '',
@@ -23,8 +20,7 @@ const INITIAL_ACCOUNT_PROPS: AccountFormProps = {
   year: '',
   color: '',
   createdAt: new Date(),
-  accountType: {value: '', label: 'Selecione o tipo da conta'},
-  type: undefined,
+  type: AccountCategories.CONTA_CORRENTE,
 };
 
 export const AccountFormViewModel = (realm: Realm | null, onFishInteration: () => void, accountItem?: Account) => {
@@ -40,9 +36,6 @@ export const AccountFormViewModel = (realm: Realm | null, onFishInteration: () =
         year: accountItem.year,
         color: accountItem.color,
         createdAt: new Date(),
-        accountType: accountItem?.type
-          ? {value: accountCategories[accountItem.type].value, label: accountCategories[accountItem.type].label}
-          : {value: '', label: 'Selecione o tipo da conta'},
         type: accountItem?.type,
       }
     : INITIAL_ACCOUNT_PROPS;
@@ -61,7 +54,7 @@ export const AccountFormViewModel = (realm: Realm | null, onFishInteration: () =
 
   const handleDeleteAccount = async (account: Account) => {
     setLoading(true);
-    await deleteAccount(account);
+    await deleteAccount(account, realm);
     onFishInteration();
     setLoading(false);
   };

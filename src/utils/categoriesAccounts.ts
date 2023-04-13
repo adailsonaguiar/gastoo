@@ -3,14 +3,19 @@ type Category = {
   value: number | string;
 };
 
+export enum AccountCategories {
+  'CONTA_CORRENTE' = 1,
+  'CONTA_INVESTIMENTO' = 2,
+}
+
 export const accountCategories: {[key: string]: Category} = {
   1: {
     label: 'Conta corrente',
-    value: 1,
+    value: AccountCategories.CONTA_CORRENTE,
   },
   2: {
     label: 'Conta de investimentos',
-    value: 2,
+    value: AccountCategories.CONTA_INVESTIMENTO,
   },
 };
 

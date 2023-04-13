@@ -1,4 +1,4 @@
-import {closeRealmInstance, handleRealmInstance, loadData, removeById, writeData} from '../database/realm';
+import {loadData, removeById, writeData} from '../database/realm';
 import {SCHEMAS} from '../database/schemas';
 import {Account} from '../models/Accounts';
 import {showAlertError} from './alertService';
@@ -8,8 +8,8 @@ export async function fetchAccounts(props: {filter?: string; realm: Realm | null
   return response as Account[];
 }
 
-export function getTransactionAccount(props: {accountId: string; realm: Realm | null}) {
-  const transactionAccount = fetchAccounts({filter: `_id = '${props.accountId}'`, realm: props.realm});
+export async function getTransactionAccount(props: {accountId: string; realm: Realm | null}) {
+  const transactionAccount = await fetchAccounts({filter: `_id = '${props.accountId}'`, realm: props.realm});
   if (transactionAccount?.length) {
     return transactionAccount[0];
   }
@@ -30,9 +30,8 @@ export function handleAccountBalance(account: Account, valueToUpdate: number, re
   }
 }
 
-export async function deleteAccount(account: Account, externalRealmInstance?: Realm) {
-  let realm = await handleRealmInstance(externalRealmInstance);
-  const data = await loadData({
+export async function deleteAccount(account: Account, realm: Realm | null) {
+  const data = loadData({
     schema: SCHEMAS.TRANSACTION,
     filter: `accountId = '${account._id}'`,
     realm,
@@ -42,5 +41,4 @@ export async function deleteAccount(account: Account, externalRealmInstance?: Re
   } else {
     removeById({id: account._id, schema: SCHEMAS.ACCOUNT, realm});
   }
-  closeRealmInstance(realm, externalRealmInstance);
 }

@@ -7,12 +7,11 @@ import {useRealm} from '../../../../store/realm';
 import Header from '../../../../components/Header';
 import {FormContentWrapper} from '../../../../components/FormContentWrapper';
 import Input from '../../../../components/Input';
-import Select from '../../../../components/Select';
-import {getAccountCategoriesList} from '../../../../utils/categoriesAccounts';
 import {ColorsList} from '../../../../components/ColorsList';
 
 import {BtnRemove, ContainerFormFooter, ButtonSave, Form} from './styles';
 import {Account} from '../../../../models/Accounts';
+import RadioAccountType from '../RadioAccountType';
 
 type NewAccountProps = {
   account?: Account;
@@ -41,7 +40,7 @@ export default function NewAccount({account, onFishInteration}: NewAccountProps)
               />
             </FormContentWrapper>
             <FormContentWrapper>
-              <Select
+              {/* <Select
                 placeholder="Selecione o tipo de conta"
                 label="Tipo de conta"
                 options={getAccountCategoriesList()}
@@ -50,7 +49,8 @@ export default function NewAccount({account, onFishInteration}: NewAccountProps)
                   setFieldValue('accountType', obj);
                   setFieldValue('type', obj.value);
                 }}
-              />
+              /> */}
+              <RadioAccountType type={values.type} toggleSwitch={obj => setFieldValue('type', obj)} />
             </FormContentWrapper>
             <FormContentWrapper>
               <ColorsList handleColor={color => setFieldValue('color', color)} />
