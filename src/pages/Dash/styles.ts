@@ -84,15 +84,6 @@ export const Logo = styled.Image`
   height: 75px;
 `;
 
-export const EyeBtn = styled.TouchableOpacity`
-  margin-left: 10px;
-`;
-
-export const eyeIcon = styled.Image`
-  width: 25px;
-  height: 25px;
-`;
-
 export const WrapperMoneyHidden = styled.View`
   background-color: ${colors.gray100};
   width: 100px;

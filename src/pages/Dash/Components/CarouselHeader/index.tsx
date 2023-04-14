@@ -19,21 +19,21 @@ const styles = StyleSheet.create({
 
 const width = Dimensions.get('window').width;
 
-type CarouselHeaderProps = {showValues: boolean; monthBalance: number; economybalance: number};
+type CarouselHeaderProps = {showValues: boolean; monthBalance: number; economybalance: number; hideValues: () => void};
 type Nav = {
   navigate: (value: string) => void;
 };
 
-const CarouselHeader: React.FC<CarouselHeaderProps> = ({showValues, economybalance, monthBalance}) => {
+const CarouselHeader: React.FC<CarouselHeaderProps> = ({showValues, economybalance, monthBalance, hideValues}) => {
   const dataValues = [
     {
-      label: 'Saldo atual',
+      label: 'Saldo do mês',
       value: monthBalance,
       color: colors.eletricBlue,
       icon: <IconFa name="dollar" size={24} color={'#fff'} />,
     },
     {
-      label: 'Economia do mês',
+      label: 'Saldo conta corrente',
       value: economybalance,
       color: colors.supportSuccess,
       icon: <IconFa name="line-chart" size={24} color={'#fff'} />,
@@ -56,6 +56,7 @@ const CarouselHeader: React.FC<CarouselHeaderProps> = ({showValues, economybalan
             showValue={showValues}
             color={item.color}
             icon={item.icon}
+            hideValues={hideValues}
             handleClickItem={() => {
               navigation.navigate(pages.config);
             }}

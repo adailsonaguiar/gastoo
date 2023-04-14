@@ -65,3 +65,12 @@ export const WrapperMoneyHidden = styled.View`
 export const Section = styled.View`
   flex-direction: column;
 `;
+
+export const EyeBtn = styled.TouchableOpacity`
+  margin-left: 10px;
+`;
+
+export const eyeIcon = styled.Image`
+  width: 25px;
+  height: 25px;
+`;

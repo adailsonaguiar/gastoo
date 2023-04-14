@@ -39,36 +39,28 @@ function calculateAccountBalance(props: {
   }
 }
 
-function calculateAccountBalanceBackup(props: {
-  transactionType: string;
-  valueType: number;
-  initialValue: number;
-  accountBalance: number;
-}) {
-  return props.accountBalance + props.valueType;
+async function updateAccountTransactionBalance(transaction: Transaction, realm: Realm | null) {
+  const account = await getTransactionAccount({accountId: transaction.accountId, realm});
+
+  const formattedDate = new Date(transaction.date.toISOString().split('T')[0]);
+  if (account && !isFuture(formattedDate)) {
+    const value = calculateAccountBalance({
+      accountBalance: account.balance,
+      initialValue: transaction.initialValue,
+      transactionType: transaction.type,
+      valueType: transaction.valueType,
+    });
+
+    handleAccountBalance(account, value, realm);
+  }
 }
 
-export function saveTransaction(transaction: Transaction, realm: Realm | null, isBackup?: boolean) {
+export async function saveTransaction(transaction: Transaction, realm: Realm | null, isBackup?: boolean) {
   try {
-    const account = getTransactionAccount({accountId: transaction.accountId, realm});
-    const formattedDate = new Date(transaction.date.toISOString().split('T')[0]);
-    if (account && !isFuture(formattedDate)) {
-      const value = isBackup
-        ? calculateAccountBalanceBackup({
-            accountBalance: account.balance,
-            initialValue: transaction.initialValue,
-            transactionType: transaction.type,
-            valueType: transaction.valueType,
-          })
-        : calculateAccountBalance({
-            accountBalance: account.balance,
-            initialValue: transaction.initialValue,
-            transactionType: transaction.type,
-            valueType: transaction.valueType,
-          });
-
-      handleAccountBalance(account, value, realm);
+    if (!isBackup) {
+      updateAccountTransactionBalance(transaction, realm);
     }
+
     writeData({
       schema: SCHEMAS.TRANSACTION,
       realm,
@@ -80,7 +72,7 @@ export function saveTransaction(transaction: Transaction, realm: Realm | null, i
 }
 
 export async function deleteTransaction(transaction: Transaction, realm: Realm | null) {
-  const account = getTransactionAccount({accountId: transaction.accountId, realm});
+  const account = await getTransactionAccount({accountId: transaction.accountId, realm});
   if (account) {
     const value = calculateAccountBalance({
       accountBalance: account.balance,

@@ -1,4 +1,5 @@
 import React from 'react';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import * as S from './styles';
 
@@ -9,22 +10,31 @@ type CardHeadProps = {
   color: string;
   icon: React.ReactNode;
   handleClickItem: () => void;
+  hideValues: () => void;
 };
 
-const CardHead: React.FC<CardHeadProps> = ({labelOfValue, handleClickItem, showValue, value, color, icon}) => {
+const CardHead: React.FC<CardHeadProps> = ({
+  labelOfValue,
+  hideValues,
+  handleClickItem,
+  showValue,
+  value,
+  color,
+  icon,
+}) => {
   return (
     <S.CompHead color={color} onPress={handleClickItem}>
       <>
         <S.Section>
           <S.LabelWrapper>
             <S.TxtDescricao>{labelOfValue}</S.TxtDescricao>
-            {/* <S.EyeBtn onPress={toggleShowValuesStorageData}>
-          {showMoney ? (
-            <FeatherIcon name="eye" size={23} color="#fff" />
-            ) : (
-              <FeatherIcon name="eye-off" size={23} color="#fff" />
+            <S.EyeBtn onPress={hideValues}>
+              {showValue ? (
+                <FeatherIcon name="eye" size={20} color="#fff" />
+              ) : (
+                <FeatherIcon name="eye-off" size={20} color="#fff" />
               )}
-            </S.EyeBtn> */}
+            </S.EyeBtn>
           </S.LabelWrapper>
           <S.ContainerSaldo>
             {showValue ? <S.TxtSaldo>R$ {value}</S.TxtSaldo> : <S.WrapperMoneyHidden />}

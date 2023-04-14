@@ -11,7 +11,7 @@ import {useExportData} from '../../hooks/useExportData';
 import {fetchTransactions, saveTransaction} from '../../services/transactionsService';
 import {Account} from '../../models/Accounts';
 import {Transaction} from '../../models/transaction';
-import {saveAccount} from '../../services/accountsService';
+import {getTransactionAccount, handleAccountBalance, saveAccount} from '../../services/accountsService';
 import {useRealm} from '../../store/realm';
 
 // import databackup from '../../../gastoo_data_backup.json';
@@ -71,24 +71,54 @@ export const Config = ({navigation}: ConfigProps) => {
             ...transaction,
             createdAt: new Date(transaction.createdAt),
             date: new Date(transaction.date),
-            // status: 0,
-            // valueType: 0,
           } as Transaction;
+
           const createPromise = async () => saveTransaction(transactionToSave, realm, true);
+
           transactionPromises.push(createPromise());
         }
       });
+
       backup.transactions.map(async transaction => {
         if (transaction.type === transactionType.TRANSACTION_OUT) {
           const transactionToSave = {
             ...transaction,
             createdAt: new Date(transaction.createdAt),
             date: new Date(transaction.date),
-            // status: 0,
-            // valueType: 0,
           } as Transaction;
+
           const createPromise = async () => saveTransaction(transactionToSave, realm, true);
+
           transactionPromises.push(createPromise());
+        }
+      });
+
+      //  update accounts balance
+      let accountsBalance = [] as {id: string; balance: number}[];
+
+      const transactions = fetchTransactions({realm});
+
+      transactions?.map(item => {
+        // FIND BY ACCOUNT ID
+        const transactionAccount = accountsBalance.find(account => account.id === item.accountId);
+        if (transactionAccount) {
+          //  REMOVE ACCOUNT FOUNDED OF A LIST
+          accountsBalance = accountsBalance?.filter(account => account.id !== transactionAccount.id);
+
+          //  CONCAT VALUE BALANCE OF ACCOUNT
+          transactionAccount.balance += item.valueType;
+
+          //  ADD ACCOUNT BALANCE WITH NEW VALUE
+          accountsBalance.push(transactionAccount);
+        } else {
+          accountsBalance.push({id: item.accountId, balance: item.valueType});
+        }
+      });
+
+      accountsBalance.map(async item => {
+        const account = await getTransactionAccount({accountId: item.id, realm});
+        if (account) {
+          handleAccountBalance(account, item.balance, realm);
         }
       });
 

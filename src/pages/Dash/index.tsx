@@ -10,7 +10,7 @@ import {TransactionsModel} from '../Transactions/index.model';
 import * as S from './styles';
 import {formatMoney} from '../../utils/FunctionUtils';
 
-import {getData} from '../../services/asyncStorageService';
+import {getData, storeData} from '../../services/asyncStorageService';
 import {useRealm} from '../../store/realm';
 import CarouselHeader from './Components/CarouselHeader';
 
@@ -21,7 +21,7 @@ type DashProps = {
 export const Dash = ({navigation}: DashProps) => {
   const {realm} = useRealm();
 
-  const {transactions, totalsMonth, getTransactions, getAccounts, accounts} = TransactionsModel({realm});
+  const {transactions, totalsMonth, totalAccounts, getTransactions, getAccounts, accounts} = TransactionsModel({realm});
   const [showMoney, setShowMoney] = React.useState(true);
 
   async function handleShowValuesStorageData() {
@@ -29,13 +29,13 @@ export const Dash = ({navigation}: DashProps) => {
     setShowMoney(value === 'true');
   }
 
-  // async function toggleShowValuesStorageData() {
-  //   storeData({
-  //     key: '_show_money_values',
-  //     value: showMoney ? 'false' : 'true',
-  //   });
-  //   setShowMoney(!showMoney);
-  // }
+  async function toggleShowValuesStorageData() {
+    storeData({
+      key: '_show_money_values',
+      value: showMoney ? 'false' : 'true',
+    });
+    setShowMoney(!showMoney);
+  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -53,8 +53,9 @@ export const Dash = ({navigation}: DashProps) => {
       <S.CustomWrapper padding={0}>
         <CarouselHeader
           showValues={showMoney}
-          economybalance={totalsMonth.totalCurrent - totalsMonth.totalExpense}
+          economybalance={totalAccounts.totalCurrent}
           monthBalance={totalsMonth.totalIncome - totalsMonth.totalExpense}
+          hideValues={toggleShowValuesStorageData}
         />
         {/* <S.HaederLogo> */}
         {/* <S.SeeMoreBtn onPress={() => navigation.navigate(pages.config)}> */}

@@ -13,6 +13,9 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
   const [totalsMonth, setTotalsMonth] = React.useState({
     totalIncome: 0,
     totalExpense: 0,
+  });
+
+  const [totalAccounts, setTotalAccounts] = React.useState({
     totalInvestiment: 0,
     totalCurrent: 0,
   });
@@ -29,7 +32,7 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
       }
     });
 
-    setTotalsMonth({...totalsMonth, ...totalValues});
+    setTotalAccounts(totalValues);
   }
 
   async function getAllTransactionsData(items: Transaction[]) {
@@ -42,7 +45,7 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
         totalValues.totalIncome = totalValues.totalIncome + transaction.value;
       }
     });
-    setTotalsMonth({...totalsMonth, ...totalValues});
+    setTotalsMonth(totalValues);
   }
 
   async function getTransactions(props?: {month: number; year: number}) {
@@ -53,7 +56,6 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
     } else {
       setTransactions([]);
       setTotalsMonth({
-        ...totalsMonth,
         totalIncome: 0,
         totalExpense: 0,
       });
@@ -68,5 +70,5 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
     }
   }
 
-  return {transactions, getTransactions, totalsMonth, getAccounts, accounts};
+  return {transactions, getTransactions, totalsMonth, totalAccounts, getAccounts, accounts};
 }
