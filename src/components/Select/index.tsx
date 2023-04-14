@@ -9,9 +9,11 @@ import {
 } from 'react-native-custom-picker';
 import {Label} from '../Label';
 
-import ArrowRightIcon from '../../assets/arrow-right-blue.png';
+import IconFt from 'react-native-vector-icons/FontAwesome';
+
 import * as S from './styles';
 import {SelectModalHeader} from '../Header';
+import colors from '../../styles/colors';
 
 export type Option = {value: string | number; label: string};
 
@@ -29,11 +31,11 @@ const Select = ({placeholder, label, options = [], btnClear = false, ...rest}: S
 
     return (
       <S.SelectOption>
-        <S.LabelWrapper>
-          <S.LineLeft lineLeftColor={item?.color || ''} />
+        <S.LabelWrapper1>
+          {item?.color && <S.LineLeft lineLeftColor={item?.color || ''} />}
           <S.LabelOption>{getLabel(item)}</S.LabelOption>
-        </S.LabelWrapper>
-        <S.ChevRightIcon source={ArrowRightIcon} />
+        </S.LabelWrapper1>
+        <IconFt size={25} name="angle-right" color={colors.gray40} />
       </S.SelectOption>
     );
   }
@@ -47,11 +49,11 @@ const Select = ({placeholder, label, options = [], btnClear = false, ...rest}: S
         {selectedItem ? (
           <>
             <S.LabelWrapper>
-              <S.LineLeft lineLeftColor={selectedItem?.color} />
+              {selectedItem?.color && <S.LineLeft lineLeftColor={selectedItem?.color} />}
               <S.Placeholder>{getLabel(selectedItem)}</S.Placeholder>
             </S.LabelWrapper>
             {btnClear && <S.BtnClear onPress={clear} />}
-            <S.ChevRightIcon source={ArrowRightIcon} />
+            <IconFt size={25} name="angle-right" color={colors.gray40} />
           </>
         ) : null}
       </S.FieldWrapper>

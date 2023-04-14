@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
-import ArrowRightIcon from '../../assets/arrow-right-blue.png';
+import IconFt from 'react-native-vector-icons/FontAwesome';
+
 import {version} from '../../../package.json';
 
 import * as S from './styles';
@@ -132,11 +133,11 @@ export const Config = ({navigation}: ConfigProps) => {
       <S.MenuWrapper>
         <S.SelectOption onPress={() => handleClick()}>
           <S.LabelOption>Exportar dados</S.LabelOption>
-          <S.ChevRightIcon source={ArrowRightIcon} />
+          <IconFt size={20} name="angle-right" />
         </S.SelectOption>
         <S.SelectOption onPress={() => handleImportData()}>
           <S.LabelOption>Importar dados</S.LabelOption>
-          <S.ChevRightIcon source={ArrowRightIcon} />
+          <IconFt size={20} name="angle-right" />
         </S.SelectOption>
       </S.MenuWrapper>
       <S.Footer>

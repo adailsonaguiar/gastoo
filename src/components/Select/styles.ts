@@ -47,15 +47,22 @@ export const Placeholder = styled.Text<{lineLeft?: boolean}>`
   `}
 `;
 
-export const LabelWrapper = styled.View`
+export const LabelWrapper1 = styled.View`
   flex-direction: row;
   align-items: center;
 `;
 
+export const LabelWrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding-left: 10px;
+`;
+
 export const LineLeft = styled.View<{lineLeftColor: string}>`
   ${({lineLeftColor}) => css`
-    width: 5px;
-    height: 27px;
+    width: 16px;
+    height: 16px;
+    border-radius: 25px;
     margin-right: 10px;
     background-color: ${lineLeftColor};
   `}
@@ -80,8 +87,3 @@ export const stylesSheet = StyleSheet.create({
     backgroundColor: colors.backgroundColorPrimary,
   },
 });
-
-export const ChevRightIcon = styled.Image`
-  width: 17px;
-  height: 17px;
-`;
