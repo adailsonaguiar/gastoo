@@ -11,8 +11,8 @@ export const Container = styled.View`
 
 export const Form = styled.ScrollView`
   flex: 7;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 24px;
+  padding-right: 24px;
 `;
 
 export const ButtonSave = styled(Button)`

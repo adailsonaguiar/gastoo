@@ -2,7 +2,6 @@ import React from 'react';
 import * as S from './styles';
 import Header from '../../components/Header';
 import {TransactionsModel} from './index.model';
-import {TransactionsList} from '../../components/TransactionsList';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 // import {Loading} from '../../components/Loading';
 import {useRealm} from '../../store/realm';

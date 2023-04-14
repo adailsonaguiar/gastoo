@@ -10,9 +10,9 @@ import {TransactionsModel} from '../Transactions/index.model';
 import * as S from './styles';
 import {formatMoney} from '../../utils/FunctionUtils';
 
-import {getData, storeData} from '../../services/asyncStorageService';
+import {getData} from '../../services/asyncStorageService';
 import {useRealm} from '../../store/realm';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import CarouselHeader from './Components/CarouselHeader';
 
 type DashProps = {
   navigation: any;
@@ -29,13 +29,13 @@ export const Dash = ({navigation}: DashProps) => {
     setShowMoney(value === 'true');
   }
 
-  async function toggleShowValuesStorageData() {
-    storeData({
-      key: '_show_money_values',
-      value: showMoney ? 'false' : 'true',
-    });
-    setShowMoney(!showMoney);
-  }
+  // async function toggleShowValuesStorageData() {
+  //   storeData({
+  //     key: '_show_money_values',
+  //     value: showMoney ? 'false' : 'true',
+  //   });
+  //   setShowMoney(!showMoney);
+  // }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -50,14 +50,19 @@ export const Dash = ({navigation}: DashProps) => {
 
   return (
     <S.Container>
-      <S.CustomWrapper>
-        <S.HaederLogo>
-          {/* <S.SeeMoreBtn onPress={() => navigation.navigate(pages.config)}> */}
-          {/* <S.SeeMoreBtn onPress={() => {}}> */}
-          {/* <S.Logo source={AppLogo} /> */}
-          {/* </S.SeeMoreBtn> */}
-        </S.HaederLogo>
-        <S.CompHead>
+      <S.CustomWrapper padding={0}>
+        <CarouselHeader
+          showValues={showMoney}
+          economybalance={totalsMonth.totalCurrent - totalsMonth.totalExpense}
+          monthBalance={totalsMonth.totalIncome - totalsMonth.totalExpense}
+        />
+        {/* <S.HaederLogo> */}
+        {/* <S.SeeMoreBtn onPress={() => navigation.navigate(pages.config)}> */}
+        {/* <S.SeeMoreBtn onPress={() => {}}> */}
+        {/* <S.Logo source={AppLogo} /> */}
+        {/* </S.SeeMoreBtn> */}
+        {/* </S.HaederLogo> */}
+        {/* <S.CompHead>
           <S.LabelWrapper>
             <S.TxtDescricao>Saldo do mês</S.TxtDescricao>
             <S.EyeBtn onPress={toggleShowValuesStorageData}>
@@ -75,7 +80,7 @@ export const Dash = ({navigation}: DashProps) => {
               <S.WrapperMoneyHidden />
             )}
           </S.ContainerSaldo>
-        </S.CompHead>
+        </S.CompHead> */}
       </S.CustomWrapper>
       <S.CustomWrapper>
         <Tabs navigation={navigation} />

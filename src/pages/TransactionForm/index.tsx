@@ -5,7 +5,7 @@ import Input from '../../components/Input';
 import Select from '../../components/Select';
 import {getArrayCategoriesIncome, getArrayCategoriesExpense} from '../../utils/categoriesTransactions';
 
-import {Container, Form, Switch, CustomDatePicker} from './styles';
+import {Container, Form, Switch, CustomDatePicker, ButtonSave} from './styles';
 
 import Header from '../../components/Header';
 // import {BtnRemove, ContainerFormFooter} from '../AccountForm/styles';
@@ -15,11 +15,12 @@ import {TransactionFormModel} from './index.model';
 import {useNavigation} from '@react-navigation/native';
 import {FormContentWrapper} from '../../components/FormContentWrapper';
 import {useRealm} from '../../store/realm';
+import {BtnRemove, ContainerFormFooter} from '../Accounts/Components/NewAccount/styles';
 
 const TransactionForm = () => {
   const {realm} = useRealm();
 
-  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE} = TransactionFormModel(realm);
+  const {formik, expenseEdit, accounts, handleDelete, FORM_TYPE, loading} = TransactionFormModel(realm);
   const navigation = useNavigation();
   function handleSceneTitle() {
     if (expenseEdit) {
@@ -124,7 +125,6 @@ const TransactionForm = () => {
               />
             </FormContentWrapper>
           )}
-
           <FormContentWrapper>
             <Switch
               toggleSwitch={value => formik.setFieldValue('status', value ? 1 : 0)}
@@ -133,7 +133,7 @@ const TransactionForm = () => {
               labelDisable={!FORM_TYPE ? 'NÃO PAGO' : 'NÃO RECEBIDO'}
             />
           </FormContentWrapper>
-          {/* <ContainerFormFooter>
+          <ContainerFormFooter>
             <ButtonSave label="Salvar" onPress={formik.handleSubmit} loading={loading} />
             {expenseEdit && (
               <BtnRemove
@@ -143,7 +143,7 @@ const TransactionForm = () => {
                 }}
               />
             )}
-          </ContainerFormFooter> */}
+          </ContainerFormFooter>
         </Form>
       </Container>
     </>

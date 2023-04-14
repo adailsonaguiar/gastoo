@@ -6,19 +6,13 @@ import {css} from 'styled-components';
 export const Container = styled.View`
   flex: 1;
   background-color: ${colors.darkBackground};
+  padding-top: 24px;
 `;
 
 export const HeaderWrapper = styled.View`
   padding: 10px 0;
 `;
 
-export const CompHead = styled.View`
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 24px;
-  border-radius: 12px;
-  background: ${colors.eletricBlue};
-`;
 export const TitleGrid = styled.Text`
   color: #00d0b4;
   font-size: 14px;
@@ -33,28 +27,6 @@ export const HaederLogo = styled.View`
   justify-content: center;
   margin-bottom: 10px;
   padding: 0 20px;
-`;
-
-export const ContainerSaldo = styled.View`
-  flex-direction: row;
-`;
-
-export const TxtSaldo = styled.Text`
-  color: ${colors.backgroundColorPrimary};
-  font-size: 24px;
-  font-family: ${fontBold};
-  line-height: 40px;
-`;
-
-export const TxtDescricao = styled.Text`
-  font-family: ${fontBold};
-  font-size: 16px;
-  color: ${colors.backgroundColorPrimary};
-`;
-
-export const LabelWrapper = styled.View`
-  flex-direction: row;
-  align-items: center;
 `;
 
 export const ContentWrapper = styled.View<{background?: string}>`
@@ -128,10 +100,10 @@ export const WrapperMoneyHidden = styled.View`
   border-radius: 5px;
 `;
 
-export const CustomWrapper = styled.View<{background?: string; marginBottom?: string}>`
-  ${({background, marginBottom}) => css`
+export const CustomWrapper = styled.View<{background?: string; marginBottom?: string; padding?: number}>`
+  ${({background, marginBottom, padding}) => css`
     background: ${background ? background : colors.darkBackground};
-    padding: 0 24px;
+    padding: ${Number.isInteger(padding) ? padding + 'px' : '0 24px'};
     margin-bottom: ${marginBottom ? marginBottom : '37px'};
   `}
 `;
