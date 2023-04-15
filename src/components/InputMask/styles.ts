@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 import {TextInputMask} from 'react-native-masked-text';
 import {css} from 'styled-components';
 import {fontBold} from '../../styles/fonts';
+import colors from '../../styles/colors';
 
 export const Container = styled.View``;
 
@@ -11,6 +12,7 @@ const inputMainStyle = css`
   font-family: ${fontBold};
   border-radius: 0;
   padding: 0;
+  color: ${colors.darkBlue};
 `;
 
 export const InputMask = styled(TextInputMask)<{mainInput?: boolean}>`

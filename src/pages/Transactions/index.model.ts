@@ -13,6 +13,7 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
   const [totalsMonth, setTotalsMonth] = React.useState({
     totalIncome: 0,
     totalExpense: 0,
+    totalExpenseNotPaid: 0,
   });
 
   const [totalAccounts, setTotalAccounts] = React.useState({
@@ -36,13 +37,18 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
   }
 
   async function getAllTransactionsData(items: Transaction[]) {
-    const totalValues = {totalIncome: 0, totalExpense: 0};
+    const totalValues = {totalIncome: 0, totalExpense: 0, totalExpenseNotPaid: 0};
     items.map(transaction => {
       if (transaction.type === transactionType.TRANSACTION_OUT) {
-        totalValues.totalExpense = totalValues.totalExpense + transaction.value;
+        totalValues.totalExpense += transaction.value;
       }
       if (transaction.type === transactionType.TRANSACTION_IN) {
-        totalValues.totalIncome = totalValues.totalIncome + transaction.value;
+        totalValues.totalIncome += transaction.value;
+      }
+      if (transaction.type === transactionType.TRANSACTION_OUT && transaction.status === 0) {
+        console.log(transaction);
+
+        totalValues.totalExpenseNotPaid += transaction.value;
       }
     });
     setTotalsMonth(totalValues);
@@ -58,6 +64,7 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
       setTotalsMonth({
         totalIncome: 0,
         totalExpense: 0,
+        totalExpenseNotPaid: 0,
       });
     }
   }

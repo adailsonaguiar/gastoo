@@ -9,6 +9,7 @@ import colors from '../../../../styles/colors';
 import IconFa from 'react-native-vector-icons/FontAwesome';
 import {pages} from '../../../../routes';
 import {useNavigation} from '@react-navigation/native';
+import {Nav} from '../../../../models/useNavigation.model';
 
 const styles = StyleSheet.create({
   carousel: {
@@ -20,9 +21,6 @@ const styles = StyleSheet.create({
 const width = Dimensions.get('window').width;
 
 type CarouselHeaderProps = {showValues: boolean; monthBalance: number; economybalance: number; hideValues: () => void};
-type Nav = {
-  navigate: (value: string) => void;
-};
 
 const CarouselHeader: React.FC<CarouselHeaderProps> = ({showValues, economybalance, monthBalance, hideValues}) => {
   const dataValues = [

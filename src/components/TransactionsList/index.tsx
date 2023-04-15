@@ -11,6 +11,8 @@ import forkIcon from '../../assets/categories/forkknife.png';
 import toolIcon from '../../assets/categories/tool.png';
 import {Account} from '../../models/Accounts';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {Nav} from '../../models/useNavigation.model';
 
 type TransactionListProps = {
   transactions: Transaction[];
@@ -42,6 +44,8 @@ export function TransactionsList({transactions, accounts = []}: TransactionListP
     return accounts.find(item => item._id === accountId)?.description || '';
   }
 
+  const navigation = useNavigation<Nav>();
+
   return (
     <>
       <FlatList
@@ -49,21 +53,15 @@ export function TransactionsList({transactions, accounts = []}: TransactionListP
         renderItem={({item}) => (
           <>
             <CardTransaction
-              routeParameters={{
-                transaction: item,
-                date: {day: item.day, month: item.month, year: item.year},
-                formType: item.type === transactionType.TRANSACTION_IN,
-              }}
               iconLeft={<TransactionIcon source={getIconByCategory(Number(item.category), item.type)} />}
               transactionTitle={item.description}
-              // categoryTransaction={getCategories(item)[item.category].label}
               categoryTransaction={getAccountById(item.accountId)}
               value={item.value}
               date={{day: item.day, month: item.month, year: item.year}}
               status={getTransactionStatus(item.status)}
               type={item.type}
-              screenNavigate={pages.transactionForm}
               transactionStatus={item.status}
+              onClickItem={() => navigation.navigate(pages.transactionForm, {transaction: item})}
             />
           </>
         )}

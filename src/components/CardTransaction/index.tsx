@@ -10,7 +10,7 @@ type CardTransactionProps = {
   value: number;
   status?: string;
   date: {day: string; month: string; year: string};
-  type?: 'TRANSACTION_IN' | 'TRANSACTION_OUT';
+  type?: string;
   onClickItem: () => void;
   transactionStatus?: number;
   iconLeft?: ReactNode;
