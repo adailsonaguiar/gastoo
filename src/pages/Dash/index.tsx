@@ -53,7 +53,7 @@ export const Dash = ({navigation}: DashProps) => {
       <S.CustomWrapper padding={0}>
         <CarouselHeader
           showValues={showMoney}
-          economybalance={totalAccounts.totalCurrent}
+          economybalance={totalAccounts.totalCurrent - totalsMonth.totalExpenseNotPaid}
           monthBalance={totalsMonth.totalIncome - totalsMonth.totalExpense}
           hideValues={toggleShowValuesStorageData}
         />

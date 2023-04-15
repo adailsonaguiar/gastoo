@@ -4,8 +4,12 @@ import {Account} from '../models/Accounts';
 import {showAlertError} from './alertService';
 
 export async function fetchAccounts(props: {filter?: string; realm: Realm | null}) {
-  const response = await loadData({schema: SCHEMAS.ACCOUNT, ...props});
-  return response as Account[];
+  try {
+    const response = await loadData({schema: SCHEMAS.ACCOUNT, ...props});
+    return response as Account[];
+  } catch (error) {
+    console.log('fetchAccounts', error);
+  }
 }
 
 export async function getTransactionAccount(props: {accountId: string; realm: Realm | null}) {
@@ -17,7 +21,11 @@ export async function getTransactionAccount(props: {accountId: string; realm: Re
 }
 
 export async function saveAccount(account: Account, realm: Realm | null) {
-  writeData({schema: SCHEMAS.ACCOUNT, data: account, realm});
+  try {
+    writeData({schema: SCHEMAS.ACCOUNT, data: account, realm});
+  } catch (error) {
+    console.log('saveAccount::', error);
+  }
 }
 
 export function handleAccountBalance(account: Account, valueToUpdate: number, realmInstance: Realm | null) {

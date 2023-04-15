@@ -67,7 +67,7 @@ export async function saveTransaction(transaction: Transaction, realm: Realm | n
       data: transaction,
     });
   } catch (error) {
-    console.error(error);
+    console.error('saveTransaction::', error);
   }
 }
 

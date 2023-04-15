@@ -48,50 +48,52 @@ export const Config = ({navigation}: ConfigProps) => {
     }
   };
 
+  function makeAccountPromises(accounts: Account[]) {
+    const promises = accounts.map(async account => {
+      const accountToSave = {
+        ...account,
+        createdAt: new Date(account.createdAt),
+        balance: 0,
+      } as Account;
+
+      const createPromise = async () => await saveAccount(accountToSave, realm);
+      return createPromise();
+    });
+
+    return promises;
+  }
+
+  function makeTransactionPromises(transactions: Transaction[], type: string) {
+    const promises = transactions.map(async transaction => {
+      if (transaction.type === type) {
+        const transactionToSave = {
+          ...transaction,
+          createdAt: new Date(transaction.createdAt),
+          date: new Date(transaction.date),
+        } as Transaction;
+
+        const createPromise = async () => saveTransaction(transactionToSave, realm, true);
+
+        return createPromise();
+      }
+    });
+
+    return promises;
+  }
+
   async function handleBackup(backup: {accounts: Account[]; transactions: Transaction[]}) {
     const response = fetchTransactions({realm});
 
     if (!response?.length) {
       console.log('...backup started');
-      const accountPromises = [] as Promise<void>[];
-      const transactionPromises = [] as Promise<void>[];
-      backup.accounts.map(async account => {
-        const accountToSave = {
-          ...account,
-          createdAt: new Date(account.createdAt),
-          balance: 0,
-        } as Account;
-        const createPromise = async () => await saveAccount(accountToSave, realm);
-        accountPromises.push(createPromise());
-      });
 
-      backup.transactions.map(async transaction => {
-        if (transaction.type === transactionType.TRANSACTION_IN) {
-          const transactionToSave = {
-            ...transaction,
-            createdAt: new Date(transaction.createdAt),
-            date: new Date(transaction.date),
-          } as Transaction;
+      let accountPromises = [] as Promise<void>[];
+      let transactionINPromises = [] as Promise<void>[];
+      let transactionOUTPromises = [] as Promise<void>[];
 
-          const createPromise = async () => saveTransaction(transactionToSave, realm, true);
-
-          transactionPromises.push(createPromise());
-        }
-      });
-
-      backup.transactions.map(async transaction => {
-        if (transaction.type === transactionType.TRANSACTION_OUT) {
-          const transactionToSave = {
-            ...transaction,
-            createdAt: new Date(transaction.createdAt),
-            date: new Date(transaction.date),
-          } as Transaction;
-
-          const createPromise = async () => saveTransaction(transactionToSave, realm, true);
-
-          transactionPromises.push(createPromise());
-        }
-      });
+      accountPromises = makeAccountPromises(backup.accounts);
+      transactionINPromises = makeTransactionPromises(backup.transactions, transactionType.TRANSACTION_IN);
+      transactionOUTPromises = makeTransactionPromises(backup.transactions, transactionType.TRANSACTION_OUT);
 
       //  update accounts balance
       let accountsBalance = [] as {id: string; balance: number}[];
@@ -115,15 +117,16 @@ export const Config = ({navigation}: ConfigProps) => {
         }
       });
 
+      await Promise.all(accountPromises);
+      await Promise.all(transactionINPromises);
+      await Promise.all(transactionOUTPromises);
+
       accountsBalance.map(async item => {
         const account = await getTransactionAccount({accountId: item.id, realm});
         if (account) {
           handleAccountBalance(account, item.balance, realm);
         }
       });
-
-      await Promise.all(accountPromises);
-      await Promise.all(transactionPromises);
     }
     console.log('...backup finished');
   }
