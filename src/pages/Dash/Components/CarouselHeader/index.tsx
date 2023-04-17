@@ -28,7 +28,7 @@ const CarouselHeader: React.FC<CarouselHeaderProps> = ({showValues, economybalan
       icon: <IconFa name="dollar" size={24} color={'#fff'} />,
     },
     {
-      label: 'Saldo conta corrente',
+      label: 'Disponível em conta corrente',
       value: economybalance,
       color: colors.supportSuccess,
       icon: <IconFa name="line-chart" size={24} color={'#fff'} />,

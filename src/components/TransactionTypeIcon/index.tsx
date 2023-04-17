@@ -10,7 +10,7 @@ type ExpenseIconType = {
 const ExpenseIcon: React.FC<ExpenseIconType> = ({categoryCode, type}) => {
   const iconProps = {
     color: colors.gray50,
-    size: 25,
+    size: 20,
   };
   if (type === transactionType.TRANSACTION_OUT) {
     switch (categoryCode) {
@@ -23,7 +23,7 @@ const ExpenseIcon: React.FC<ExpenseIconType> = ({categoryCode, type}) => {
       case 5:
         return <IconMc {...iconProps} name="shirt-outline" />;
       case 6:
-        return <IconMc {...iconProps} name="bag-outline" />;
+        return <IconMc {...iconProps} name="ios-cart-outline" />;
       case 7:
         return <IconMc {...iconProps} name="fitness-outline" />;
       case 8:
