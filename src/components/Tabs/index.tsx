@@ -61,26 +61,6 @@ const Tabs = ({navigation}: TabsProps) => {
           </TabItem>
         )}
       />
-      {/* <TabsContainer>
-      <TabItem style={styles.tab} onPress={() => navigation.navigate(pages.transactionForm)}>
-        <IconArea>
-          <Icon name="arrow-down-left" size={23} color="#fff" />
-        </IconArea>
-        <TitleCard>Despesa</TitleCard>
-      </TabItem>
-      <TabItem style={styles.tab} onPress={() => navigation.navigate(pages.transactionForm, {formType: true})}>
-        <IconArea>
-          <Icon name="arrow-up-right" size={23} color="#fff" />
-        </IconArea>
-        <TitleCard>Receita</TitleCard>
-      </TabItem>
-      <TabItem style={styles.tab} onPress={() => navigation.navigate(pages.accounts)}>
-        <IconArea>
-          <IconFt name="bank" size={15} color="#fff" />
-        </IconArea>
-        <TitleCard>Contas</TitleCard>
-      </TabItem>
-    </TabsContainer>*/}
     </GestureHandlerRootView>
   );
 };

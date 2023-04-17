@@ -12,6 +12,7 @@ import * as S from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {Nav} from '../../models/useNavigation.model';
 import ExpenseIcon from '../TransactionTypeIcon';
+import {transactionType} from '../../database/schemas/TransactionSchema';
 
 type TransactionListProps = {
   transactions: Transaction[];
@@ -66,7 +67,12 @@ export function TransactionsListByDate({transactions, accounts = []}: Transactio
                 status={getTransactionStatus(transaction.status)}
                 type={transaction.type}
                 transactionStatus={transaction.status}
-                onClickItem={() => navigation.navigate(pages.transactionForm, {transaction})}
+                onClickItem={() =>
+                  navigation.navigate(pages.transactionForm, {
+                    transaction,
+                    formType: transaction.type === transactionType.TRANSACTION_IN ? true : false,
+                  })
+                }
               />
             ))}
           </S.DateSection>

@@ -32,7 +32,8 @@ type RouterProps = RouteProp<TransactionFormRouteProps, 'props'>;
 export function TransactionFormModel(realm: Realm | null) {
   const route = useRoute<RouterProps>();
   const [loading, setLoading] = React.useState(false);
-  const FORM_TYPE = route.params?.formType;
+  const FORM_TYPE = !!route.params?.formType;
+
   const INITIAL_FORM_VALUES: FormProps = {
     _id: String(uuid.v4()),
     category: 0,
@@ -41,7 +42,7 @@ export function TransactionFormModel(realm: Realm | null) {
     initialValue: 0,
     description: '',
     accountId: '',
-    type: transactionType.TRANSACTION_OUT,
+    type: FORM_TYPE ? transactionType.TRANSACTION_IN : transactionType.TRANSACTION_OUT,
     recurrence: false,
     status: 0,
     day: '',
