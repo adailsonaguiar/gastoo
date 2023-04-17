@@ -115,7 +115,7 @@ const TransactionForm = () => {
               placeholder={!FORM_TYPE ? 'Compras mercadinho' : 'Prestação de serviço'}
             />
           </FormContentWrapper>
-          {!expenseEdit?.recurrence && (
+          {!expenseEdit?._id && (
             <FormContentWrapper>
               <Switch
                 toggleSwitch={value => formik.setFieldValue('recurrence', value ? 1 : 0)}

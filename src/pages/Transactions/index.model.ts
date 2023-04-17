@@ -46,8 +46,6 @@ export function TransactionsModel({realm}: {realm: Realm | null}) {
         totalValues.totalIncome += transaction.value;
       }
       if (transaction.type === transactionType.TRANSACTION_OUT && transaction.status === 0) {
-        console.log(transaction);
-
         totalValues.totalExpenseNotPaid += transaction.value;
       }
     });
