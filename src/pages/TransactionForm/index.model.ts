@@ -41,7 +41,7 @@ export function TransactionFormModel(realm: Realm | null) {
     initialValue: 0,
     description: '',
     accountId: '',
-    type: !FORM_TYPE ? transactionType.TRANSACTION_OUT : transactionType.TRANSACTION_IN,
+    type: transactionType.TRANSACTION_OUT,
     recurrence: false,
     status: 0,
     day: '',
@@ -53,6 +53,7 @@ export function TransactionFormModel(realm: Realm | null) {
     valueType: 0,
     createdAt: new Date(),
   };
+
   const navigation = useNavigation();
   const expenseEdit = route.params?.transaction ? route.params?.transaction : null;
 
@@ -124,7 +125,7 @@ export function TransactionFormModel(realm: Realm | null) {
         description: expenseEdit.description,
         accountId: expenseEdit.accountId,
 
-        type: !FORM_TYPE ? transactionType.TRANSACTION_OUT : transactionType.TRANSACTION_IN,
+        type: expenseEdit.type,
         status: expenseEdit.status,
         day: expenseEdit.day,
         month: expenseEdit.month,
