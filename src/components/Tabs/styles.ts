@@ -1,14 +1,8 @@
 import styled from 'styled-components/native';
 import {fontMedium} from '../../styles/fonts';
-// import {fontRegular} from '../../styles/fonts';
-
-export const TabsContainer = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-`;
 
 export const TabItem = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.7,
+  activeOpacity: 0.9,
 })`
   align-items: center;
 `;

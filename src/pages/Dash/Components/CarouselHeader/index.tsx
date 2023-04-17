@@ -7,9 +7,6 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {formatMoney} from '../../../../utils/FunctionUtils';
 import colors from '../../../../styles/colors';
 import IconFa from 'react-native-vector-icons/FontAwesome';
-import {pages} from '../../../../routes';
-import {useNavigation} from '@react-navigation/native';
-import {Nav} from '../../../../models/useNavigation.model';
 
 const styles = StyleSheet.create({
   carousel: {
@@ -38,8 +35,6 @@ const CarouselHeader: React.FC<CarouselHeaderProps> = ({showValues, economybalan
     },
   ];
 
-  const navigation = useNavigation<Nav>();
-
   return (
     <GestureHandlerRootView>
       <Carousel
@@ -55,9 +50,7 @@ const CarouselHeader: React.FC<CarouselHeaderProps> = ({showValues, economybalan
             color={item.color}
             icon={item.icon}
             hideValues={hideValues}
-            handleClickItem={() => {
-              navigation.navigate(pages.config);
-            }}
+            handleClickItem={() => {}}
           />
         )}
       />

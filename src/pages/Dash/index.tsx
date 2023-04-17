@@ -83,7 +83,7 @@ export const Dash = ({navigation}: DashProps) => {
           </S.ContainerSaldo>
         </S.CompHead> */}
       </S.CustomWrapper>
-      <S.CustomWrapper>
+      <S.CustomWrapper padding={0}>
         <Tabs navigation={navigation} />
       </S.CustomWrapper>
       <S.CustomWrapper>
