@@ -52,6 +52,10 @@ export const LabelWrapper1 = styled.View`
   align-items: center;
 `;
 
+export const CategoryTransacation = styled.View`
+  margin-right: 10px;
+`;
+
 export const LabelWrapper = styled.View`
   flex-direction: row;
   align-items: center;

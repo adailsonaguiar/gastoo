@@ -3,7 +3,7 @@ import colors from '../../styles/colors';
 import {fontBold, fontMedium} from '../../styles/fonts';
 
 export const Container = styled.View`
-  background: ${colors.backgroundColorPrimary};
+  background: ${colors.backgroundColorSecondary};
   height: 50px;
   flex-direction: row;
   align-items: center;
@@ -20,7 +20,7 @@ export const Title = styled.Text`
 export const HeaderForm = styled.View<{padding?: number; style?: 'dark' | 'light'}>`
   ${({padding, style}) => css`
     width: 100%;
-    background: ${style === 'dark' ? colors.darkBackground : colors.backgroundColorPrimary};
+    background: ${style === 'dark' ? colors.darkBackground : colors.backgroundColorSecondary};
     padding-left: ${padding ? padding + 'px' : '20px'};
     padding-right: ${padding ? padding + 'px' : '20px'};
     padding-top: ${padding ? padding + 'px' : '30px'};
@@ -55,7 +55,16 @@ export const TxtHeaderForm = styled.Text<{style?: 'dark' | 'light'}>`
   `}
 `;
 
-export const HeaderBtn = styled.TouchableOpacity``;
+export const HeaderBtn = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8,
+})`
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  border: 1px solid ${colors.dark500};
+`;
 
 export const Subtitle = styled.View`
   font-size: 16px;

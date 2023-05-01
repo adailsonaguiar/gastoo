@@ -20,6 +20,8 @@ const ExpenseIcon: React.FC<ExpenseIconType> = ({categoryCode, type}) => {
         return <IconMc {...iconProps} name="car-sport-outline" />;
       case 3:
         return <IconMc {...iconProps} name="build-outline" />;
+      case 4:
+        return <IconMc {...iconProps} name="book-outline" />;
       case 5:
         return <IconMc {...iconProps} name="shirt-outline" />;
       case 6:
@@ -29,7 +31,7 @@ const ExpenseIcon: React.FC<ExpenseIconType> = ({categoryCode, type}) => {
       case 8:
         return <IconMc {...iconProps} name="ios-bookmark-outline" />;
       case 10:
-        return <IconMc {...iconProps} name="wallet-outline" />;
+        return <IconMc {...iconProps} name="card-outline" />;
       default:
         return <IconMc {...iconProps} name="wallet-outline" />;
     }

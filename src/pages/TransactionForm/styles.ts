@@ -6,7 +6,7 @@ import colors from '../../styles/colors';
 
 export const Container = styled.View`
   flex: 1;
-  background: ${colors.backgroundColorPrimary};
+  background: ${colors.backgroundColorSecondary};
 `;
 
 export const Form = styled.ScrollView`
@@ -20,7 +20,7 @@ export const ButtonSave = styled(Button)`
 `;
 
 export const Switch = styled(SwitchContainer)`
-  margin-top: 30px;
+  margin-top: 25px;
 `;
 
 export const CustomDatePicker = styled(DatePicker)``;

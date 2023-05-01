@@ -2,8 +2,6 @@ import React from 'react';
 import * as S from './styles';
 import MonthHeader from '../MothHeader';
 
-import closeIcon from '../../assets/ArrowLeft-white.png';
-
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import colors from '../../styles/colors';
 
@@ -66,7 +64,7 @@ export const SelectModalHeader = ({title, onClose, children, style}: HeaderProps
                   onClose();
                 }
               }}>
-              <S.HeaderBtnIcon source={closeIcon} />
+              <FeatherIcon name="x" size={23} color={colors.darkBlue} />
             </S.HeaderBtn>
           )}
           {children && <S.Subtitle>{children}</S.Subtitle>}

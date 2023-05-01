@@ -4,7 +4,7 @@ import {fontMedium} from '../../styles/fonts';
 
 export const Container = styled.View`
   flex: 1;
-  background: ${colors.backgroundColorPrimary};
+  background: ${colors.backgroundColorSecondary};
   padding-top: 20px;
 `;
 
@@ -13,7 +13,7 @@ export const Lista = styled.View`
 `;
 
 export const Footer = styled.View`
-  background: ${colors.backgroundColorPrimary};
+  background: ${colors.backgroundColorSecondary};
   align-items: center;
   padding-left: 20px;
   padding-right: 20px;

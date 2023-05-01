@@ -5,11 +5,16 @@ import {fontBold, fontMedium} from '../../styles/fonts';
 
 import {transactionType} from '../../database/schemas/TransactionSchema';
 
-export const Conta = styled(TouchableOpacity)`
+export const Conta = styled(TouchableOpacity).attrs({
+  activeOpacity: 0.7,
+})`
   flex-direction: row;
   height: 70px;
   align-items: center;
-  padding: 0 24px;
+  margin: 7px 24px;
+  background-color: #fff;
+  padding: 16px 10px;
+  border-radius: 6px;
 `;
 
 export const WrapperIcon = styled.View`
@@ -47,12 +52,6 @@ export const Saldo = styled.Text<{type: string}>`
   `}
 `;
 
-export const Atualizado = styled.Text`
-  color: ${colors.gray40};
-  font-family: ${fontMedium};
-  font-size: 12px;
-`;
-
 export const CircleIconWrapper = styled.View`
   height: 100%;
   align-items: center;
@@ -76,6 +75,10 @@ export const BadgeStatus = styled.View`
   border-radius: 25px;
   background-color: ${colors.appColor2};
   position: absolute;
-  right: 20px;
-  top: 5px;
+  right: 10px;
+  top: 16px;
+`;
+
+export const LineWrapper = styled.View`
+  flex-direction: row;
 `;

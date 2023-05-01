@@ -13,6 +13,7 @@ import {formatMoney} from '../../utils/FunctionUtils';
 import {getData, storeData} from '../../services/asyncStorageService';
 import {useRealm} from '../../store/realm';
 import CarouselHeader from './Components/CarouselHeader';
+import colors from '../../styles/colors';
 
 type DashProps = {
   navigation: any;
@@ -106,7 +107,7 @@ export const Dash = ({navigation}: DashProps) => {
           </S.IncomeCard>
         </S.IncomeCardsWrapper>
       </S.CustomWrapper>
-      <S.CustomWrapper background="#fff" marginBottom={'0'}>
+      <S.CustomWrapper background={colors.backgroundColorPrimary} marginBottom={'0'}>
         <S.HeaderWrapper>
           <SelectModalHeader title="Transações" style="light">
             <S.SeeMoreBtn
@@ -118,7 +119,7 @@ export const Dash = ({navigation}: DashProps) => {
           </SelectModalHeader>
         </S.HeaderWrapper>
       </S.CustomWrapper>
-      <S.CustomWrapperWithoutMargin background="#fff">
+      <S.CustomWrapperWithoutMargin background={colors.backgroundColorPrimary}>
         <TransactionsList transactions={transactions} accounts={accounts} />
       </S.CustomWrapperWithoutMargin>
     </S.Container>

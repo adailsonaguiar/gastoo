@@ -1,7 +1,8 @@
 export default {
   fontLight: '#24292F',
-  backgroundColorPrimary: '#fff',
-  backgroundColorSecondary: '#24292F',
+  backgroundColorPrimary: '#EDF1F5',
+  backgroundColorSecondary: '#fff',
+
   greenApp: '#0FB09C',
   colorStroke: '#233D4E',
   colorDanger: '#C93A2C',
@@ -23,9 +24,12 @@ export default {
   supportWarning: '#FF971D',
 
   eletricBlue: '#2E68FF',
+  eletricBlue100: '#EAF0FF',
 
   gray50: '#687489',
   gray40: '#97A3B6',
   gray20: '#E3E8EF',
   gray10: '#F2F5F9',
+
+  dark500: '#49505F',
 };

@@ -16,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {FormContentWrapper} from '../../components/FormContentWrapper';
 import {useRealm} from '../../store/realm';
 import {BtnRemove, ContainerFormFooter} from '../Accounts/Components/NewAccount/styles';
+import {transactionType} from '../../database/schemas/TransactionSchema';
 
 const TransactionForm = () => {
   const {realm} = useRealm();
@@ -82,7 +83,9 @@ const TransactionForm = () => {
           <FormContentWrapper>
             <Select
               placeholder="Selecione uma categoria"
+              headerTitle="Selecione uma categoria"
               label="Categoria"
+              transactionsType={!FORM_TYPE ? transactionType.TRANSACTION_OUT : transactionType.TRANSACTION_IN}
               options={!FORM_TYPE ? getArrayCategoriesExpense() : getArrayCategoriesIncome()}
               value={formik.values.categoryOption}
               onValueChange={obj => formik.setFieldValue('categoryOption', obj)}
@@ -91,6 +94,7 @@ const TransactionForm = () => {
           <FormContentWrapper>
             <Select
               placeholder="Selecione uma conta"
+              headerTitle="Selecione uma conta"
               label="Contas"
               options={accounts}
               value={formik.values.accountOption}
@@ -120,8 +124,8 @@ const TransactionForm = () => {
               <Switch
                 toggleSwitch={value => formik.setFieldValue('recurrence', value ? 1 : 0)}
                 isEnabled={!!formik.values.recurrence}
-                labelEnable={'REPETIR A CADA MÊS'}
-                labelDisable={'NÃO REPETIR'}
+                labelEnable={'Repetir todo mês'}
+                labelDisable={'Não repetir'}
               />
             </FormContentWrapper>
           )}
@@ -129,8 +133,8 @@ const TransactionForm = () => {
             <Switch
               toggleSwitch={value => formik.setFieldValue('status', value ? 1 : 0)}
               isEnabled={!!formik.values.status}
-              labelEnable={!FORM_TYPE ? 'PAGO' : 'RECEBIDO'}
-              labelDisable={!FORM_TYPE ? 'NÃO PAGO' : 'NÃO RECEBIDO'}
+              labelEnable={!FORM_TYPE ? 'Pago' : 'Recebido'}
+              labelDisable={!FORM_TYPE ? 'Não pago' : 'Não recebido'}
             />
           </FormContentWrapper>
           <ContainerFormFooter>

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import colors from '../../styles/colors';
-import {fontBold, fontMedium, fontRegular} from '../../styles/fonts';
+import {fontBold, fontMedium} from '../../styles/fonts';
 import {css} from 'styled-components';
 
 export const Container = styled.View`
@@ -75,8 +75,8 @@ export const SeeMoreBtn = styled.TouchableOpacity``;
 
 export const SeeMore = styled.Text`
   font-size: 16px;
-  font-family: ${fontRegular};
-  color: ${colors.eletricBlue};
+  font-family: ${fontBold};
+  color: ${colors.dark500};
 `;
 
 export const Logo = styled.Image`

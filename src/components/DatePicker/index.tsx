@@ -33,22 +33,23 @@ const DatePicker = ({date, setDate, ...rest}: DatePickerProps) => {
         <S.Value>{format(date, 'dd/MM/yyyy')}</S.Value>
         <Modal animationType="slide" visible={show} onRequestClose={() => setShow(false)}>
           <S.ModalContainer>
-            <Header title="Selecione uma data" lineColor={colors.appColor} onClose={() => setShow(false)} />
+            <Header title="Selecione" onClose={() => setShow(false)} />
             <S.CustomDatePicker
               mode="calendar"
               selected={format(date, 'yyyy-MM-dd')}
+              current={format(date, 'yyyy-MM-dd')}
               options={{
-                textHeaderColor: colors.fontLight,
+                textHeaderColor: colors.dark500,
                 textDefaultColor: colors.fontLight,
-                mainColor: colors.appColor,
+                mainColor: colors.eletricBlue,
                 textSecondaryColor: colors.gray400,
                 defaultFont: fontRegular,
                 headerFont: fontMedium,
+                headerAnimationDistance: 50,
               }}
               onDateChange={value => {
                 onChange(value);
               }}
-              current={format(date, 'yyyy-MM-dd')}
             />
           </S.ModalContainer>
         </Modal>

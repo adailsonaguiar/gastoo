@@ -14,6 +14,7 @@ import IconFt from 'react-native-vector-icons/FontAwesome';
 import * as S from './styles';
 import {SelectModalHeader} from '../Header';
 import colors from '../../styles/colors';
+import ExpenseIcon from '../TransactionTypeIcon';
 
 export type Option = {value: string | number; label: string};
 
@@ -23,15 +24,30 @@ type SelectProps = {
   options: Option[];
   lineLeftColor?: string;
   btnClear?: boolean;
+  headerTitle: string;
+  transactionsType?: string;
 } & CustomPickerProps;
 
-const Select = ({placeholder, label, options = [], btnClear = false, ...rest}: SelectProps) => {
+const Select = ({
+  placeholder,
+  label,
+  options = [],
+  btnClear = false,
+  headerTitle,
+  transactionsType,
+  ...rest
+}: SelectProps) => {
   function renderOption(settings: OptionTemplateSettings) {
     const {item, getLabel} = settings;
 
     return (
       <S.SelectOption>
         <S.LabelWrapper1>
+          {transactionsType && (
+            <S.CategoryTransacation>
+              <ExpenseIcon categoryCode={item.value} type={transactionsType} />
+            </S.CategoryTransacation>
+          )}
           {item?.color && <S.LineLeft lineLeftColor={item?.color || ''} />}
           <S.LabelOption>{getLabel(item)}</S.LabelOption>
         </S.LabelWrapper1>
@@ -61,7 +77,7 @@ const Select = ({placeholder, label, options = [], btnClear = false, ...rest}: S
   }
 
   function renderHeader(settings: CustomPickerActions) {
-    return <SelectModalHeader title={'Selecione'} onClose={() => settings.close()} />;
+    return <SelectModalHeader title={headerTitle} onClose={() => settings.close()} />;
   }
 
   return (

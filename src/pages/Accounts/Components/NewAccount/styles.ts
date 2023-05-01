@@ -19,14 +19,14 @@ export const InputContainer = styled.View`
 export const ContainerFormFooter = styled.View`
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 10px;
   padding-bottom: 20px;
 `;
 
 export const BtnRemove = styled(Button).attrs({
   color: colors.colorDanger,
 })`
-  background-color: ${colors.backgroundColorPrimary};
+  background-color: ${colors.backgroundColorSecondary};
   border: 1px ${colors.colorDanger};
   margin-top: 10px;
 `;

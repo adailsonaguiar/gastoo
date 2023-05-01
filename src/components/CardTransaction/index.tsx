@@ -47,11 +47,13 @@ const CardTransaction = ({
 
       <S.ColLeft>
         <S.TitleConta>{handleTransactionTitle(transactionTitle)}</S.TitleConta>
-        <S.CategoryConta>{categoryTransaction}</S.CategoryConta>
+        <S.LineWrapper>
+          <S.CategoryConta>{categoryTransaction}</S.CategoryConta>
+          <S.CategoryConta> • {`${formatteNumber(date.day)}/${formatteNumber(date.month)}`}</S.CategoryConta>
+        </S.LineWrapper>
       </S.ColLeft>
       <S.ColRight>
         <S.Saldo type={type}>{`${type === 'TRANSACTION_OUT' ? '-' : ''}R$${formatMoney(value)}`}</S.Saldo>
-        <S.Atualizado>{`${status} ${formatteNumber(date.day)}/${formatteNumber(date.month)}`}</S.Atualizado>
       </S.ColRight>
       {transactionStatus === 0 ? <S.BadgeStatus /> : null}
     </S.Conta>
